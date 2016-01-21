@@ -1,5 +1,4 @@
 #![allow(non_camel_case_types, non_upper_case_globals, non_snake_case)]
-extern crate libc;
 use libc::{c_int};
 
 pub const GNUTLS_E_SUCCESS: c_int = 0;
@@ -230,3 +229,6 @@ pub const GNUTLS_E_UNIMPLEMENTED_FEATURE: c_int = -1250;
 
 pub const GNUTLS_E_APPLICATION_ERROR_MAX: c_int = -65000;
 pub const GNUTLS_E_APPLICATION_ERROR_MIN: c_int = -65500;
+
+pub const GNUTLS_HEARTBEAT_WAIT: c_int = 1;
+pub const GNUTLS_RECORD_WAIT: c_int = 1;
