@@ -918,7 +918,7 @@ pub enum Struct_mbuffer_st { }
 pub type gnutls_packet_t = *mut Struct_mbuffer_st;
 #[derive(Clone, Copy)]
 #[repr(u32)]
-pub enum Enum_Unnamed38 { GNUTLS_NAME_DNS = 1, _DUMMY_UNNAMED_37 }
+pub enum Enum_Unnamed38 { GNUTLS_NAME_DNS = 1, _DUMMY_UNNAMED_38 }
 pub type gnutls_server_name_type_t = Enum_Unnamed38;
 #[derive(Clone, Copy)]
 #[repr(u32)]
@@ -1092,7 +1092,7 @@ pub type gnutls_errno_func =
                               -> ::libc::c_int>;
 #[derive(Clone, Copy)]
 #[repr(u32)]
-pub enum Enum_gnutls_random_art { GNUTLS_RANDOM_ART_OPENSSH = 1, _DUMMY_GNUTLS_RANDOM }
+pub enum Enum_gnutls_random_art { GNUTLS_RANDOM_ART_OPENSSH = 1, _DUMMY_GNUTLS_RANDOM_ART }
 pub type gnutls_random_art_t = Enum_gnutls_random_art;
 pub enum Struct_gnutls_srp_server_credentials_st { }
 pub type gnutls_srp_server_credentials_t =
@@ -1353,6 +1353,742 @@ pub type gnutls_datum = gnutls_datum_t;
 pub type gnutls_transport_ptr = gnutls_transport_ptr_t;
 pub type gnutls_openpgp_key_status_t = gnutls_openpgp_crt_status_t;
 pub type gnutls_openpgp_key_t = gnutls_openpgp_crt_t;
+#[derive(Clone, Copy)]
+#[repr(u32)]
+pub enum Enum_gnutls_certificate_import_flags {
+    GNUTLS_X509_CRT_LIST_IMPORT_FAIL_IF_EXCEED = 1,
+    GNUTLS_X509_CRT_LIST_FAIL_IF_UNSORTED = 2,
+    GNUTLS_X509_CRT_LIST_SORT = 4,
+}
+pub type gnutls_certificate_import_flags =
+    Enum_gnutls_certificate_import_flags;
+#[derive(Clone, Copy)]
+#[repr(u32)]
+pub enum Enum_Unnamed49 {
+    GNUTLS_KEYID_USE_SHA1 = 0,
+    GNUTLS_KEYID_USE_SHA256 = 1,
+    GNUTLS_KEYID_USE_BEST_KNOWN = 1073741824,
+}
+pub type gnutls_keyid_flags_t = Enum_Unnamed49;
+#[derive(Clone, Copy)]
+#[repr(u32)]
+pub enum Enum_gnutls_info_access_what_t {
+    GNUTLS_IA_ACCESSMETHOD_OID = 1,
+    GNUTLS_IA_ACCESSLOCATION_GENERALNAME_TYPE = 2,
+    GNUTLS_IA_URI = 106,
+    GNUTLS_IA_UNKNOWN = 10000,
+    GNUTLS_IA_OCSP_URI = 10006,
+    GNUTLS_IA_CAISSUERS_URI = 10106,
+}
+pub type gnutls_info_access_what_t = Enum_gnutls_info_access_what_t;
+pub enum Struct_gnutls_name_constraints_st { }
+pub type gnutls_x509_name_constraints_t =
+    *mut Struct_gnutls_name_constraints_st;
+#[derive(Clone, Copy)]
+#[repr(u32)]
+pub enum Enum_gnutls_x509_crl_reason_flags_t {
+    GNUTLS_CRL_REASON_UNSPECIFIED = 0,
+    GNUTLS_CRL_REASON_PRIVILEGE_WITHDRAWN = 1,
+    GNUTLS_CRL_REASON_CERTIFICATE_HOLD = 2,
+    GNUTLS_CRL_REASON_CESSATION_OF_OPERATION = 4,
+    GNUTLS_CRL_REASON_SUPERSEDED = 8,
+    GNUTLS_CRL_REASON_AFFILIATION_CHANGED = 16,
+    GNUTLS_CRL_REASON_CA_COMPROMISE = 32,
+    GNUTLS_CRL_REASON_KEY_COMPROMISE = 64,
+    GNUTLS_CRL_REASON_UNUSED = 128,
+    GNUTLS_CRL_REASON_AA_COMPROMISE = 32768,
+}
+pub type gnutls_x509_crl_reason_flags_t = Enum_gnutls_x509_crl_reason_flags_t;
+#[derive(Clone, Copy)]
+#[repr(u32)]
+pub enum Enum_gnutls_x509_qualifier_t {
+    GNUTLS_X509_QUALIFIER_UNKNOWN = 0,
+    GNUTLS_X509_QUALIFIER_URI = 1,
+    GNUTLS_X509_QUALIFIER_NOTICE = 2,
+}
+pub type gnutls_x509_qualifier_t = Enum_gnutls_x509_qualifier_t;
+#[repr(C)]
+#[derive(Copy)]
+pub struct Struct_gnutls_x509_policy_st {
+    pub oid: *mut ::libc::c_char,
+    pub qualifiers: ::libc::c_uint,
+    pub qualifier: [Struct_Unnamed50; 8usize],
+}
+impl ::std::clone::Clone for Struct_gnutls_x509_policy_st {
+    fn clone(&self) -> Self { *self }
+}
+impl ::std::default::Default for Struct_gnutls_x509_policy_st {
+    fn default() -> Self { unsafe { ::std::mem::zeroed() } }
+}
+#[repr(C)]
+#[derive(Copy)]
+pub struct Struct_Unnamed50 {
+    pub _type: gnutls_x509_qualifier_t,
+    pub data: *mut ::libc::c_char,
+    pub size: ::libc::c_uint,
+}
+impl ::std::clone::Clone for Struct_Unnamed50 {
+    fn clone(&self) -> Self { *self }
+}
+impl ::std::default::Default for Struct_Unnamed50 {
+    fn default() -> Self { unsafe { ::std::mem::zeroed() } }
+}
+pub type gnutls_x509_policy_st = Struct_gnutls_x509_policy_st;
+pub enum Struct_gnutls_x509_dn_st { }
+pub type gnutls_x509_dn_t = *mut Struct_gnutls_x509_dn_st;
+#[repr(C)]
+#[derive(Copy)]
+pub struct Struct_gnutls_x509_ava_st {
+    pub oid: gnutls_datum_t,
+    pub value: gnutls_datum_t,
+    pub value_tag: ::libc::c_ulong,
+}
+impl ::std::clone::Clone for Struct_gnutls_x509_ava_st {
+    fn clone(&self) -> Self { *self }
+}
+impl ::std::default::Default for Struct_gnutls_x509_ava_st {
+    fn default() -> Self { unsafe { ::std::mem::zeroed() } }
+}
+pub type gnutls_x509_ava_st = Struct_gnutls_x509_ava_st;
+pub enum Struct_gnutls_x509_crl_iter { }
+pub type gnutls_x509_crl_iter_t = *mut Struct_gnutls_x509_crl_iter;
+#[derive(Clone, Copy)]
+#[repr(u32)]
+pub enum Enum_gnutls_certificate_verify_flags {
+    GNUTLS_VERIFY_DISABLE_CA_SIGN = 1,
+    GNUTLS_VERIFY_DO_NOT_ALLOW_SAME = 4,
+    GNUTLS_VERIFY_ALLOW_ANY_X509_V1_CA_CRT = 8,
+    GNUTLS_VERIFY_ALLOW_SIGN_RSA_MD2 = 16,
+    GNUTLS_VERIFY_ALLOW_SIGN_RSA_MD5 = 32,
+    GNUTLS_VERIFY_DISABLE_TIME_CHECKS = 64,
+    GNUTLS_VERIFY_DISABLE_TRUSTED_TIME_CHECKS = 128,
+    GNUTLS_VERIFY_DO_NOT_ALLOW_X509_V1_CA_CRT = 256,
+    GNUTLS_VERIFY_DISABLE_CRL_CHECKS = 512,
+    GNUTLS_VERIFY_ALLOW_UNSORTED_CHAIN = 1024,
+    GNUTLS_VERIFY_DO_NOT_ALLOW_UNSORTED_CHAIN = 2048,
+    GNUTLS_VERIFY_DO_NOT_ALLOW_WILDCARDS = 4096,
+    GNUTLS_VERIFY_USE_TLS1_RSA = 8192,
+}
+pub type gnutls_certificate_verify_flags =
+    Enum_gnutls_certificate_verify_flags;
+#[derive(Clone, Copy)]
+#[repr(u32)]
+pub enum Enum_gnutls_certificate_verification_profiles_t {
+    GNUTLS_PROFILE_VERY_WEAK = 1,
+    GNUTLS_PROFILE_LOW = 2,
+    GNUTLS_PROFILE_LEGACY = 4,
+    GNUTLS_PROFILE_MEDIUM = 5,
+    GNUTLS_PROFILE_HIGH = 6,
+    GNUTLS_PROFILE_ULTRA = 7,
+    GNUTLS_PROFILE_SUITEB128 = 32,
+    GNUTLS_PROFILE_SUITEB192 = 33,
+}
+pub type gnutls_certificate_verification_profiles_t =
+    Enum_gnutls_certificate_verification_profiles_t;
+#[derive(Clone, Copy)]
+#[repr(u32)]
+pub enum Enum_gnutls_pkcs_encrypt_flags_t {
+    GNUTLS_PKCS_PLAIN = 1,
+    GNUTLS_PKCS_PKCS12_3DES = 2,
+    GNUTLS_PKCS_PKCS12_ARCFOUR = 4,
+    GNUTLS_PKCS_PKCS12_RC2_40 = 8,
+    GNUTLS_PKCS_PBES2_3DES = 16,
+    GNUTLS_PKCS_PBES2_AES_128 = 32,
+    GNUTLS_PKCS_PBES2_AES_192 = 64,
+    GNUTLS_PKCS_PBES2_AES_256 = 128,
+    GNUTLS_PKCS_NULL_PASSWORD = 256,
+    GNUTLS_PKCS_PBES2_DES = 512,
+}
+pub type gnutls_pkcs_encrypt_flags_t = Enum_gnutls_pkcs_encrypt_flags_t;
+pub enum Struct_gnutls_x509_trust_list_st { }
+pub type gnutls_x509_trust_list_t = *mut Struct_gnutls_x509_trust_list_st;
+pub enum Struct_gnutls_x509_trust_list_iter { }
+pub type gnutls_x509_trust_list_iter_t =
+    *mut Struct_gnutls_x509_trust_list_iter;
+pub type gnutls_verify_output_function =
+    extern "C" fn(cert: gnutls_x509_crt_t, issuer: gnutls_x509_crt_t,
+                  crl: gnutls_x509_crl_t, verification_output: ::libc::c_uint)
+        -> ::libc::c_int;
+#[repr(C)]
+#[derive(Copy)]
+pub struct Struct_gnutls_x509_ext_st {
+    pub oid: *mut ::libc::c_char,
+    pub critical: ::libc::c_uint,
+    pub data: gnutls_datum_t,
+}
+impl ::std::clone::Clone for Struct_gnutls_x509_ext_st {
+    fn clone(&self) -> Self { *self }
+}
+impl ::std::default::Default for Struct_gnutls_x509_ext_st {
+    fn default() -> Self { unsafe { ::std::mem::zeroed() } }
+}
+pub type gnutls_x509_ext_st = Struct_gnutls_x509_ext_st;
+pub enum Struct_gnutls_pkcs7_int { }
+pub type gnutls_pkcs7_t = *mut Struct_gnutls_pkcs7_int;
+pub enum Struct_gnutls_pkcs7_attrs_st { }
+pub type gnutls_pkcs7_attrs_t = *mut Struct_gnutls_pkcs7_attrs_st;
+#[repr(C)]
+#[derive(Copy)]
+pub struct Struct_gnutls_pkcs7_signature_info_st {
+    pub algo: gnutls_sign_algorithm_t,
+    pub sig: gnutls_datum_t,
+    pub issuer_dn: gnutls_datum_t,
+    pub signer_serial: gnutls_datum_t,
+    pub issuer_keyid: gnutls_datum_t,
+    pub signing_time: time_t,
+    pub signed_attrs: gnutls_pkcs7_attrs_t,
+    pub unsigned_attrs: gnutls_pkcs7_attrs_t,
+    pub pad: [::libc::c_char; 64usize],
+}
+impl ::std::clone::Clone for Struct_gnutls_pkcs7_signature_info_st {
+    fn clone(&self) -> Self { *self }
+}
+impl ::std::default::Default for Struct_gnutls_pkcs7_signature_info_st {
+    fn default() -> Self { unsafe { ::std::mem::zeroed() } }
+}
+pub type gnutls_pkcs7_signature_info_st =
+    Struct_gnutls_pkcs7_signature_info_st;
+#[derive(Clone, Copy)]
+#[repr(u32)]
+pub enum Enum_gnutls_pkcs7_sign_flags {
+    GNUTLS_PKCS7_EMBED_DATA = 1,
+    GNUTLS_PKCS7_INCLUDE_TIME = 2,
+    GNUTLS_PKCS7_INCLUDE_CERT = 4,
+    GNUTLS_PKCS7_WRITE_SPKI = 8,
+}
+pub type gnutls_pkcs7_sign_flags = Enum_gnutls_pkcs7_sign_flags;
+pub type va_list = __builtin_va_list;
+pub type __gnuc_va_list = __builtin_va_list;
+pub type gnutls_pkcs11_token_callback_t =
+    ::std::option::Option<unsafe extern "C" fn(userdata: *mut ::libc::c_void,
+                                               label: *const ::libc::c_char,
+                                               retry: ::libc::c_uint)
+                              -> ::libc::c_int>;
+pub enum Struct_gnutls_pkcs11_obj_st { }
+pub type gnutls_pkcs11_obj_t = *mut Struct_gnutls_pkcs11_obj_st;
+pub const GNUTLS_PKCS11_OBJ_FLAG_RETRIEVE_TRUSTED:
+          Enum_gnutls_pkcs11_obj_flags =
+    Enum_gnutls_pkcs11_obj_flags::GNUTLS_PKCS11_OBJ_FLAG_MARK_TRUSTED;
+pub const GNUTLS_PKCS11_OBJ_FLAG_NO_STORE_PUBKEY: Enum_gnutls_pkcs11_obj_flags
+          =
+    Enum_gnutls_pkcs11_obj_flags::GNUTLS_PKCS11_OBJ_FLAG_PUBKEY;
+#[derive(Clone, Copy)]
+#[repr(u32)]
+pub enum Enum_gnutls_pkcs11_obj_flags {
+    GNUTLS_PKCS11_OBJ_FLAG_LOGIN = 1,
+    GNUTLS_PKCS11_OBJ_FLAG_MARK_TRUSTED = 2,
+    GNUTLS_PKCS11_OBJ_FLAG_MARK_SENSITIVE = 4,
+    GNUTLS_PKCS11_OBJ_FLAG_LOGIN_SO = 8,
+    GNUTLS_PKCS11_OBJ_FLAG_MARK_PRIVATE = 16,
+    GNUTLS_PKCS11_OBJ_FLAG_MARK_NOT_PRIVATE = 32,
+    GNUTLS_PKCS11_OBJ_FLAG_RETRIEVE_ANY = 64,
+    GNUTLS_PKCS11_OBJ_FLAG_RETRIEVE_DISTRUSTED = 256,
+    GNUTLS_PKCS11_OBJ_FLAG_COMPARE = 512,
+    GNUTLS_PKCS11_OBJ_FLAG_PRESENT_IN_TRUSTED_MODULE = 1024,
+    GNUTLS_PKCS11_OBJ_FLAG_MARK_CA = 2048,
+    GNUTLS_PKCS11_OBJ_FLAG_MARK_KEY_WRAP = 4096,
+    GNUTLS_PKCS11_OBJ_FLAG_COMPARE_KEY = 8192,
+    GNUTLS_PKCS11_OBJ_FLAG_OVERWRITE_TRUSTMOD_EXT = 16384,
+    GNUTLS_PKCS11_OBJ_FLAG_MARK_ALWAYS_AUTH = 32768,
+    GNUTLS_PKCS11_OBJ_FLAG_MARK_EXTRACTABLE = 65536,
+    GNUTLS_PKCS11_OBJ_FLAG_NEVER_EXTRACTABLE = 131072,
+    GNUTLS_PKCS11_OBJ_FLAG_CRT = 262144,
+    GNUTLS_PKCS11_OBJ_FLAG_WITH_PRIVKEY = 524288,
+    GNUTLS_PKCS11_OBJ_FLAG_PUBKEY = 1048576,
+    GNUTLS_PKCS11_OBJ_FLAG_PRIVKEY = 2097152,
+}
+pub type gnutls_pkcs11_obj_flags = Enum_gnutls_pkcs11_obj_flags;
+#[derive(Clone, Copy)]
+#[repr(u32)]
+pub enum Enum_Unnamed51 {
+    GNUTLS_PKCS11_URL_GENERIC = 0,
+    GNUTLS_PKCS11_URL_LIB = 1,
+    GNUTLS_PKCS11_URL_LIB_VERSION = 2,
+}
+pub type gnutls_pkcs11_url_type_t = Enum_Unnamed51;
+#[derive(Clone, Copy)]
+#[repr(u32)]
+pub enum Enum_Unnamed52 {
+    GNUTLS_PKCS11_OBJ_ID_HEX = 1,
+    GNUTLS_PKCS11_OBJ_LABEL = 2,
+    GNUTLS_PKCS11_OBJ_TOKEN_LABEL = 3,
+    GNUTLS_PKCS11_OBJ_TOKEN_SERIAL = 4,
+    GNUTLS_PKCS11_OBJ_TOKEN_MANUFACTURER = 5,
+    GNUTLS_PKCS11_OBJ_TOKEN_MODEL = 6,
+    GNUTLS_PKCS11_OBJ_ID = 7,
+    GNUTLS_PKCS11_OBJ_LIBRARY_VERSION = 8,
+    GNUTLS_PKCS11_OBJ_LIBRARY_DESCRIPTION = 9,
+    GNUTLS_PKCS11_OBJ_LIBRARY_MANUFACTURER = 10,
+}
+pub type gnutls_pkcs11_obj_info_t = Enum_Unnamed52;
+#[derive(Clone, Copy)]
+#[repr(u32)]
+pub enum Enum_Unnamed53 {
+    GNUTLS_PKCS11_TOKEN_LABEL = 0,
+    GNUTLS_PKCS11_TOKEN_SERIAL = 1,
+    GNUTLS_PKCS11_TOKEN_MANUFACTURER = 2,
+    GNUTLS_PKCS11_TOKEN_MODEL = 3,
+    GNUTLS_PKCS11_TOKEN_MODNAME = 4,
+}
+pub type gnutls_pkcs11_token_info_t = Enum_Unnamed53;
+#[derive(Clone, Copy)]
+#[repr(u32)]
+pub enum Enum_Unnamed54 {
+    GNUTLS_PKCS11_OBJ_UNKNOWN = 0,
+    GNUTLS_PKCS11_OBJ_X509_CRT = 1,
+    GNUTLS_PKCS11_OBJ_PUBKEY = 2,
+    GNUTLS_PKCS11_OBJ_PRIVKEY = 3,
+    GNUTLS_PKCS11_OBJ_SECRET_KEY = 4,
+    GNUTLS_PKCS11_OBJ_DATA = 5,
+    GNUTLS_PKCS11_OBJ_X509_CRT_EXTENSION = 6,
+}
+pub type gnutls_pkcs11_obj_type_t = Enum_Unnamed54;
+#[derive(Clone, Copy)]
+#[repr(u32)]
+pub enum Enum_gnutls_openpgp_crt_fmt {
+    GNUTLS_OPENPGP_FMT_RAW = 0,
+    GNUTLS_OPENPGP_FMT_BASE64 = 1,
+}
+pub type gnutls_openpgp_crt_fmt_t = Enum_gnutls_openpgp_crt_fmt;
+pub type gnutls_openpgp_keyid_t = [::libc::c_uchar; 8usize];
+pub type gnutls_openpgp_recv_key_func =
+    ::std::option::Option<unsafe extern "C" fn(session: gnutls_session_t,
+                                               keyfpr: *const ::libc::c_uchar,
+                                               keyfpr_length: ::libc::c_uint,
+                                               key: *mut gnutls_datum_t)
+                              -> ::libc::c_int>;
+pub enum Struct_tpm_key_list_st { }
+pub type gnutls_tpm_key_list_t = *mut Struct_tpm_key_list_st;
+pub const GNUTLS_TPMKEY_FMT_DER: Enum_Unnamed55 =
+    Enum_Unnamed55::GNUTLS_TPMKEY_FMT_RAW;
+#[derive(Clone, Copy)]
+#[repr(u32)]
+pub enum Enum_Unnamed55 {
+    GNUTLS_TPMKEY_FMT_RAW = 0,
+    GNUTLS_TPMKEY_FMT_CTK_PEM = 1,
+}
+pub type gnutls_tpmkey_fmt_t = Enum_Unnamed55;
+#[derive(Clone, Copy)]
+#[repr(u32)]
+pub enum Enum_gnutls_pubkey_flags {
+    GNUTLS_PUBKEY_DISABLE_CALLBACKS = 4,
+    GNUTLS_PUBKEY_GET_OPENPGP_FINGERPRINT = 8,
+}
+pub type gnutls_pubkey_flags_t = Enum_gnutls_pubkey_flags;
+pub type gnutls_privkey_sign_func =
+    ::std::option::Option<unsafe extern "C" fn(key: gnutls_privkey_t,
+                                               userdata: *mut ::libc::c_void,
+                                               raw_data:
+                                                   *const gnutls_datum_t,
+                                               signature: *mut gnutls_datum_t)
+                              -> ::libc::c_int>;
+pub type gnutls_privkey_decrypt_func =
+    ::std::option::Option<unsafe extern "C" fn(key: gnutls_privkey_t,
+                                               userdata: *mut ::libc::c_void,
+                                               ciphertext:
+                                                   *const gnutls_datum_t,
+                                               plaintext: *mut gnutls_datum_t)
+                              -> ::libc::c_int>;
+pub type gnutls_privkey_deinit_func =
+    ::std::option::Option<unsafe extern "C" fn(key: gnutls_privkey_t,
+                                               userdata:
+                                                   *mut ::libc::c_void)>;
+pub type gnutls_privkey_info_func =
+    ::std::option::Option<unsafe extern "C" fn(key: gnutls_privkey_t,
+                                               flags: ::libc::c_uint,
+                                               userdata: *mut ::libc::c_void)
+                              -> ::libc::c_int>;
+#[derive(Clone, Copy)]
+#[repr(u32)]
+pub enum Enum_gnutls_privkey_flags {
+    GNUTLS_PRIVKEY_IMPORT_AUTO_RELEASE = 1,
+    GNUTLS_PRIVKEY_IMPORT_COPY = 2,
+    GNUTLS_PRIVKEY_DISABLE_CALLBACKS = 4,
+    GNUTLS_PRIVKEY_SIGN_FLAG_TLS1_RSA = 16,
+}
+pub type gnutls_privkey_flags_t = Enum_gnutls_privkey_flags;
+#[repr(C)]
+#[derive(Copy)]
+pub struct Struct_gnutls_pcert_st {
+    pub pubkey: gnutls_pubkey_t,
+    pub cert: gnutls_datum_t,
+    pub _type: gnutls_certificate_type_t,
+}
+impl ::std::clone::Clone for Struct_gnutls_pcert_st {
+    fn clone(&self) -> Self { *self }
+}
+impl ::std::default::Default for Struct_gnutls_pcert_st {
+    fn default() -> Self { unsafe { ::std::mem::zeroed() } }
+}
+pub type gnutls_pcert_st = Struct_gnutls_pcert_st;
+pub type gnutls_certificate_retrieve_function2 =
+    unsafe extern "C" fn(arg1: gnutls_session_t,
+                         req_ca_rdn: *const gnutls_datum_t,
+                         nreqs: ::libc::c_int,
+                         pk_algos: *const gnutls_pk_algorithm_t,
+                         pk_algos_length: ::libc::c_int,
+                         arg2: *mut *mut gnutls_pcert_st,
+                         pcert_length: *mut ::libc::c_uint,
+                         privkey: *mut gnutls_privkey_t) -> ::libc::c_int;
+pub enum Struct_api_cipher_hd_st { }
+pub type gnutls_cipher_hd_t = *mut Struct_api_cipher_hd_st;
+pub enum Struct_api_aead_cipher_hd_st { }
+pub type gnutls_aead_cipher_hd_t = *mut Struct_api_aead_cipher_hd_st;
+pub enum Struct_hash_hd_st { }
+pub type gnutls_hash_hd_t = *mut Struct_hash_hd_st;
+pub enum Struct_hmac_hd_st { }
+pub type gnutls_hmac_hd_t = *mut Struct_hmac_hd_st;
+#[derive(Clone, Copy)]
+#[repr(u32)]
+pub enum Enum_gnutls_rnd_level {
+    GNUTLS_RND_NONCE = 0,
+    GNUTLS_RND_RANDOM = 1,
+    GNUTLS_RND_KEY = 2,
+}
+pub type gnutls_rnd_level_t = Enum_gnutls_rnd_level;
+pub type gnutls_cipher_init_func =
+    ::std::option::Option<unsafe extern "C" fn(arg1:
+                                                   gnutls_cipher_algorithm_t,
+                                               ctx: *mut *mut ::libc::c_void,
+                                               enc: ::libc::c_int)
+                              -> ::libc::c_int>;
+pub type gnutls_cipher_setkey_func =
+    ::std::option::Option<unsafe extern "C" fn(ctx: *mut ::libc::c_void,
+                                               key: *const ::libc::c_void,
+                                               keysize: size_t)
+                              -> ::libc::c_int>;
+pub type gnutls_cipher_setiv_func =
+    ::std::option::Option<unsafe extern "C" fn(ctx: *mut ::libc::c_void,
+                                               iv: *const ::libc::c_void,
+                                               ivsize: size_t)
+                              -> ::libc::c_int>;
+pub type gnutls_cipher_encrypt_func =
+    ::std::option::Option<unsafe extern "C" fn(ctx: *mut ::libc::c_void,
+                                               plain: *const ::libc::c_void,
+                                               plainsize: size_t,
+                                               encr: *mut ::libc::c_void,
+                                               encrsize: size_t)
+                              -> ::libc::c_int>;
+pub type gnutls_cipher_decrypt_func =
+    ::std::option::Option<unsafe extern "C" fn(ctx: *mut ::libc::c_void,
+                                               encr: *const ::libc::c_void,
+                                               encrsize: size_t,
+                                               plain: *mut ::libc::c_void,
+                                               plainsize: size_t)
+                              -> ::libc::c_int>;
+pub type gnutls_cipher_auth_func =
+    ::std::option::Option<unsafe extern "C" fn(ctx: *mut ::libc::c_void,
+                                               data: *const ::libc::c_void,
+                                               datasize: size_t)
+                              -> ::libc::c_int>;
+pub type gnutls_cipher_tag_func =
+    ::std::option::Option<unsafe extern "C" fn(ctx: *mut ::libc::c_void,
+                                               tag: *mut ::libc::c_void,
+                                               tagsize: size_t)>;
+pub type gnutls_cipher_aead_encrypt_func =
+    ::std::option::Option<unsafe extern "C" fn(ctx: *mut ::libc::c_void,
+                                               nonce: *const ::libc::c_void,
+                                               noncesize: size_t,
+                                               auth: *const ::libc::c_void,
+                                               authsize: size_t,
+                                               tag_size: size_t,
+                                               plain: *const ::libc::c_void,
+                                               plainsize: size_t,
+                                               encr: *mut ::libc::c_void,
+                                               encrsize: size_t)
+                              -> ::libc::c_int>;
+pub type gnutls_cipher_aead_decrypt_func =
+    ::std::option::Option<unsafe extern "C" fn(ctx: *mut ::libc::c_void,
+                                               nonce: *const ::libc::c_void,
+                                               noncesize: size_t,
+                                               auth: *const ::libc::c_void,
+                                               authsize: size_t,
+                                               tag_size: size_t,
+                                               encr: *const ::libc::c_void,
+                                               encrsize: size_t,
+                                               plain: *mut ::libc::c_void,
+                                               plainsize: size_t)
+                              -> ::libc::c_int>;
+pub type gnutls_cipher_deinit_func =
+    ::std::option::Option<unsafe extern "C" fn(ctx: *mut ::libc::c_void)>;
+pub type gnutls_mac_init_func =
+    ::std::option::Option<unsafe extern "C" fn(arg1: gnutls_mac_algorithm_t,
+                                               ctx: *mut *mut ::libc::c_void)
+                              -> ::libc::c_int>;
+pub type gnutls_mac_setkey_func =
+    ::std::option::Option<unsafe extern "C" fn(ctx: *mut ::libc::c_void,
+                                               key: *const ::libc::c_void,
+                                               keysize: size_t)
+                              -> ::libc::c_int>;
+pub type gnutls_mac_setnonce_func =
+    ::std::option::Option<unsafe extern "C" fn(ctx: *mut ::libc::c_void,
+                                               nonce: *const ::libc::c_void,
+                                               noncesize: size_t)
+                              -> ::libc::c_int>;
+pub type gnutls_mac_hash_func =
+    ::std::option::Option<unsafe extern "C" fn(ctx: *mut ::libc::c_void,
+                                               text: *const ::libc::c_void,
+                                               textsize: size_t)
+                              -> ::libc::c_int>;
+pub type gnutls_mac_output_func =
+    ::std::option::Option<unsafe extern "C" fn(src_ctx: *mut ::libc::c_void,
+                                               digest: *mut ::libc::c_void,
+                                               digestsize: size_t)
+                              -> ::libc::c_int>;
+pub type gnutls_mac_deinit_func =
+    ::std::option::Option<unsafe extern "C" fn(ctx: *mut ::libc::c_void)>;
+pub type gnutls_mac_fast_func =
+    ::std::option::Option<unsafe extern "C" fn(arg1: gnutls_mac_algorithm_t,
+                                               nonce: *const ::libc::c_void,
+                                               nonce_size: size_t,
+                                               key: *const ::libc::c_void,
+                                               keysize: size_t,
+                                               text: *const ::libc::c_void,
+                                               textsize: size_t,
+                                               digest: *mut ::libc::c_void)
+                              -> ::libc::c_int>;
+pub type gnutls_digest_init_func =
+    ::std::option::Option<unsafe extern "C" fn(arg1:
+                                                   gnutls_digest_algorithm_t,
+                                               ctx: *mut *mut ::libc::c_void)
+                              -> ::libc::c_int>;
+pub type gnutls_digest_hash_func =
+    ::std::option::Option<unsafe extern "C" fn(ctx: *mut ::libc::c_void,
+                                               text: *const ::libc::c_void,
+                                               textsize: size_t)
+                              -> ::libc::c_int>;
+pub type gnutls_digest_output_func =
+    ::std::option::Option<unsafe extern "C" fn(src_ctx: *mut ::libc::c_void,
+                                               digest: *mut ::libc::c_void,
+                                               digestsize: size_t)
+                              -> ::libc::c_int>;
+pub type gnutls_digest_deinit_func =
+    ::std::option::Option<unsafe extern "C" fn(ctx: *mut ::libc::c_void)>;
+pub type gnutls_digest_fast_func =
+    ::std::option::Option<unsafe extern "C" fn(arg1:
+                                                   gnutls_digest_algorithm_t,
+                                               text: *const ::libc::c_void,
+                                               textsize: size_t,
+                                               digest: *mut ::libc::c_void)
+                              -> ::libc::c_int>;
+#[derive(Clone, Copy)]
+#[repr(u32)]
+pub enum Enum_dane_cert_usage_t {
+    DANE_CERT_USAGE_CA = 0,
+    DANE_CERT_USAGE_EE = 1,
+    DANE_CERT_USAGE_LOCAL_CA = 2,
+    DANE_CERT_USAGE_LOCAL_EE = 3,
+}
+pub type dane_cert_usage_t = Enum_dane_cert_usage_t;
+#[derive(Clone, Copy)]
+#[repr(u32)]
+pub enum Enum_dane_cert_type_t { DANE_CERT_X509 = 0, DANE_CERT_PK = 1, }
+pub type dane_cert_type_t = Enum_dane_cert_type_t;
+#[derive(Clone, Copy)]
+#[repr(u32)]
+pub enum Enum_dane_match_type_t {
+    DANE_MATCH_EXACT = 0,
+    DANE_MATCH_SHA2_256 = 1,
+    DANE_MATCH_SHA2_512 = 2,
+}
+pub type dane_match_type_t = Enum_dane_match_type_t;
+#[derive(Clone, Copy)]
+#[repr(u32)]
+pub enum Enum_dane_query_status_t {
+    DANE_QUERY_UNKNOWN = 0,
+    DANE_QUERY_DNSSEC_VERIFIED = 1,
+    DANE_QUERY_BOGUS = 2,
+    DANE_QUERY_NO_DNSSEC = 3,
+}
+pub type dane_query_status_t = Enum_dane_query_status_t;
+pub enum Struct_dane_state_st { }
+pub type dane_state_t = *mut Struct_dane_state_st;
+pub enum Struct_dane_query_st { }
+pub type dane_query_t = *mut Struct_dane_query_st;
+#[derive(Clone, Copy)]
+#[repr(u32)]
+pub enum Enum_dane_state_flags_t {
+    DANE_F_IGNORE_LOCAL_RESOLVER = 1,
+    DANE_F_INSECURE = 2,
+    DANE_F_IGNORE_DNSSEC = 4,
+}
+pub type dane_state_flags_t = Enum_dane_state_flags_t;
+#[derive(Clone, Copy)]
+#[repr(u32)]
+pub enum Enum_dane_verify_flags_t {
+    DANE_VFLAG_FAIL_IF_NOT_CHECKED = 1,
+    DANE_VFLAG_ONLY_CHECK_EE_USAGE = 2,
+    DANE_VFLAG_ONLY_CHECK_CA_USAGE = 4,
+}
+pub type dane_verify_flags_t = Enum_dane_verify_flags_t;
+#[derive(Clone, Copy)]
+#[repr(u32)]
+pub enum Enum_dane_verify_status_t {
+    DANE_VERIFY_CA_CONSTRAINTS_VIOLATED = 1,
+    DANE_VERIFY_CERT_DIFFERS = 2,
+    DANE_VERIFY_UNKNOWN_DANE_INFO = 4,
+}
+pub type dane_verify_status_t = Enum_dane_verify_status_t;
+#[repr(C)]
+#[derive(Copy)]
+pub struct Struct_Unnamed56 {
+    pub record_seq: ::libc::c_uint,
+    pub hsk_read_seq: ::libc::c_uint,
+    pub hsk_write_seq: ::libc::c_uint,
+}
+impl ::std::clone::Clone for Struct_Unnamed56 {
+    fn clone(&self) -> Self { *self }
+}
+impl ::std::default::Default for Struct_Unnamed56 {
+    fn default() -> Self { unsafe { ::std::mem::zeroed() } }
+}
+pub type gnutls_dtls_prestate_st = Struct_Unnamed56;
+#[derive(Clone, Copy)]
+#[repr(u32)]
+pub enum Enum_gnutls_ocsp_print_formats_t {
+    GNUTLS_OCSP_PRINT_FULL = 0,
+    GNUTLS_OCSP_PRINT_COMPACT = 1,
+}
+pub type gnutls_ocsp_print_formats_t = Enum_gnutls_ocsp_print_formats_t;
+#[derive(Clone, Copy)]
+#[repr(u32)]
+pub enum Enum_gnutls_ocsp_resp_status_t {
+    GNUTLS_OCSP_RESP_SUCCESSFUL = 0,
+    GNUTLS_OCSP_RESP_MALFORMEDREQUEST = 1,
+    GNUTLS_OCSP_RESP_INTERNALERROR = 2,
+    GNUTLS_OCSP_RESP_TRYLATER = 3,
+    GNUTLS_OCSP_RESP_SIGREQUIRED = 5,
+    GNUTLS_OCSP_RESP_UNAUTHORIZED = 6,
+}
+pub type gnutls_ocsp_resp_status_t = Enum_gnutls_ocsp_resp_status_t;
+#[derive(Clone, Copy)]
+#[repr(u32)]
+pub enum Enum_gnutls_ocsp_cert_status_t {
+    GNUTLS_OCSP_CERT_GOOD = 0,
+    GNUTLS_OCSP_CERT_REVOKED = 1,
+    GNUTLS_OCSP_CERT_UNKNOWN = 2,
+}
+pub type gnutls_ocsp_cert_status_t = Enum_gnutls_ocsp_cert_status_t;
+#[derive(Clone, Copy)]
+#[repr(u32)]
+pub enum Enum_gnutls_x509_crl_reason_t {
+    GNUTLS_X509_CRLREASON_UNSPECIFIED = 0,
+    GNUTLS_X509_CRLREASON_KEYCOMPROMISE = 1,
+    GNUTLS_X509_CRLREASON_CACOMPROMISE = 2,
+    GNUTLS_X509_CRLREASON_AFFILIATIONCHANGED = 3,
+    GNUTLS_X509_CRLREASON_SUPERSEDED = 4,
+    GNUTLS_X509_CRLREASON_CESSATIONOFOPERATION = 5,
+    GNUTLS_X509_CRLREASON_CERTIFICATEHOLD = 6,
+    GNUTLS_X509_CRLREASON_REMOVEFROMCRL = 8,
+    GNUTLS_X509_CRLREASON_PRIVILEGEWITHDRAWN = 9,
+    GNUTLS_X509_CRLREASON_AACOMPROMISE = 10,
+}
+pub type gnutls_x509_crl_reason_t = Enum_gnutls_x509_crl_reason_t;
+#[derive(Clone, Copy)]
+#[repr(u32)]
+pub enum Enum_gnutls_ocsp_verify_reason_t {
+    GNUTLS_OCSP_VERIFY_SIGNER_NOT_FOUND = 1,
+    GNUTLS_OCSP_VERIFY_SIGNER_KEYUSAGE_ERROR = 2,
+    GNUTLS_OCSP_VERIFY_UNTRUSTED_SIGNER = 4,
+    GNUTLS_OCSP_VERIFY_INSECURE_ALGORITHM = 8,
+    GNUTLS_OCSP_VERIFY_SIGNATURE_FAILURE = 16,
+    GNUTLS_OCSP_VERIFY_CERT_NOT_ACTIVATED = 32,
+    GNUTLS_OCSP_VERIFY_CERT_EXPIRED = 64,
+}
+pub type gnutls_ocsp_verify_reason_t = Enum_gnutls_ocsp_verify_reason_t;
+pub enum Struct_gnutls_ocsp_req_int { }
+pub type gnutls_ocsp_req_t = *mut Struct_gnutls_ocsp_req_int;
+pub enum Struct_gnutls_ocsp_resp_int { }
+pub type gnutls_ocsp_resp_t = *mut Struct_gnutls_ocsp_resp_int;
+pub enum Struct_gnutls_pkcs12_int { }
+pub type gnutls_pkcs12_t = *mut Struct_gnutls_pkcs12_int;
+pub enum Struct_gnutls_pkcs12_bag_int { }
+pub type gnutls_pkcs12_bag_t = *mut Struct_gnutls_pkcs12_bag_int;
+#[derive(Clone, Copy)]
+#[repr(u32)]
+pub enum Enum_gnutls_pkcs12_bag_type_t {
+    GNUTLS_BAG_EMPTY = 0,
+    GNUTLS_BAG_PKCS8_ENCRYPTED_KEY = 1,
+    GNUTLS_BAG_PKCS8_KEY = 2,
+    GNUTLS_BAG_CERTIFICATE = 3,
+    GNUTLS_BAG_CRL = 4,
+    GNUTLS_BAG_SECRET = 5,
+    GNUTLS_BAG_ENCRYPTED = 10,
+    GNUTLS_BAG_UNKNOWN = 20,
+}
+pub type gnutls_pkcs12_bag_type_t = Enum_gnutls_pkcs12_bag_type_t;
+pub enum Struct_system_key_iter_st { }
+pub type gnutls_system_key_iter_t = *mut Struct_system_key_iter_st;
+pub type gnutls_privkey_import_url_func =
+    ::std::option::Option<unsafe extern "C" fn(pkey: gnutls_privkey_t,
+                                               url: *const ::libc::c_char,
+                                               flags: ::libc::c_uint)
+                              -> ::libc::c_int>;
+pub type gnutls_x509_crt_import_url_func =
+    ::std::option::Option<unsafe extern "C" fn(pkey: gnutls_x509_crt_t,
+                                               url: *const ::libc::c_char,
+                                               flags: ::libc::c_uint)
+                              -> ::libc::c_int>;
+pub type gnutls_pubkey_import_url_func =
+    ::std::option::Option<unsafe extern "C" fn(pkey: gnutls_pubkey_t,
+                                               url: *const ::libc::c_char,
+                                               flags: ::libc::c_uint)
+                              -> ::libc::c_int>;
+pub type gnutls_get_raw_issuer_func =
+    ::std::option::Option<unsafe extern "C" fn(url: *const ::libc::c_char,
+                                               crt: gnutls_x509_crt_t,
+                                               issuer_der:
+                                                   *mut gnutls_datum_t,
+                                               flags: ::libc::c_uint)
+                              -> ::libc::c_int>;
+#[repr(C)]
+#[derive(Copy)]
+pub struct Struct_gnutls_custom_url_st {
+    pub name: *const ::libc::c_char,
+    pub name_size: ::libc::c_uint,
+    pub import_key: gnutls_privkey_import_url_func,
+    pub import_crt: gnutls_x509_crt_import_url_func,
+    pub import_pubkey: gnutls_pubkey_import_url_func,
+    pub get_issuer: gnutls_get_raw_issuer_func,
+    pub future1: *mut ::libc::c_void,
+    pub future2: *mut ::libc::c_void,
+}
+impl ::std::clone::Clone for Struct_gnutls_custom_url_st {
+    fn clone(&self) -> Self { *self }
+}
+impl ::std::default::Default for Struct_gnutls_custom_url_st {
+    fn default() -> Self { unsafe { ::std::mem::zeroed() } }
+}
+pub type gnutls_custom_url_st = Struct_gnutls_custom_url_st;
+pub enum Struct_gnutls_subject_alt_names_st { }
+pub type gnutls_subject_alt_names_t = *mut Struct_gnutls_subject_alt_names_st;
+pub enum Struct_gnutls_x509_crl_dist_points_st { }
+pub type gnutls_x509_crl_dist_points_t =
+    *mut Struct_gnutls_x509_crl_dist_points_st;
+pub enum Struct_gnutls_x509_aia_st { }
+pub type gnutls_x509_aia_t = *mut Struct_gnutls_x509_aia_st;
+pub enum Struct_gnutls_x509_aki_st { }
+pub type gnutls_x509_aki_t = *mut Struct_gnutls_x509_aki_st;
+pub enum Struct_gnutls_x509_key_purposes_st { }
+pub type gnutls_x509_key_purposes_t = *mut Struct_gnutls_x509_key_purposes_st;
+pub enum Struct_gnutls_x509_policies_st { }
+pub type gnutls_x509_policies_t = *mut Struct_gnutls_x509_policies_st;
+pub type __builtin_va_list = [__va_list_tag; 1usize];
+pub type __va_list_tag = Struct___va_list_tag;
+#[repr(C)]
+#[derive(Copy)]
+pub struct Struct___va_list_tag {
+    pub gp_offset: ::libc::c_uint,
+    pub fp_offset: ::libc::c_uint,
+    pub overflow_arg_area: *mut ::libc::c_void,
+    pub reg_save_area: *mut ::libc::c_void,
+}
+impl ::std::clone::Clone for Struct___va_list_tag {
+    fn clone(&self) -> Self { *self }
+}
+impl ::std::default::Default for Struct___va_list_tag {
+    fn default() -> Self { unsafe { ::std::mem::zeroed() } }
+}
 #[link(name = "gnutls")]
 extern "C" {
     pub static mut __tzname: [*mut ::libc::c_char; 2usize];
@@ -2526,4 +3262,2983 @@ extern "C" {
                                            realloc_func:
                                                gnutls_realloc_function,
                                            free_func: gnutls_free_function);
+    pub fn gnutls_x509_crt_init(cert: *mut gnutls_x509_crt_t)
+     -> ::libc::c_int;
+    pub fn gnutls_x509_crt_deinit(cert: gnutls_x509_crt_t);
+    pub fn gnutls_x509_crt_import(cert: gnutls_x509_crt_t,
+                                  data: *const gnutls_datum_t,
+                                  format: gnutls_x509_crt_fmt_t)
+     -> ::libc::c_int;
+    pub fn gnutls_x509_crt_list_import2(certs: *mut *mut gnutls_x509_crt_t,
+                                        size: *mut ::libc::c_uint,
+                                        data: *const gnutls_datum_t,
+                                        format: gnutls_x509_crt_fmt_t,
+                                        flags: ::libc::c_uint)
+     -> ::libc::c_int;
+    pub fn gnutls_x509_crt_list_import(certs: *mut gnutls_x509_crt_t,
+                                       cert_max: *mut ::libc::c_uint,
+                                       data: *const gnutls_datum_t,
+                                       format: gnutls_x509_crt_fmt_t,
+                                       flags: ::libc::c_uint)
+     -> ::libc::c_int;
+    pub fn gnutls_x509_crt_import_url(crt: gnutls_x509_crt_t,
+                                      url: *const ::libc::c_char,
+                                      flags: ::libc::c_uint) -> ::libc::c_int;
+    pub fn gnutls_x509_crt_export(cert: gnutls_x509_crt_t,
+                                  format: gnutls_x509_crt_fmt_t,
+                                  output_data: *mut ::libc::c_void,
+                                  output_data_size: *mut size_t)
+     -> ::libc::c_int;
+    pub fn gnutls_x509_crt_export2(cert: gnutls_x509_crt_t,
+                                   format: gnutls_x509_crt_fmt_t,
+                                   out: *mut gnutls_datum_t) -> ::libc::c_int;
+    pub fn gnutls_x509_crt_get_private_key_usage_period(cert:
+                                                            gnutls_x509_crt_t,
+                                                        activation:
+                                                            *mut time_t,
+                                                        expiration:
+                                                            *mut time_t,
+                                                        critical:
+                                                            *mut ::libc::c_uint)
+     -> ::libc::c_int;
+    pub fn gnutls_x509_crt_get_issuer_dn(cert: gnutls_x509_crt_t,
+                                         buf: *mut ::libc::c_char,
+                                         buf_size: *mut size_t)
+     -> ::libc::c_int;
+    pub fn gnutls_x509_crt_get_issuer_dn2(cert: gnutls_x509_crt_t,
+                                          dn: *mut gnutls_datum_t)
+     -> ::libc::c_int;
+    pub fn gnutls_x509_crt_get_issuer_dn_oid(cert: gnutls_x509_crt_t,
+                                             indx: ::libc::c_int,
+                                             oid: *mut ::libc::c_void,
+                                             oid_size: *mut size_t)
+     -> ::libc::c_int;
+    pub fn gnutls_x509_crt_get_issuer_dn_by_oid(cert: gnutls_x509_crt_t,
+                                                oid: *const ::libc::c_char,
+                                                indx: ::libc::c_int,
+                                                raw_flag: ::libc::c_uint,
+                                                buf: *mut ::libc::c_void,
+                                                buf_size: *mut size_t)
+     -> ::libc::c_int;
+    pub fn gnutls_x509_crt_get_dn(cert: gnutls_x509_crt_t,
+                                  buf: *mut ::libc::c_char,
+                                  buf_size: *mut size_t) -> ::libc::c_int;
+    pub fn gnutls_x509_crt_get_dn2(cert: gnutls_x509_crt_t,
+                                   dn: *mut gnutls_datum_t) -> ::libc::c_int;
+    pub fn gnutls_x509_crt_get_dn_oid(cert: gnutls_x509_crt_t,
+                                      indx: ::libc::c_int,
+                                      oid: *mut ::libc::c_void,
+                                      oid_size: *mut size_t) -> ::libc::c_int;
+    pub fn gnutls_x509_crt_get_dn_by_oid(cert: gnutls_x509_crt_t,
+                                         oid: *const ::libc::c_char,
+                                         indx: ::libc::c_int,
+                                         raw_flag: ::libc::c_uint,
+                                         buf: *mut ::libc::c_void,
+                                         buf_size: *mut size_t)
+     -> ::libc::c_int;
+    pub fn gnutls_x509_crt_check_hostname(cert: gnutls_x509_crt_t,
+                                          hostname: *const ::libc::c_char)
+     -> ::libc::c_int;
+    pub fn gnutls_x509_crt_check_hostname2(cert: gnutls_x509_crt_t,
+                                           hostname: *const ::libc::c_char,
+                                           flags: ::libc::c_uint)
+     -> ::libc::c_int;
+    pub fn gnutls_x509_crt_check_email(cert: gnutls_x509_crt_t,
+                                       email: *const ::libc::c_char,
+                                       flags: ::libc::c_uint)
+     -> ::libc::c_int;
+    pub fn gnutls_x509_crt_get_signature_algorithm(cert: gnutls_x509_crt_t)
+     -> ::libc::c_int;
+    pub fn gnutls_x509_crt_get_signature(cert: gnutls_x509_crt_t,
+                                         sig: *mut ::libc::c_char,
+                                         sizeof_sig: *mut size_t)
+     -> ::libc::c_int;
+    pub fn gnutls_x509_crt_get_version(cert: gnutls_x509_crt_t)
+     -> ::libc::c_int;
+    pub fn gnutls_x509_crt_get_key_id(crt: gnutls_x509_crt_t,
+                                      flags: ::libc::c_uint,
+                                      output_data: *mut ::libc::c_uchar,
+                                      output_data_size: *mut size_t)
+     -> ::libc::c_int;
+    pub fn gnutls_x509_crt_set_private_key_usage_period(crt:
+                                                            gnutls_x509_crt_t,
+                                                        activation: time_t,
+                                                        expiration: time_t)
+     -> ::libc::c_int;
+    pub fn gnutls_x509_crt_set_authority_key_id(cert: gnutls_x509_crt_t,
+                                                id: *const ::libc::c_void,
+                                                id_size: size_t)
+     -> ::libc::c_int;
+    pub fn gnutls_x509_crt_get_authority_key_id(cert: gnutls_x509_crt_t,
+                                                id: *mut ::libc::c_void,
+                                                id_size: *mut size_t,
+                                                critical: *mut ::libc::c_uint)
+     -> ::libc::c_int;
+    pub fn gnutls_x509_crt_get_authority_key_gn_serial(cert:
+                                                           gnutls_x509_crt_t,
+                                                       seq: ::libc::c_uint,
+                                                       alt:
+                                                           *mut ::libc::c_void,
+                                                       alt_size: *mut size_t,
+                                                       alt_type:
+                                                           *mut ::libc::c_uint,
+                                                       serial:
+                                                           *mut ::libc::c_void,
+                                                       serial_size:
+                                                           *mut size_t,
+                                                       critical:
+                                                           *mut ::libc::c_uint)
+     -> ::libc::c_int;
+    pub fn gnutls_x509_crt_get_subject_key_id(cert: gnutls_x509_crt_t,
+                                              ret: *mut ::libc::c_void,
+                                              ret_size: *mut size_t,
+                                              critical: *mut ::libc::c_uint)
+     -> ::libc::c_int;
+    pub fn gnutls_x509_crt_get_subject_unique_id(crt: gnutls_x509_crt_t,
+                                                 buf: *mut ::libc::c_char,
+                                                 buf_size: *mut size_t)
+     -> ::libc::c_int;
+    pub fn gnutls_x509_crt_get_issuer_unique_id(crt: gnutls_x509_crt_t,
+                                                buf: *mut ::libc::c_char,
+                                                buf_size: *mut size_t)
+     -> ::libc::c_int;
+    pub fn gnutls_x509_crt_set_pin_function(crt: gnutls_x509_crt_t,
+                                            _fn: gnutls_pin_callback_t,
+                                            userdata: *mut ::libc::c_void);
+    pub fn gnutls_x509_crt_get_authority_info_access(crt: gnutls_x509_crt_t,
+                                                     seq: ::libc::c_uint,
+                                                     what: ::libc::c_int,
+                                                     data:
+                                                         *mut gnutls_datum_t,
+                                                     critical:
+                                                         *mut ::libc::c_uint)
+     -> ::libc::c_int;
+    pub fn gnutls_x509_name_constraints_check(nc:
+                                                  gnutls_x509_name_constraints_t,
+                                              _type:
+                                                  gnutls_x509_subject_alt_name_t,
+                                              name: *const gnutls_datum_t)
+     -> ::libc::c_uint;
+    pub fn gnutls_x509_name_constraints_check_crt(nc:
+                                                      gnutls_x509_name_constraints_t,
+                                                  _type:
+                                                      gnutls_x509_subject_alt_name_t,
+                                                  crt: gnutls_x509_crt_t)
+     -> ::libc::c_uint;
+    pub fn gnutls_x509_name_constraints_init(nc:
+                                                 *mut gnutls_x509_name_constraints_t)
+     -> ::libc::c_int;
+    pub fn gnutls_x509_name_constraints_deinit(nc:
+                                                   gnutls_x509_name_constraints_t);
+    pub fn gnutls_x509_crt_get_name_constraints(crt: gnutls_x509_crt_t,
+                                                nc:
+                                                    gnutls_x509_name_constraints_t,
+                                                flags: ::libc::c_uint,
+                                                critical: *mut ::libc::c_uint)
+     -> ::libc::c_int;
+    pub fn gnutls_x509_name_constraints_add_permitted(nc:
+                                                          gnutls_x509_name_constraints_t,
+                                                      _type:
+                                                          gnutls_x509_subject_alt_name_t,
+                                                      name:
+                                                          *const gnutls_datum_t)
+     -> ::libc::c_int;
+    pub fn gnutls_x509_name_constraints_add_excluded(nc:
+                                                         gnutls_x509_name_constraints_t,
+                                                     _type:
+                                                         gnutls_x509_subject_alt_name_t,
+                                                     name:
+                                                         *const gnutls_datum_t)
+     -> ::libc::c_int;
+    pub fn gnutls_x509_crt_set_name_constraints(crt: gnutls_x509_crt_t,
+                                                nc:
+                                                    gnutls_x509_name_constraints_t,
+                                                critical: ::libc::c_uint)
+     -> ::libc::c_int;
+    pub fn gnutls_x509_name_constraints_get_permitted(nc:
+                                                          gnutls_x509_name_constraints_t,
+                                                      idx: ::libc::c_uint,
+                                                      _type:
+                                                          *mut ::libc::c_uint,
+                                                      name:
+                                                          *mut gnutls_datum_t)
+     -> ::libc::c_int;
+    pub fn gnutls_x509_name_constraints_get_excluded(nc:
+                                                         gnutls_x509_name_constraints_t,
+                                                     idx: ::libc::c_uint,
+                                                     _type:
+                                                         *mut ::libc::c_uint,
+                                                     name:
+                                                         *mut gnutls_datum_t)
+     -> ::libc::c_int;
+    pub fn gnutls_x509_crt_get_crl_dist_points(cert: gnutls_x509_crt_t,
+                                               seq: ::libc::c_uint,
+                                               ret: *mut ::libc::c_void,
+                                               ret_size: *mut size_t,
+                                               reason_flags:
+                                                   *mut ::libc::c_uint,
+                                               critical: *mut ::libc::c_uint)
+     -> ::libc::c_int;
+    pub fn gnutls_x509_crt_set_crl_dist_points2(crt: gnutls_x509_crt_t,
+                                                _type:
+                                                    gnutls_x509_subject_alt_name_t,
+                                                data: *const ::libc::c_void,
+                                                data_size: ::libc::c_uint,
+                                                reason_flags: ::libc::c_uint)
+     -> ::libc::c_int;
+    pub fn gnutls_x509_crt_set_crl_dist_points(crt: gnutls_x509_crt_t,
+                                               _type:
+                                                   gnutls_x509_subject_alt_name_t,
+                                               data_string:
+                                                   *const ::libc::c_void,
+                                               reason_flags: ::libc::c_uint)
+     -> ::libc::c_int;
+    pub fn gnutls_x509_crt_cpy_crl_dist_points(dst: gnutls_x509_crt_t,
+                                               src: gnutls_x509_crt_t)
+     -> ::libc::c_int;
+    pub fn gnutls_x509_crl_sign2(crl: gnutls_x509_crl_t,
+                                 issuer: gnutls_x509_crt_t,
+                                 issuer_key: gnutls_x509_privkey_t,
+                                 dig: gnutls_digest_algorithm_t,
+                                 flags: ::libc::c_uint) -> ::libc::c_int;
+    pub fn gnutls_x509_crt_get_activation_time(cert: gnutls_x509_crt_t)
+     -> time_t;
+    pub fn gnutls_x509_crt_get_expiration_time(cert: gnutls_x509_crt_t)
+     -> time_t;
+    pub fn gnutls_x509_crt_get_serial(cert: gnutls_x509_crt_t,
+                                      result: *mut ::libc::c_void,
+                                      result_size: *mut size_t)
+     -> ::libc::c_int;
+    pub fn gnutls_x509_crt_get_pk_algorithm(cert: gnutls_x509_crt_t,
+                                            bits: *mut ::libc::c_uint)
+     -> ::libc::c_int;
+    pub fn gnutls_x509_crt_get_pk_rsa_raw(crt: gnutls_x509_crt_t,
+                                          m: *mut gnutls_datum_t,
+                                          e: *mut gnutls_datum_t)
+     -> ::libc::c_int;
+    pub fn gnutls_x509_crt_get_pk_dsa_raw(crt: gnutls_x509_crt_t,
+                                          p: *mut gnutls_datum_t,
+                                          q: *mut gnutls_datum_t,
+                                          g: *mut gnutls_datum_t,
+                                          y: *mut gnutls_datum_t)
+     -> ::libc::c_int;
+    pub fn gnutls_x509_crt_get_pk_ecc_raw(crt: gnutls_x509_crt_t,
+                                          curve: *mut gnutls_ecc_curve_t,
+                                          x: *mut gnutls_datum_t,
+                                          y: *mut gnutls_datum_t)
+     -> ::libc::c_int;
+    pub fn gnutls_x509_crt_get_subject_alt_name(cert: gnutls_x509_crt_t,
+                                                seq: ::libc::c_uint,
+                                                san: *mut ::libc::c_void,
+                                                san_size: *mut size_t,
+                                                critical: *mut ::libc::c_uint)
+     -> ::libc::c_int;
+    pub fn gnutls_x509_crt_get_subject_alt_name2(cert: gnutls_x509_crt_t,
+                                                 seq: ::libc::c_uint,
+                                                 san: *mut ::libc::c_void,
+                                                 san_size: *mut size_t,
+                                                 san_type:
+                                                     *mut ::libc::c_uint,
+                                                 critical:
+                                                     *mut ::libc::c_uint)
+     -> ::libc::c_int;
+    pub fn gnutls_x509_crt_get_subject_alt_othername_oid(cert:
+                                                             gnutls_x509_crt_t,
+                                                         seq: ::libc::c_uint,
+                                                         oid:
+                                                             *mut ::libc::c_void,
+                                                         oid_size:
+                                                             *mut size_t)
+     -> ::libc::c_int;
+    pub fn gnutls_x509_crt_get_issuer_alt_name(cert: gnutls_x509_crt_t,
+                                               seq: ::libc::c_uint,
+                                               ian: *mut ::libc::c_void,
+                                               ian_size: *mut size_t,
+                                               critical: *mut ::libc::c_uint)
+     -> ::libc::c_int;
+    pub fn gnutls_x509_crt_get_issuer_alt_name2(cert: gnutls_x509_crt_t,
+                                                seq: ::libc::c_uint,
+                                                ian: *mut ::libc::c_void,
+                                                ian_size: *mut size_t,
+                                                ian_type: *mut ::libc::c_uint,
+                                                critical: *mut ::libc::c_uint)
+     -> ::libc::c_int;
+    pub fn gnutls_x509_crt_get_issuer_alt_othername_oid(cert:
+                                                            gnutls_x509_crt_t,
+                                                        seq: ::libc::c_uint,
+                                                        ret:
+                                                            *mut ::libc::c_void,
+                                                        ret_size: *mut size_t)
+     -> ::libc::c_int;
+    pub fn gnutls_x509_crt_get_ca_status(cert: gnutls_x509_crt_t,
+                                         critical: *mut ::libc::c_uint)
+     -> ::libc::c_int;
+    pub fn gnutls_x509_crt_get_basic_constraints(cert: gnutls_x509_crt_t,
+                                                 critical:
+                                                     *mut ::libc::c_uint,
+                                                 ca: *mut ::libc::c_uint,
+                                                 pathlen: *mut ::libc::c_int)
+     -> ::libc::c_int;
+    pub fn gnutls_x509_crt_get_key_usage(cert: gnutls_x509_crt_t,
+                                         key_usage: *mut ::libc::c_uint,
+                                         critical: *mut ::libc::c_uint)
+     -> ::libc::c_int;
+    pub fn gnutls_x509_crt_set_key_usage(crt: gnutls_x509_crt_t,
+                                         usage: ::libc::c_uint)
+     -> ::libc::c_int;
+    pub fn gnutls_x509_crt_set_authority_info_access(crt: gnutls_x509_crt_t,
+                                                     what: ::libc::c_int,
+                                                     data:
+                                                         *mut gnutls_datum_t)
+     -> ::libc::c_int;
+    pub fn gnutls_x509_crt_get_proxy(cert: gnutls_x509_crt_t,
+                                     critical: *mut ::libc::c_uint,
+                                     pathlen: *mut ::libc::c_int,
+                                     policyLanguage: *mut *mut ::libc::c_char,
+                                     policy: *mut *mut ::libc::c_char,
+                                     sizeof_policy: *mut size_t)
+     -> ::libc::c_int;
+    pub fn gnutls_x509_policy_release(policy:
+                                          *mut Struct_gnutls_x509_policy_st);
+    pub fn gnutls_x509_crt_get_policy(crt: gnutls_x509_crt_t,
+                                      indx: ::libc::c_int,
+                                      policy:
+                                          *mut Struct_gnutls_x509_policy_st,
+                                      critical: *mut ::libc::c_uint)
+     -> ::libc::c_int;
+    pub fn gnutls_x509_crt_set_policy(crt: gnutls_x509_crt_t,
+                                      policy:
+                                          *const Struct_gnutls_x509_policy_st,
+                                      critical: ::libc::c_uint)
+     -> ::libc::c_int;
+    pub fn gnutls_x509_dn_oid_known(oid: *const ::libc::c_char)
+     -> ::libc::c_int;
+    pub fn gnutls_x509_dn_oid_name(oid: *const ::libc::c_char,
+                                   flags: ::libc::c_uint)
+     -> *const ::libc::c_char;
+    pub fn gnutls_x509_crt_get_extension_oid(cert: gnutls_x509_crt_t,
+                                             indx: ::libc::c_int,
+                                             oid: *mut ::libc::c_void,
+                                             oid_size: *mut size_t)
+     -> ::libc::c_int;
+    pub fn gnutls_x509_crt_get_extension_by_oid(cert: gnutls_x509_crt_t,
+                                                oid: *const ::libc::c_char,
+                                                indx: ::libc::c_int,
+                                                buf: *mut ::libc::c_void,
+                                                buf_size: *mut size_t,
+                                                critical: *mut ::libc::c_uint)
+     -> ::libc::c_int;
+    pub fn gnutls_x509_crq_get_signature_algorithm(crq: gnutls_x509_crq_t)
+     -> ::libc::c_int;
+    pub fn gnutls_x509_crq_get_extension_by_oid2(crq: gnutls_x509_crq_t,
+                                                 oid: *const ::libc::c_char,
+                                                 indx: ::libc::c_int,
+                                                 output: *mut gnutls_datum_t,
+                                                 critical:
+                                                     *mut ::libc::c_uint)
+     -> ::libc::c_int;
+    pub fn gnutls_x509_crt_get_extension_info(cert: gnutls_x509_crt_t,
+                                              indx: ::libc::c_int,
+                                              oid: *mut ::libc::c_void,
+                                              oid_size: *mut size_t,
+                                              critical: *mut ::libc::c_uint)
+     -> ::libc::c_int;
+    pub fn gnutls_x509_crt_get_extension_data(cert: gnutls_x509_crt_t,
+                                              indx: ::libc::c_int,
+                                              data: *mut ::libc::c_void,
+                                              sizeof_data: *mut size_t)
+     -> ::libc::c_int;
+    pub fn gnutls_x509_crt_get_extension_data2(cert: gnutls_x509_crt_t,
+                                               indx: ::libc::c_uint,
+                                               data: *mut gnutls_datum_t)
+     -> ::libc::c_int;
+    pub fn gnutls_x509_crt_set_extension_by_oid(crt: gnutls_x509_crt_t,
+                                                oid: *const ::libc::c_char,
+                                                buf: *const ::libc::c_void,
+                                                sizeof_buf: size_t,
+                                                critical: ::libc::c_uint)
+     -> ::libc::c_int;
+    pub fn gnutls_x509_crt_set_dn(crt: gnutls_x509_crt_t,
+                                  dn: *const ::libc::c_char,
+                                  err: *mut *const ::libc::c_char)
+     -> ::libc::c_int;
+    pub fn gnutls_x509_crt_set_dn_by_oid(crt: gnutls_x509_crt_t,
+                                         oid: *const ::libc::c_char,
+                                         raw_flag: ::libc::c_uint,
+                                         name: *const ::libc::c_void,
+                                         sizeof_name: ::libc::c_uint)
+     -> ::libc::c_int;
+    pub fn gnutls_x509_crt_set_issuer_dn_by_oid(crt: gnutls_x509_crt_t,
+                                                oid: *const ::libc::c_char,
+                                                raw_flag: ::libc::c_uint,
+                                                name: *const ::libc::c_void,
+                                                sizeof_name: ::libc::c_uint)
+     -> ::libc::c_int;
+    pub fn gnutls_x509_crt_set_issuer_dn(crt: gnutls_x509_crt_t,
+                                         dn: *const ::libc::c_char,
+                                         err: *mut *const ::libc::c_char)
+     -> ::libc::c_int;
+    pub fn gnutls_x509_crt_set_version(crt: gnutls_x509_crt_t,
+                                       version: ::libc::c_uint)
+     -> ::libc::c_int;
+    pub fn gnutls_x509_crt_set_key(crt: gnutls_x509_crt_t,
+                                   key: gnutls_x509_privkey_t)
+     -> ::libc::c_int;
+    pub fn gnutls_x509_crt_set_ca_status(crt: gnutls_x509_crt_t,
+                                         ca: ::libc::c_uint) -> ::libc::c_int;
+    pub fn gnutls_x509_crt_set_basic_constraints(crt: gnutls_x509_crt_t,
+                                                 ca: ::libc::c_uint,
+                                                 pathLenConstraint:
+                                                     ::libc::c_int)
+     -> ::libc::c_int;
+    pub fn gnutls_x509_crt_set_subject_unique_id(cert: gnutls_x509_crt_t,
+                                                 id: *const ::libc::c_void,
+                                                 id_size: size_t)
+     -> ::libc::c_int;
+    pub fn gnutls_x509_crt_set_issuer_unique_id(cert: gnutls_x509_crt_t,
+                                                id: *const ::libc::c_void,
+                                                id_size: size_t)
+     -> ::libc::c_int;
+    pub fn gnutls_x509_crt_set_subject_alternative_name(crt:
+                                                            gnutls_x509_crt_t,
+                                                        _type:
+                                                            gnutls_x509_subject_alt_name_t,
+                                                        data_string:
+                                                            *const ::libc::c_char)
+     -> ::libc::c_int;
+    pub fn gnutls_x509_crt_set_subject_alt_name(crt: gnutls_x509_crt_t,
+                                                _type:
+                                                    gnutls_x509_subject_alt_name_t,
+                                                data: *const ::libc::c_void,
+                                                data_size: ::libc::c_uint,
+                                                flags: ::libc::c_uint)
+     -> ::libc::c_int;
+    pub fn gnutls_x509_crt_set_issuer_alt_name(crt: gnutls_x509_crt_t,
+                                               _type:
+                                                   gnutls_x509_subject_alt_name_t,
+                                               data: *const ::libc::c_void,
+                                               data_size: ::libc::c_uint,
+                                               flags: ::libc::c_uint)
+     -> ::libc::c_int;
+    pub fn gnutls_x509_crt_sign(crt: gnutls_x509_crt_t,
+                                issuer: gnutls_x509_crt_t,
+                                issuer_key: gnutls_x509_privkey_t)
+     -> ::libc::c_int;
+    pub fn gnutls_x509_crt_sign2(crt: gnutls_x509_crt_t,
+                                 issuer: gnutls_x509_crt_t,
+                                 issuer_key: gnutls_x509_privkey_t,
+                                 dig: gnutls_digest_algorithm_t,
+                                 flags: ::libc::c_uint) -> ::libc::c_int;
+    pub fn gnutls_x509_crt_set_activation_time(cert: gnutls_x509_crt_t,
+                                               act_time: time_t)
+     -> ::libc::c_int;
+    pub fn gnutls_x509_crt_set_expiration_time(cert: gnutls_x509_crt_t,
+                                               exp_time: time_t)
+     -> ::libc::c_int;
+    pub fn gnutls_x509_crt_set_serial(cert: gnutls_x509_crt_t,
+                                      serial: *const ::libc::c_void,
+                                      serial_size: size_t) -> ::libc::c_int;
+    pub fn gnutls_x509_crt_set_subject_key_id(cert: gnutls_x509_crt_t,
+                                              id: *const ::libc::c_void,
+                                              id_size: size_t)
+     -> ::libc::c_int;
+    pub fn gnutls_x509_crt_set_proxy_dn(crt: gnutls_x509_crt_t,
+                                        eecrt: gnutls_x509_crt_t,
+                                        raw_flag: ::libc::c_uint,
+                                        name: *const ::libc::c_void,
+                                        sizeof_name: ::libc::c_uint)
+     -> ::libc::c_int;
+    pub fn gnutls_x509_crt_set_proxy(crt: gnutls_x509_crt_t,
+                                     pathLenConstraint: ::libc::c_int,
+                                     policyLanguage: *const ::libc::c_char,
+                                     policy: *const ::libc::c_char,
+                                     sizeof_policy: size_t) -> ::libc::c_int;
+    pub fn gnutls_x509_crt_print(cert: gnutls_x509_crt_t,
+                                 format: gnutls_certificate_print_formats_t,
+                                 out: *mut gnutls_datum_t) -> ::libc::c_int;
+    pub fn gnutls_x509_crl_print(crl: gnutls_x509_crl_t,
+                                 format: gnutls_certificate_print_formats_t,
+                                 out: *mut gnutls_datum_t) -> ::libc::c_int;
+    pub fn gnutls_x509_crt_get_raw_issuer_dn(cert: gnutls_x509_crt_t,
+                                             start: *mut gnutls_datum_t)
+     -> ::libc::c_int;
+    pub fn gnutls_x509_crt_get_raw_dn(cert: gnutls_x509_crt_t,
+                                      start: *mut gnutls_datum_t)
+     -> ::libc::c_int;
+    pub fn gnutls_x509_rdn_get(idn: *const gnutls_datum_t,
+                               buf: *mut ::libc::c_char,
+                               sizeof_buf: *mut size_t) -> ::libc::c_int;
+    pub fn gnutls_x509_rdn_get_oid(idn: *const gnutls_datum_t,
+                                   indx: ::libc::c_int,
+                                   buf: *mut ::libc::c_void,
+                                   sizeof_buf: *mut size_t) -> ::libc::c_int;
+    pub fn gnutls_x509_rdn_get_by_oid(idn: *const gnutls_datum_t,
+                                      oid: *const ::libc::c_char,
+                                      indx: ::libc::c_int,
+                                      raw_flag: ::libc::c_uint,
+                                      buf: *mut ::libc::c_void,
+                                      sizeof_buf: *mut size_t)
+     -> ::libc::c_int;
+    pub fn gnutls_x509_crt_get_subject(cert: gnutls_x509_crt_t,
+                                       dn: *mut gnutls_x509_dn_t)
+     -> ::libc::c_int;
+    pub fn gnutls_x509_crt_get_issuer(cert: gnutls_x509_crt_t,
+                                      dn: *mut gnutls_x509_dn_t)
+     -> ::libc::c_int;
+    pub fn gnutls_x509_dn_get_rdn_ava(dn: gnutls_x509_dn_t,
+                                      irdn: ::libc::c_int,
+                                      iava: ::libc::c_int,
+                                      ava: *mut gnutls_x509_ava_st)
+     -> ::libc::c_int;
+    pub fn gnutls_x509_dn_get_str(dn: gnutls_x509_dn_t,
+                                  str: *mut gnutls_datum_t) -> ::libc::c_int;
+    pub fn gnutls_x509_dn_init(dn: *mut gnutls_x509_dn_t) -> ::libc::c_int;
+    pub fn gnutls_x509_dn_import(dn: gnutls_x509_dn_t,
+                                 data: *const gnutls_datum_t)
+     -> ::libc::c_int;
+    pub fn gnutls_x509_dn_export(dn: gnutls_x509_dn_t,
+                                 format: gnutls_x509_crt_fmt_t,
+                                 output_data: *mut ::libc::c_void,
+                                 output_data_size: *mut size_t)
+     -> ::libc::c_int;
+    pub fn gnutls_x509_dn_export2(dn: gnutls_x509_dn_t,
+                                  format: gnutls_x509_crt_fmt_t,
+                                  out: *mut gnutls_datum_t) -> ::libc::c_int;
+    pub fn gnutls_x509_dn_deinit(dn: gnutls_x509_dn_t);
+    pub fn gnutls_x509_crl_init(crl: *mut gnutls_x509_crl_t) -> ::libc::c_int;
+    pub fn gnutls_x509_crl_deinit(crl: gnutls_x509_crl_t);
+    pub fn gnutls_x509_crl_import(crl: gnutls_x509_crl_t,
+                                  data: *const gnutls_datum_t,
+                                  format: gnutls_x509_crt_fmt_t)
+     -> ::libc::c_int;
+    pub fn gnutls_x509_crl_export(crl: gnutls_x509_crl_t,
+                                  format: gnutls_x509_crt_fmt_t,
+                                  output_data: *mut ::libc::c_void,
+                                  output_data_size: *mut size_t)
+     -> ::libc::c_int;
+    pub fn gnutls_x509_crl_export2(crl: gnutls_x509_crl_t,
+                                   format: gnutls_x509_crt_fmt_t,
+                                   out: *mut gnutls_datum_t) -> ::libc::c_int;
+    pub fn gnutls_x509_crl_get_raw_issuer_dn(crl: gnutls_x509_crl_t,
+                                             dn: *mut gnutls_datum_t)
+     -> ::libc::c_int;
+    pub fn gnutls_x509_crl_get_issuer_dn(crl: gnutls_x509_crl_t,
+                                         buf: *mut ::libc::c_char,
+                                         sizeof_buf: *mut size_t)
+     -> ::libc::c_int;
+    pub fn gnutls_x509_crl_get_issuer_dn2(crl: gnutls_x509_crl_t,
+                                          dn: *mut gnutls_datum_t)
+     -> ::libc::c_int;
+    pub fn gnutls_x509_crl_get_issuer_dn_by_oid(crl: gnutls_x509_crl_t,
+                                                oid: *const ::libc::c_char,
+                                                indx: ::libc::c_int,
+                                                raw_flag: ::libc::c_uint,
+                                                buf: *mut ::libc::c_void,
+                                                sizeof_buf: *mut size_t)
+     -> ::libc::c_int;
+    pub fn gnutls_x509_crl_get_dn_oid(crl: gnutls_x509_crl_t,
+                                      indx: ::libc::c_int,
+                                      oid: *mut ::libc::c_void,
+                                      sizeof_oid: *mut size_t)
+     -> ::libc::c_int;
+    pub fn gnutls_x509_crl_get_signature_algorithm(crl: gnutls_x509_crl_t)
+     -> ::libc::c_int;
+    pub fn gnutls_x509_crl_get_signature(crl: gnutls_x509_crl_t,
+                                         sig: *mut ::libc::c_char,
+                                         sizeof_sig: *mut size_t)
+     -> ::libc::c_int;
+    pub fn gnutls_x509_crl_get_version(crl: gnutls_x509_crl_t)
+     -> ::libc::c_int;
+    pub fn gnutls_x509_crl_get_this_update(crl: gnutls_x509_crl_t) -> time_t;
+    pub fn gnutls_x509_crl_get_next_update(crl: gnutls_x509_crl_t) -> time_t;
+    pub fn gnutls_x509_crl_get_crt_count(crl: gnutls_x509_crl_t)
+     -> ::libc::c_int;
+    pub fn gnutls_x509_crl_get_crt_serial(crl: gnutls_x509_crl_t,
+                                          indx: ::libc::c_int,
+                                          serial: *mut ::libc::c_uchar,
+                                          serial_size: *mut size_t,
+                                          t: *mut time_t) -> ::libc::c_int;
+    pub fn gnutls_x509_crl_iter_crt_serial(crl: gnutls_x509_crl_t,
+                                           arg1: *mut gnutls_x509_crl_iter_t,
+                                           serial: *mut ::libc::c_uchar,
+                                           serial_size: *mut size_t,
+                                           t: *mut time_t) -> ::libc::c_int;
+    pub fn gnutls_x509_crl_iter_deinit(arg1: gnutls_x509_crl_iter_t);
+    pub fn gnutls_x509_crl_check_issuer(crl: gnutls_x509_crl_t,
+                                        issuer: gnutls_x509_crt_t)
+     -> ::libc::c_int;
+    pub fn gnutls_x509_crl_list_import2(crls: *mut *mut gnutls_x509_crl_t,
+                                        size: *mut ::libc::c_uint,
+                                        data: *const gnutls_datum_t,
+                                        format: gnutls_x509_crt_fmt_t,
+                                        flags: ::libc::c_uint)
+     -> ::libc::c_int;
+    pub fn gnutls_x509_crl_list_import(crls: *mut gnutls_x509_crl_t,
+                                       crl_max: *mut ::libc::c_uint,
+                                       data: *const gnutls_datum_t,
+                                       format: gnutls_x509_crt_fmt_t,
+                                       flags: ::libc::c_uint)
+     -> ::libc::c_int;
+    pub fn gnutls_x509_crl_set_version(crl: gnutls_x509_crl_t,
+                                       version: ::libc::c_uint)
+     -> ::libc::c_int;
+    pub fn gnutls_x509_crl_set_this_update(crl: gnutls_x509_crl_t,
+                                           act_time: time_t) -> ::libc::c_int;
+    pub fn gnutls_x509_crl_set_next_update(crl: gnutls_x509_crl_t,
+                                           exp_time: time_t) -> ::libc::c_int;
+    pub fn gnutls_x509_crl_set_crt_serial(crl: gnutls_x509_crl_t,
+                                          serial: *const ::libc::c_void,
+                                          serial_size: size_t,
+                                          revocation_time: time_t)
+     -> ::libc::c_int;
+    pub fn gnutls_x509_crl_set_crt(crl: gnutls_x509_crl_t,
+                                   crt: gnutls_x509_crt_t,
+                                   revocation_time: time_t) -> ::libc::c_int;
+    pub fn gnutls_x509_crl_get_authority_key_id(crl: gnutls_x509_crl_t,
+                                                id: *mut ::libc::c_void,
+                                                id_size: *mut size_t,
+                                                critical: *mut ::libc::c_uint)
+     -> ::libc::c_int;
+    pub fn gnutls_x509_crl_get_authority_key_gn_serial(crl: gnutls_x509_crl_t,
+                                                       seq: ::libc::c_uint,
+                                                       alt:
+                                                           *mut ::libc::c_void,
+                                                       alt_size: *mut size_t,
+                                                       alt_type:
+                                                           *mut ::libc::c_uint,
+                                                       serial:
+                                                           *mut ::libc::c_void,
+                                                       serial_size:
+                                                           *mut size_t,
+                                                       critical:
+                                                           *mut ::libc::c_uint)
+     -> ::libc::c_int;
+    pub fn gnutls_x509_crl_get_number(crl: gnutls_x509_crl_t,
+                                      ret: *mut ::libc::c_void,
+                                      ret_size: *mut size_t,
+                                      critical: *mut ::libc::c_uint)
+     -> ::libc::c_int;
+    pub fn gnutls_x509_crl_get_extension_oid(crl: gnutls_x509_crl_t,
+                                             indx: ::libc::c_int,
+                                             oid: *mut ::libc::c_void,
+                                             sizeof_oid: *mut size_t)
+     -> ::libc::c_int;
+    pub fn gnutls_x509_crl_get_extension_info(crl: gnutls_x509_crl_t,
+                                              indx: ::libc::c_int,
+                                              oid: *mut ::libc::c_void,
+                                              sizeof_oid: *mut size_t,
+                                              critical: *mut ::libc::c_uint)
+     -> ::libc::c_int;
+    pub fn gnutls_x509_crl_get_extension_data(crl: gnutls_x509_crl_t,
+                                              indx: ::libc::c_int,
+                                              data: *mut ::libc::c_void,
+                                              sizeof_data: *mut size_t)
+     -> ::libc::c_int;
+    pub fn gnutls_x509_crl_get_extension_data2(crl: gnutls_x509_crl_t,
+                                               indx: ::libc::c_uint,
+                                               data: *mut gnutls_datum_t)
+     -> ::libc::c_int;
+    pub fn gnutls_x509_crl_set_authority_key_id(crl: gnutls_x509_crl_t,
+                                                id: *const ::libc::c_void,
+                                                id_size: size_t)
+     -> ::libc::c_int;
+    pub fn gnutls_x509_crl_set_number(crl: gnutls_x509_crl_t,
+                                      nr: *const ::libc::c_void,
+                                      nr_size: size_t) -> ::libc::c_int;
+    pub fn gnutls_x509_crt_check_issuer(cert: gnutls_x509_crt_t,
+                                        issuer: gnutls_x509_crt_t)
+     -> ::libc::c_int;
+    pub fn gnutls_x509_crt_list_verify(cert_list: *const gnutls_x509_crt_t,
+                                       cert_list_length: ::libc::c_int,
+                                       CA_list: *const gnutls_x509_crt_t,
+                                       CA_list_length: ::libc::c_int,
+                                       CRL_list: *const gnutls_x509_crl_t,
+                                       CRL_list_length: ::libc::c_int,
+                                       flags: ::libc::c_uint,
+                                       verify: *mut ::libc::c_uint)
+     -> ::libc::c_int;
+    pub fn gnutls_x509_crt_verify(cert: gnutls_x509_crt_t,
+                                  CA_list: *const gnutls_x509_crt_t,
+                                  CA_list_length: ::libc::c_int,
+                                  flags: ::libc::c_uint,
+                                  verify: *mut ::libc::c_uint)
+     -> ::libc::c_int;
+    pub fn gnutls_x509_crl_verify(crl: gnutls_x509_crl_t,
+                                  CA_list: *const gnutls_x509_crt_t,
+                                  CA_list_length: ::libc::c_int,
+                                  flags: ::libc::c_uint,
+                                  verify: *mut ::libc::c_uint)
+     -> ::libc::c_int;
+    pub fn gnutls_x509_crt_verify_data2(crt: gnutls_x509_crt_t,
+                                        algo: gnutls_sign_algorithm_t,
+                                        flags: ::libc::c_uint,
+                                        data: *const gnutls_datum_t,
+                                        signature: *const gnutls_datum_t)
+     -> ::libc::c_int;
+    pub fn gnutls_x509_crt_check_revocation(cert: gnutls_x509_crt_t,
+                                            crl_list:
+                                                *const gnutls_x509_crl_t,
+                                            crl_list_length: ::libc::c_int)
+     -> ::libc::c_int;
+    pub fn gnutls_x509_crt_get_fingerprint(cert: gnutls_x509_crt_t,
+                                           algo: gnutls_digest_algorithm_t,
+                                           buf: *mut ::libc::c_void,
+                                           buf_size: *mut size_t)
+     -> ::libc::c_int;
+    pub fn gnutls_x509_crt_get_key_purpose_oid(cert: gnutls_x509_crt_t,
+                                               indx: ::libc::c_int,
+                                               oid: *mut ::libc::c_void,
+                                               oid_size: *mut size_t,
+                                               critical: *mut ::libc::c_uint)
+     -> ::libc::c_int;
+    pub fn gnutls_x509_crt_set_key_purpose_oid(cert: gnutls_x509_crt_t,
+                                               oid: *const ::libc::c_void,
+                                               critical: ::libc::c_uint)
+     -> ::libc::c_int;
+    pub fn gnutls_pkcs_schema_get_name(schema: ::libc::c_uint)
+     -> *const ::libc::c_char;
+    pub fn gnutls_pkcs_schema_get_oid(schema: ::libc::c_uint)
+     -> *const ::libc::c_char;
+    pub fn gnutls_x509_privkey_init(key: *mut gnutls_x509_privkey_t)
+     -> ::libc::c_int;
+    pub fn gnutls_x509_privkey_deinit(key: gnutls_x509_privkey_t);
+    pub fn gnutls_x509_privkey_sec_param(key: gnutls_x509_privkey_t)
+     -> gnutls_sec_param_t;
+    pub fn gnutls_x509_privkey_set_pin_function(key: gnutls_x509_privkey_t,
+                                                _fn: gnutls_pin_callback_t,
+                                                userdata:
+                                                    *mut ::libc::c_void);
+    pub fn gnutls_x509_privkey_cpy(dst: gnutls_x509_privkey_t,
+                                   src: gnutls_x509_privkey_t)
+     -> ::libc::c_int;
+    pub fn gnutls_x509_privkey_import(key: gnutls_x509_privkey_t,
+                                      data: *const gnutls_datum_t,
+                                      format: gnutls_x509_crt_fmt_t)
+     -> ::libc::c_int;
+    pub fn gnutls_x509_privkey_import_pkcs8(key: gnutls_x509_privkey_t,
+                                            data: *const gnutls_datum_t,
+                                            format: gnutls_x509_crt_fmt_t,
+                                            password: *const ::libc::c_char,
+                                            flags: ::libc::c_uint)
+     -> ::libc::c_int;
+    pub fn gnutls_x509_privkey_import_openssl(key: gnutls_x509_privkey_t,
+                                              data: *const gnutls_datum_t,
+                                              password: *const ::libc::c_char)
+     -> ::libc::c_int;
+    pub fn gnutls_pkcs8_info(data: *const gnutls_datum_t,
+                             format: gnutls_x509_crt_fmt_t,
+                             schema: *mut ::libc::c_uint,
+                             cipher: *mut ::libc::c_uint,
+                             salt: *mut ::libc::c_void,
+                             salt_size: *mut ::libc::c_uint,
+                             iter_count: *mut ::libc::c_uint,
+                             oid: *mut *mut ::libc::c_char) -> ::libc::c_int;
+    pub fn gnutls_x509_privkey_import2(key: gnutls_x509_privkey_t,
+                                       data: *const gnutls_datum_t,
+                                       format: gnutls_x509_crt_fmt_t,
+                                       password: *const ::libc::c_char,
+                                       flags: ::libc::c_uint)
+     -> ::libc::c_int;
+    pub fn gnutls_x509_privkey_import_rsa_raw(key: gnutls_x509_privkey_t,
+                                              m: *const gnutls_datum_t,
+                                              e: *const gnutls_datum_t,
+                                              d: *const gnutls_datum_t,
+                                              p: *const gnutls_datum_t,
+                                              q: *const gnutls_datum_t,
+                                              u: *const gnutls_datum_t)
+     -> ::libc::c_int;
+    pub fn gnutls_x509_privkey_import_rsa_raw2(key: gnutls_x509_privkey_t,
+                                               m: *const gnutls_datum_t,
+                                               e: *const gnutls_datum_t,
+                                               d: *const gnutls_datum_t,
+                                               p: *const gnutls_datum_t,
+                                               q: *const gnutls_datum_t,
+                                               u: *const gnutls_datum_t,
+                                               e1: *const gnutls_datum_t,
+                                               e2: *const gnutls_datum_t)
+     -> ::libc::c_int;
+    pub fn gnutls_x509_privkey_import_ecc_raw(key: gnutls_x509_privkey_t,
+                                              curve: gnutls_ecc_curve_t,
+                                              x: *const gnutls_datum_t,
+                                              y: *const gnutls_datum_t,
+                                              k: *const gnutls_datum_t)
+     -> ::libc::c_int;
+    pub fn gnutls_x509_privkey_fix(key: gnutls_x509_privkey_t)
+     -> ::libc::c_int;
+    pub fn gnutls_x509_privkey_export_dsa_raw(key: gnutls_x509_privkey_t,
+                                              p: *mut gnutls_datum_t,
+                                              q: *mut gnutls_datum_t,
+                                              g: *mut gnutls_datum_t,
+                                              y: *mut gnutls_datum_t,
+                                              x: *mut gnutls_datum_t)
+     -> ::libc::c_int;
+    pub fn gnutls_x509_privkey_import_dsa_raw(key: gnutls_x509_privkey_t,
+                                              p: *const gnutls_datum_t,
+                                              q: *const gnutls_datum_t,
+                                              g: *const gnutls_datum_t,
+                                              y: *const gnutls_datum_t,
+                                              x: *const gnutls_datum_t)
+     -> ::libc::c_int;
+    pub fn gnutls_x509_privkey_get_pk_algorithm(key: gnutls_x509_privkey_t)
+     -> ::libc::c_int;
+    pub fn gnutls_x509_privkey_get_pk_algorithm2(key: gnutls_x509_privkey_t,
+                                                 bits: *mut ::libc::c_uint)
+     -> ::libc::c_int;
+    pub fn gnutls_x509_privkey_get_key_id(key: gnutls_x509_privkey_t,
+                                          flags: ::libc::c_uint,
+                                          output_data: *mut ::libc::c_uchar,
+                                          output_data_size: *mut size_t)
+     -> ::libc::c_int;
+    pub fn gnutls_x509_privkey_generate(key: gnutls_x509_privkey_t,
+                                        algo: gnutls_pk_algorithm_t,
+                                        bits: ::libc::c_uint,
+                                        flags: ::libc::c_uint)
+     -> ::libc::c_int;
+    pub fn gnutls_x509_privkey_verify_params(key: gnutls_x509_privkey_t)
+     -> ::libc::c_int;
+    pub fn gnutls_x509_privkey_export(key: gnutls_x509_privkey_t,
+                                      format: gnutls_x509_crt_fmt_t,
+                                      output_data: *mut ::libc::c_void,
+                                      output_data_size: *mut size_t)
+     -> ::libc::c_int;
+    pub fn gnutls_x509_privkey_export2(key: gnutls_x509_privkey_t,
+                                       format: gnutls_x509_crt_fmt_t,
+                                       out: *mut gnutls_datum_t)
+     -> ::libc::c_int;
+    pub fn gnutls_x509_privkey_export_pkcs8(key: gnutls_x509_privkey_t,
+                                            format: gnutls_x509_crt_fmt_t,
+                                            password: *const ::libc::c_char,
+                                            flags: ::libc::c_uint,
+                                            output_data: *mut ::libc::c_void,
+                                            output_data_size: *mut size_t)
+     -> ::libc::c_int;
+    pub fn gnutls_x509_privkey_export2_pkcs8(key: gnutls_x509_privkey_t,
+                                             format: gnutls_x509_crt_fmt_t,
+                                             password: *const ::libc::c_char,
+                                             flags: ::libc::c_uint,
+                                             out: *mut gnutls_datum_t)
+     -> ::libc::c_int;
+    pub fn gnutls_x509_privkey_export_rsa_raw2(key: gnutls_x509_privkey_t,
+                                               m: *mut gnutls_datum_t,
+                                               e: *mut gnutls_datum_t,
+                                               d: *mut gnutls_datum_t,
+                                               p: *mut gnutls_datum_t,
+                                               q: *mut gnutls_datum_t,
+                                               u: *mut gnutls_datum_t,
+                                               e1: *mut gnutls_datum_t,
+                                               e2: *mut gnutls_datum_t)
+     -> ::libc::c_int;
+    pub fn gnutls_x509_privkey_export_rsa_raw(key: gnutls_x509_privkey_t,
+                                              m: *mut gnutls_datum_t,
+                                              e: *mut gnutls_datum_t,
+                                              d: *mut gnutls_datum_t,
+                                              p: *mut gnutls_datum_t,
+                                              q: *mut gnutls_datum_t,
+                                              u: *mut gnutls_datum_t)
+     -> ::libc::c_int;
+    pub fn gnutls_x509_privkey_export_ecc_raw(key: gnutls_x509_privkey_t,
+                                              curve: *mut gnutls_ecc_curve_t,
+                                              x: *mut gnutls_datum_t,
+                                              y: *mut gnutls_datum_t,
+                                              k: *mut gnutls_datum_t)
+     -> ::libc::c_int;
+    pub fn gnutls_x509_privkey_sign_data(key: gnutls_x509_privkey_t,
+                                         digest: gnutls_digest_algorithm_t,
+                                         flags: ::libc::c_uint,
+                                         data: *const gnutls_datum_t,
+                                         signature: *mut ::libc::c_void,
+                                         signature_size: *mut size_t)
+     -> ::libc::c_int;
+    pub fn gnutls_x509_crq_sign2(crq: gnutls_x509_crq_t,
+                                 key: gnutls_x509_privkey_t,
+                                 dig: gnutls_digest_algorithm_t,
+                                 flags: ::libc::c_uint) -> ::libc::c_int;
+    pub fn gnutls_x509_crq_print(crq: gnutls_x509_crq_t,
+                                 format: gnutls_certificate_print_formats_t,
+                                 out: *mut gnutls_datum_t) -> ::libc::c_int;
+    pub fn gnutls_x509_crq_verify(crq: gnutls_x509_crq_t,
+                                  flags: ::libc::c_uint) -> ::libc::c_int;
+    pub fn gnutls_x509_crq_init(crq: *mut gnutls_x509_crq_t) -> ::libc::c_int;
+    pub fn gnutls_x509_crq_deinit(crq: gnutls_x509_crq_t);
+    pub fn gnutls_x509_crq_import(crq: gnutls_x509_crq_t,
+                                  data: *const gnutls_datum_t,
+                                  format: gnutls_x509_crt_fmt_t)
+     -> ::libc::c_int;
+    pub fn gnutls_x509_crq_get_private_key_usage_period(cert:
+                                                            gnutls_x509_crq_t,
+                                                        activation:
+                                                            *mut time_t,
+                                                        expiration:
+                                                            *mut time_t,
+                                                        critical:
+                                                            *mut ::libc::c_uint)
+     -> ::libc::c_int;
+    pub fn gnutls_x509_crq_get_dn(crq: gnutls_x509_crq_t,
+                                  buf: *mut ::libc::c_char,
+                                  sizeof_buf: *mut size_t) -> ::libc::c_int;
+    pub fn gnutls_x509_crq_get_dn2(crq: gnutls_x509_crq_t,
+                                   dn: *mut gnutls_datum_t) -> ::libc::c_int;
+    pub fn gnutls_x509_crq_get_dn_oid(crq: gnutls_x509_crq_t,
+                                      indx: ::libc::c_int,
+                                      oid: *mut ::libc::c_void,
+                                      sizeof_oid: *mut size_t)
+     -> ::libc::c_int;
+    pub fn gnutls_x509_crq_get_dn_by_oid(crq: gnutls_x509_crq_t,
+                                         oid: *const ::libc::c_char,
+                                         indx: ::libc::c_int,
+                                         raw_flag: ::libc::c_uint,
+                                         buf: *mut ::libc::c_void,
+                                         sizeof_buf: *mut size_t)
+     -> ::libc::c_int;
+    pub fn gnutls_x509_crq_set_dn(crq: gnutls_x509_crq_t,
+                                  dn: *const ::libc::c_char,
+                                  err: *mut *const ::libc::c_char)
+     -> ::libc::c_int;
+    pub fn gnutls_x509_crq_set_dn_by_oid(crq: gnutls_x509_crq_t,
+                                         oid: *const ::libc::c_char,
+                                         raw_flag: ::libc::c_uint,
+                                         data: *const ::libc::c_void,
+                                         sizeof_data: ::libc::c_uint)
+     -> ::libc::c_int;
+    pub fn gnutls_x509_crq_set_version(crq: gnutls_x509_crq_t,
+                                       version: ::libc::c_uint)
+     -> ::libc::c_int;
+    pub fn gnutls_x509_crq_get_version(crq: gnutls_x509_crq_t)
+     -> ::libc::c_int;
+    pub fn gnutls_x509_crq_set_key(crq: gnutls_x509_crq_t,
+                                   key: gnutls_x509_privkey_t)
+     -> ::libc::c_int;
+    pub fn gnutls_x509_crq_set_challenge_password(crq: gnutls_x509_crq_t,
+                                                  pass: *const ::libc::c_char)
+     -> ::libc::c_int;
+    pub fn gnutls_x509_crq_get_challenge_password(crq: gnutls_x509_crq_t,
+                                                  pass: *mut ::libc::c_char,
+                                                  sizeof_pass: *mut size_t)
+     -> ::libc::c_int;
+    pub fn gnutls_x509_crq_set_attribute_by_oid(crq: gnutls_x509_crq_t,
+                                                oid: *const ::libc::c_char,
+                                                buf: *mut ::libc::c_void,
+                                                sizeof_buf: size_t)
+     -> ::libc::c_int;
+    pub fn gnutls_x509_crq_get_attribute_by_oid(crq: gnutls_x509_crq_t,
+                                                oid: *const ::libc::c_char,
+                                                indx: ::libc::c_int,
+                                                buf: *mut ::libc::c_void,
+                                                sizeof_buf: *mut size_t)
+     -> ::libc::c_int;
+    pub fn gnutls_x509_crq_export(crq: gnutls_x509_crq_t,
+                                  format: gnutls_x509_crt_fmt_t,
+                                  output_data: *mut ::libc::c_void,
+                                  output_data_size: *mut size_t)
+     -> ::libc::c_int;
+    pub fn gnutls_x509_crq_export2(crq: gnutls_x509_crq_t,
+                                   format: gnutls_x509_crt_fmt_t,
+                                   out: *mut gnutls_datum_t) -> ::libc::c_int;
+    pub fn gnutls_x509_crt_set_crq(crt: gnutls_x509_crt_t,
+                                   crq: gnutls_x509_crq_t) -> ::libc::c_int;
+    pub fn gnutls_x509_crt_set_crq_extensions(crt: gnutls_x509_crt_t,
+                                              crq: gnutls_x509_crq_t)
+     -> ::libc::c_int;
+    pub fn gnutls_x509_crq_set_private_key_usage_period(crq:
+                                                            gnutls_x509_crq_t,
+                                                        activation: time_t,
+                                                        expiration: time_t)
+     -> ::libc::c_int;
+    pub fn gnutls_x509_crq_set_key_rsa_raw(crq: gnutls_x509_crq_t,
+                                           m: *const gnutls_datum_t,
+                                           e: *const gnutls_datum_t)
+     -> ::libc::c_int;
+    pub fn gnutls_x509_crq_set_subject_alt_name(crq: gnutls_x509_crq_t,
+                                                nt:
+                                                    gnutls_x509_subject_alt_name_t,
+                                                data: *const ::libc::c_void,
+                                                data_size: ::libc::c_uint,
+                                                flags: ::libc::c_uint)
+     -> ::libc::c_int;
+    pub fn gnutls_x509_crq_set_key_usage(crq: gnutls_x509_crq_t,
+                                         usage: ::libc::c_uint)
+     -> ::libc::c_int;
+    pub fn gnutls_x509_crq_set_basic_constraints(crq: gnutls_x509_crq_t,
+                                                 ca: ::libc::c_uint,
+                                                 pathLenConstraint:
+                                                     ::libc::c_int)
+     -> ::libc::c_int;
+    pub fn gnutls_x509_crq_set_key_purpose_oid(crq: gnutls_x509_crq_t,
+                                               oid: *const ::libc::c_void,
+                                               critical: ::libc::c_uint)
+     -> ::libc::c_int;
+    pub fn gnutls_x509_crq_get_key_purpose_oid(crq: gnutls_x509_crq_t,
+                                               indx: ::libc::c_int,
+                                               oid: *mut ::libc::c_void,
+                                               sizeof_oid: *mut size_t,
+                                               critical: *mut ::libc::c_uint)
+     -> ::libc::c_int;
+    pub fn gnutls_x509_crq_get_extension_data(crq: gnutls_x509_crq_t,
+                                              indx: ::libc::c_int,
+                                              data: *mut ::libc::c_void,
+                                              sizeof_data: *mut size_t)
+     -> ::libc::c_int;
+    pub fn gnutls_x509_crq_get_extension_data2(crq: gnutls_x509_crq_t,
+                                               indx: ::libc::c_uint,
+                                               data: *mut gnutls_datum_t)
+     -> ::libc::c_int;
+    pub fn gnutls_x509_crq_get_extension_info(crq: gnutls_x509_crq_t,
+                                              indx: ::libc::c_int,
+                                              oid: *mut ::libc::c_void,
+                                              sizeof_oid: *mut size_t,
+                                              critical: *mut ::libc::c_uint)
+     -> ::libc::c_int;
+    pub fn gnutls_x509_crq_get_attribute_data(crq: gnutls_x509_crq_t,
+                                              indx: ::libc::c_int,
+                                              data: *mut ::libc::c_void,
+                                              sizeof_data: *mut size_t)
+     -> ::libc::c_int;
+    pub fn gnutls_x509_crq_get_attribute_info(crq: gnutls_x509_crq_t,
+                                              indx: ::libc::c_int,
+                                              oid: *mut ::libc::c_void,
+                                              sizeof_oid: *mut size_t)
+     -> ::libc::c_int;
+    pub fn gnutls_x509_crq_get_pk_algorithm(crq: gnutls_x509_crq_t,
+                                            bits: *mut ::libc::c_uint)
+     -> ::libc::c_int;
+    pub fn gnutls_x509_crq_get_key_id(crq: gnutls_x509_crq_t,
+                                      flags: ::libc::c_uint,
+                                      output_data: *mut ::libc::c_uchar,
+                                      output_data_size: *mut size_t)
+     -> ::libc::c_int;
+    pub fn gnutls_x509_crq_get_key_rsa_raw(crq: gnutls_x509_crq_t,
+                                           m: *mut gnutls_datum_t,
+                                           e: *mut gnutls_datum_t)
+     -> ::libc::c_int;
+    pub fn gnutls_x509_crq_get_key_usage(crq: gnutls_x509_crq_t,
+                                         key_usage: *mut ::libc::c_uint,
+                                         critical: *mut ::libc::c_uint)
+     -> ::libc::c_int;
+    pub fn gnutls_x509_crq_get_basic_constraints(crq: gnutls_x509_crq_t,
+                                                 critical:
+                                                     *mut ::libc::c_uint,
+                                                 ca: *mut ::libc::c_uint,
+                                                 pathlen: *mut ::libc::c_int)
+     -> ::libc::c_int;
+    pub fn gnutls_x509_crq_get_subject_alt_name(crq: gnutls_x509_crq_t,
+                                                seq: ::libc::c_uint,
+                                                ret: *mut ::libc::c_void,
+                                                ret_size: *mut size_t,
+                                                ret_type: *mut ::libc::c_uint,
+                                                critical: *mut ::libc::c_uint)
+     -> ::libc::c_int;
+    pub fn gnutls_x509_crq_get_subject_alt_othername_oid(crq:
+                                                             gnutls_x509_crq_t,
+                                                         seq: ::libc::c_uint,
+                                                         ret:
+                                                             *mut ::libc::c_void,
+                                                         ret_size:
+                                                             *mut size_t)
+     -> ::libc::c_int;
+    pub fn gnutls_x509_crq_get_extension_by_oid(crq: gnutls_x509_crq_t,
+                                                oid: *const ::libc::c_char,
+                                                indx: ::libc::c_int,
+                                                buf: *mut ::libc::c_void,
+                                                sizeof_buf: *mut size_t,
+                                                critical: *mut ::libc::c_uint)
+     -> ::libc::c_int;
+    pub fn gnutls_x509_crt_get_extension_by_oid2(cert: gnutls_x509_crt_t,
+                                                 oid: *const ::libc::c_char,
+                                                 indx: ::libc::c_int,
+                                                 output: *mut gnutls_datum_t,
+                                                 critical:
+                                                     *mut ::libc::c_uint)
+     -> ::libc::c_int;
+    pub fn gnutls_x509_trust_list_init(list: *mut gnutls_x509_trust_list_t,
+                                       size: ::libc::c_uint) -> ::libc::c_int;
+    pub fn gnutls_x509_trust_list_deinit(list: gnutls_x509_trust_list_t,
+                                         all: ::libc::c_uint);
+    pub fn gnutls_x509_trust_list_get_issuer(list: gnutls_x509_trust_list_t,
+                                             cert: gnutls_x509_crt_t,
+                                             issuer: *mut gnutls_x509_crt_t,
+                                             flags: ::libc::c_uint)
+     -> ::libc::c_int;
+    pub fn gnutls_x509_trust_list_get_issuer_by_dn(list:
+                                                       gnutls_x509_trust_list_t,
+                                                   dn: *const gnutls_datum_t,
+                                                   issuer:
+                                                       *mut gnutls_x509_crt_t,
+                                                   flags: ::libc::c_uint)
+     -> ::libc::c_int;
+    pub fn gnutls_x509_trust_list_get_issuer_by_subject_key_id(list:
+                                                                   gnutls_x509_trust_list_t,
+                                                               dn:
+                                                                   *const gnutls_datum_t,
+                                                               spki:
+                                                                   *const gnutls_datum_t,
+                                                               issuer:
+                                                                   *mut gnutls_x509_crt_t,
+                                                               flags:
+                                                                   ::libc::c_uint)
+     -> ::libc::c_int;
+    pub fn gnutls_x509_trust_list_add_cas(list: gnutls_x509_trust_list_t,
+                                          clist: *const gnutls_x509_crt_t,
+                                          clist_size: ::libc::c_uint,
+                                          flags: ::libc::c_uint)
+     -> ::libc::c_int;
+    pub fn gnutls_x509_trust_list_remove_cas(list: gnutls_x509_trust_list_t,
+                                             clist: *const gnutls_x509_crt_t,
+                                             clist_size: ::libc::c_int)
+     -> ::libc::c_int;
+    pub fn gnutls_x509_trust_list_add_named_crt(list:
+                                                    gnutls_x509_trust_list_t,
+                                                cert: gnutls_x509_crt_t,
+                                                name: *const ::libc::c_void,
+                                                name_size: size_t,
+                                                flags: ::libc::c_uint)
+     -> ::libc::c_int;
+    pub fn gnutls_x509_trust_list_add_crls(list: gnutls_x509_trust_list_t,
+                                           crl_list: *const gnutls_x509_crl_t,
+                                           crl_size: ::libc::c_int,
+                                           flags: ::libc::c_uint,
+                                           verification_flags: ::libc::c_uint)
+     -> ::libc::c_int;
+    pub fn gnutls_x509_trust_list_iter_get_ca(list: gnutls_x509_trust_list_t,
+                                              iter:
+                                                  *mut gnutls_x509_trust_list_iter_t,
+                                              crt: *mut gnutls_x509_crt_t)
+     -> ::libc::c_int;
+    pub fn gnutls_x509_trust_list_iter_deinit(iter:
+                                                  gnutls_x509_trust_list_iter_t);
+    pub fn gnutls_x509_trust_list_verify_named_crt(list:
+                                                       gnutls_x509_trust_list_t,
+                                                   cert: gnutls_x509_crt_t,
+                                                   name:
+                                                       *const ::libc::c_void,
+                                                   name_size: size_t,
+                                                   flags: ::libc::c_uint,
+                                                   verify:
+                                                       *mut ::libc::c_uint,
+                                                   func:
+                                                       gnutls_verify_output_function)
+     -> ::libc::c_int;
+    pub fn gnutls_x509_trust_list_verify_crt2(list: gnutls_x509_trust_list_t,
+                                              cert_list:
+                                                  *mut gnutls_x509_crt_t,
+                                              cert_list_size: ::libc::c_uint,
+                                              data:
+                                                  *mut gnutls_typed_vdata_st,
+                                              elements: ::libc::c_uint,
+                                              flags: ::libc::c_uint,
+                                              voutput: *mut ::libc::c_uint,
+                                              func:
+                                                  gnutls_verify_output_function)
+     -> ::libc::c_int;
+    pub fn gnutls_x509_trust_list_verify_crt(list: gnutls_x509_trust_list_t,
+                                             cert_list:
+                                                 *mut gnutls_x509_crt_t,
+                                             cert_list_size: ::libc::c_uint,
+                                             flags: ::libc::c_uint,
+                                             verify: *mut ::libc::c_uint,
+                                             func:
+                                                 gnutls_verify_output_function)
+     -> ::libc::c_int;
+    pub fn gnutls_x509_trust_list_add_trust_mem(list:
+                                                    gnutls_x509_trust_list_t,
+                                                cas: *const gnutls_datum_t,
+                                                crls: *const gnutls_datum_t,
+                                                _type: gnutls_x509_crt_fmt_t,
+                                                tl_flags: ::libc::c_uint,
+                                                tl_vflags: ::libc::c_uint)
+     -> ::libc::c_int;
+    pub fn gnutls_x509_trust_list_add_trust_file(list:
+                                                     gnutls_x509_trust_list_t,
+                                                 ca_file:
+                                                     *const ::libc::c_char,
+                                                 crl_file:
+                                                     *const ::libc::c_char,
+                                                 _type: gnutls_x509_crt_fmt_t,
+                                                 tl_flags: ::libc::c_uint,
+                                                 tl_vflags: ::libc::c_uint)
+     -> ::libc::c_int;
+    pub fn gnutls_x509_trust_list_add_trust_dir(list:
+                                                    gnutls_x509_trust_list_t,
+                                                ca_dir: *const ::libc::c_char,
+                                                crl_dir:
+                                                    *const ::libc::c_char,
+                                                _type: gnutls_x509_crt_fmt_t,
+                                                tl_flags: ::libc::c_uint,
+                                                tl_vflags: ::libc::c_uint)
+     -> ::libc::c_int;
+    pub fn gnutls_x509_trust_list_remove_trust_file(list:
+                                                        gnutls_x509_trust_list_t,
+                                                    ca_file:
+                                                        *const ::libc::c_char,
+                                                    _type:
+                                                        gnutls_x509_crt_fmt_t)
+     -> ::libc::c_int;
+    pub fn gnutls_x509_trust_list_remove_trust_mem(list:
+                                                       gnutls_x509_trust_list_t,
+                                                   cas: *const gnutls_datum_t,
+                                                   _type:
+                                                       gnutls_x509_crt_fmt_t)
+     -> ::libc::c_int;
+    pub fn gnutls_x509_trust_list_add_system_trust(list:
+                                                       gnutls_x509_trust_list_t,
+                                                   tl_flags: ::libc::c_uint,
+                                                   tl_vflags: ::libc::c_uint)
+     -> ::libc::c_int;
+    pub fn gnutls_certificate_set_trust_list(res:
+                                                 gnutls_certificate_credentials_t,
+                                             tlist: gnutls_x509_trust_list_t,
+                                             flags: ::libc::c_uint);
+    pub fn gnutls_certificate_get_trust_list(res:
+                                                 gnutls_certificate_credentials_t,
+                                             tlist:
+                                                 *mut gnutls_x509_trust_list_t);
+    pub fn gnutls_x509_ext_deinit(ext: *mut gnutls_x509_ext_st);
+    pub fn gnutls_x509_ext_print(exts: *mut gnutls_x509_ext_st,
+                                 exts_size: ::libc::c_uint,
+                                 format: gnutls_certificate_print_formats_t,
+                                 out: *mut gnutls_datum_t) -> ::libc::c_int;
+    pub fn gnutls_pkcs7_init(pkcs7: *mut gnutls_pkcs7_t) -> ::libc::c_int;
+    pub fn gnutls_pkcs7_deinit(pkcs7: gnutls_pkcs7_t);
+    pub fn gnutls_pkcs7_import(pkcs7: gnutls_pkcs7_t,
+                               data: *const gnutls_datum_t,
+                               format: gnutls_x509_crt_fmt_t)
+     -> ::libc::c_int;
+    pub fn gnutls_pkcs7_export(pkcs7: gnutls_pkcs7_t,
+                               format: gnutls_x509_crt_fmt_t,
+                               output_data: *mut ::libc::c_void,
+                               output_data_size: *mut size_t)
+     -> ::libc::c_int;
+    pub fn gnutls_pkcs7_export2(pkcs7: gnutls_pkcs7_t,
+                                format: gnutls_x509_crt_fmt_t,
+                                out: *mut gnutls_datum_t) -> ::libc::c_int;
+    pub fn gnutls_pkcs7_get_signature_count(pkcs7: gnutls_pkcs7_t)
+     -> ::libc::c_int;
+    pub fn gnutls_pkcs7_get_embedded_data(pkcs7: gnutls_pkcs7_t,
+                                          idx: ::libc::c_uint,
+                                          data: *mut gnutls_datum_t)
+     -> ::libc::c_int;
+    pub fn gnutls_pkcs7_get_crt_count(pkcs7: gnutls_pkcs7_t) -> ::libc::c_int;
+    pub fn gnutls_pkcs7_get_crt_raw(pkcs7: gnutls_pkcs7_t,
+                                    indx: ::libc::c_int,
+                                    certificate: *mut ::libc::c_void,
+                                    certificate_size: *mut size_t)
+     -> ::libc::c_int;
+    pub fn gnutls_pkcs7_set_crt_raw(pkcs7: gnutls_pkcs7_t,
+                                    crt: *const gnutls_datum_t)
+     -> ::libc::c_int;
+    pub fn gnutls_pkcs7_set_crt(pkcs7: gnutls_pkcs7_t, crt: gnutls_x509_crt_t)
+     -> ::libc::c_int;
+    pub fn gnutls_pkcs7_delete_crt(pkcs7: gnutls_pkcs7_t, indx: ::libc::c_int)
+     -> ::libc::c_int;
+    pub fn gnutls_pkcs7_get_crl_raw(pkcs7: gnutls_pkcs7_t,
+                                    indx: ::libc::c_int,
+                                    crl: *mut ::libc::c_void,
+                                    crl_size: *mut size_t) -> ::libc::c_int;
+    pub fn gnutls_pkcs7_get_crl_count(pkcs7: gnutls_pkcs7_t) -> ::libc::c_int;
+    pub fn gnutls_pkcs7_set_crl_raw(pkcs7: gnutls_pkcs7_t,
+                                    crl: *const gnutls_datum_t)
+     -> ::libc::c_int;
+    pub fn gnutls_pkcs7_set_crl(pkcs7: gnutls_pkcs7_t, crl: gnutls_x509_crl_t)
+     -> ::libc::c_int;
+    pub fn gnutls_pkcs7_delete_crl(pkcs7: gnutls_pkcs7_t, indx: ::libc::c_int)
+     -> ::libc::c_int;
+    pub fn gnutls_pkcs7_signature_info_deinit(info:
+                                                  *mut gnutls_pkcs7_signature_info_st);
+    pub fn gnutls_pkcs7_get_signature_info(pkcs7: gnutls_pkcs7_t,
+                                           idx: ::libc::c_uint,
+                                           info:
+                                               *mut gnutls_pkcs7_signature_info_st)
+     -> ::libc::c_int;
+    pub fn gnutls_pkcs7_verify_direct(pkcs7: gnutls_pkcs7_t,
+                                      signer: gnutls_x509_crt_t,
+                                      idx: ::libc::c_uint,
+                                      data: *const gnutls_datum_t,
+                                      flags: ::libc::c_uint) -> ::libc::c_int;
+    pub fn gnutls_pkcs7_verify(pkcs7: gnutls_pkcs7_t,
+                               tl: gnutls_x509_trust_list_t,
+                               vdata: *mut gnutls_typed_vdata_st,
+                               vdata_size: ::libc::c_uint,
+                               idx: ::libc::c_uint,
+                               data: *const gnutls_datum_t,
+                               flags: ::libc::c_uint) -> ::libc::c_int;
+    pub fn gnutls_pkcs7_add_attr(list: *mut gnutls_pkcs7_attrs_t,
+                                 oid: *const ::libc::c_char,
+                                 data: *mut gnutls_datum_t,
+                                 flags: ::libc::c_uint) -> ::libc::c_int;
+    pub fn gnutls_pkcs7_attrs_deinit(list: gnutls_pkcs7_attrs_t);
+    pub fn gnutls_pkcs7_get_attr(list: gnutls_pkcs7_attrs_t,
+                                 idx: ::libc::c_uint,
+                                 oid: *mut *mut ::libc::c_char,
+                                 data: *mut gnutls_datum_t,
+                                 flags: ::libc::c_uint) -> ::libc::c_int;
+    pub fn gnutls_pkcs7_sign(pkcs7: gnutls_pkcs7_t, signer: gnutls_x509_crt_t,
+                             signer_key: gnutls_privkey_t,
+                             data: *const gnutls_datum_t,
+                             signed_attrs: gnutls_pkcs7_attrs_t,
+                             unsigned_attrs: gnutls_pkcs7_attrs_t,
+                             dig: gnutls_digest_algorithm_t,
+                             flags: ::libc::c_uint) -> ::libc::c_int;
+    pub fn gnutls_pkcs7_get_crt_raw2(pkcs7: gnutls_pkcs7_t,
+                                     indx: ::libc::c_int,
+                                     cert: *mut gnutls_datum_t)
+     -> ::libc::c_int;
+    pub fn gnutls_pkcs7_get_crl_raw2(pkcs7: gnutls_pkcs7_t,
+                                     indx: ::libc::c_int,
+                                     crl: *mut gnutls_datum_t)
+     -> ::libc::c_int;
+    pub fn gnutls_pkcs7_print(pkcs7: gnutls_pkcs7_t,
+                              format: gnutls_certificate_print_formats_t,
+                              out: *mut gnutls_datum_t) -> ::libc::c_int;
+    pub fn gnutls_pkcs11_init(flags: ::libc::c_uint,
+                              deprecated_config_file: *const ::libc::c_char)
+     -> ::libc::c_int;
+    pub fn gnutls_pkcs11_reinit() -> ::libc::c_int;
+    pub fn gnutls_pkcs11_deinit();
+    pub fn gnutls_pkcs11_set_token_function(_fn:
+                                                gnutls_pkcs11_token_callback_t,
+                                            userdata: *mut ::libc::c_void);
+    pub fn gnutls_pkcs11_set_pin_function(_fn: gnutls_pin_callback_t,
+                                          userdata: *mut ::libc::c_void);
+    pub fn gnutls_pkcs11_get_pin_function(userdata: *mut *mut ::libc::c_void)
+     -> gnutls_pin_callback_t;
+    pub fn gnutls_pkcs11_add_provider(name: *const ::libc::c_char,
+                                      params: *const ::libc::c_char)
+     -> ::libc::c_int;
+    pub fn gnutls_pkcs11_obj_init(obj: *mut gnutls_pkcs11_obj_t)
+     -> ::libc::c_int;
+    pub fn gnutls_pkcs11_obj_set_pin_function(obj: gnutls_pkcs11_obj_t,
+                                              _fn: gnutls_pin_callback_t,
+                                              userdata: *mut ::libc::c_void);
+    pub fn gnutls_pkcs11_obj_import_url(obj: gnutls_pkcs11_obj_t,
+                                        url: *const ::libc::c_char,
+                                        flags: ::libc::c_uint)
+     -> ::libc::c_int;
+    pub fn gnutls_pkcs11_obj_export_url(obj: gnutls_pkcs11_obj_t,
+                                        detailed: gnutls_pkcs11_url_type_t,
+                                        url: *mut *mut ::libc::c_char)
+     -> ::libc::c_int;
+    pub fn gnutls_pkcs11_obj_deinit(obj: gnutls_pkcs11_obj_t);
+    pub fn gnutls_pkcs11_obj_export(obj: gnutls_pkcs11_obj_t,
+                                    output_data: *mut ::libc::c_void,
+                                    output_data_size: *mut size_t)
+     -> ::libc::c_int;
+    pub fn gnutls_pkcs11_obj_export2(obj: gnutls_pkcs11_obj_t,
+                                     out: *mut gnutls_datum_t)
+     -> ::libc::c_int;
+    pub fn gnutls_pkcs11_obj_export3(obj: gnutls_pkcs11_obj_t,
+                                     fmt: gnutls_x509_crt_fmt_t,
+                                     out: *mut gnutls_datum_t)
+     -> ::libc::c_int;
+    pub fn gnutls_pkcs11_get_raw_issuer(url: *const ::libc::c_char,
+                                        cert: gnutls_x509_crt_t,
+                                        issuer: *mut gnutls_datum_t,
+                                        fmt: gnutls_x509_crt_fmt_t,
+                                        flags: ::libc::c_uint)
+     -> ::libc::c_int;
+    pub fn gnutls_pkcs11_get_raw_issuer_by_dn(url: *const ::libc::c_char,
+                                              dn: *const gnutls_datum_t,
+                                              issuer: *mut gnutls_datum_t,
+                                              fmt: gnutls_x509_crt_fmt_t,
+                                              flags: ::libc::c_uint)
+     -> ::libc::c_int;
+    pub fn gnutls_pkcs11_get_raw_issuer_by_subject_key_id(url:
+                                                              *const ::libc::c_char,
+                                                          dn:
+                                                              *const gnutls_datum_t,
+                                                          spki:
+                                                              *const gnutls_datum_t,
+                                                          issuer:
+                                                              *mut gnutls_datum_t,
+                                                          fmt:
+                                                              gnutls_x509_crt_fmt_t,
+                                                          flags:
+                                                              ::libc::c_uint)
+     -> ::libc::c_int;
+    pub fn gnutls_pkcs11_crt_is_known(url: *const ::libc::c_char,
+                                      cert: gnutls_x509_crt_t,
+                                      flags: ::libc::c_uint) -> ::libc::c_int;
+    pub fn gnutls_pkcs11_copy_pubkey(token_url: *const ::libc::c_char,
+                                     crt: gnutls_pubkey_t,
+                                     label: *const ::libc::c_char,
+                                     cid: *const gnutls_datum_t,
+                                     key_usage: ::libc::c_uint,
+                                     flags: ::libc::c_uint) -> ::libc::c_int;
+    pub fn gnutls_pkcs11_copy_x509_crt2(token_url: *const ::libc::c_char,
+                                        crt: gnutls_x509_crt_t,
+                                        label: *const ::libc::c_char,
+                                        id: *const gnutls_datum_t,
+                                        flags: ::libc::c_uint)
+     -> ::libc::c_int;
+    pub fn gnutls_pkcs11_copy_x509_privkey2(token_url: *const ::libc::c_char,
+                                            key: gnutls_x509_privkey_t,
+                                            label: *const ::libc::c_char,
+                                            cid: *const gnutls_datum_t,
+                                            key_usage: ::libc::c_uint,
+                                            flags: ::libc::c_uint)
+     -> ::libc::c_int;
+    pub fn gnutls_pkcs11_delete_url(object_url: *const ::libc::c_char,
+                                    flags: ::libc::c_uint) -> ::libc::c_int;
+    pub fn gnutls_pkcs11_copy_secret_key(token_url: *const ::libc::c_char,
+                                         key: *mut gnutls_datum_t,
+                                         label: *const ::libc::c_char,
+                                         key_usage: ::libc::c_uint,
+                                         flags: ::libc::c_uint)
+     -> ::libc::c_int;
+    pub fn gnutls_pkcs11_obj_get_info(crt: gnutls_pkcs11_obj_t,
+                                      itype: gnutls_pkcs11_obj_info_t,
+                                      output: *mut ::libc::c_void,
+                                      output_size: *mut size_t)
+     -> ::libc::c_int;
+    pub fn gnutls_pkcs11_obj_set_info(crt: gnutls_pkcs11_obj_t,
+                                      itype: gnutls_pkcs11_obj_info_t,
+                                      data: *const ::libc::c_void,
+                                      data_size: size_t,
+                                      flags: ::libc::c_uint) -> ::libc::c_int;
+    pub fn gnutls_pkcs11_token_init(token_url: *const ::libc::c_char,
+                                    so_pin: *const ::libc::c_char,
+                                    label: *const ::libc::c_char)
+     -> ::libc::c_int;
+    pub fn gnutls_pkcs11_token_get_mechanism(url: *const ::libc::c_char,
+                                             idx: ::libc::c_uint,
+                                             mechanism: *mut ::libc::c_ulong)
+     -> ::libc::c_int;
+    pub fn gnutls_pkcs11_token_set_pin(token_url: *const ::libc::c_char,
+                                       oldpin: *const ::libc::c_char,
+                                       newpin: *const ::libc::c_char,
+                                       flags: ::libc::c_uint)
+     -> ::libc::c_int;
+    pub fn gnutls_pkcs11_token_get_url(seq: ::libc::c_uint,
+                                       detailed: gnutls_pkcs11_url_type_t,
+                                       url: *mut *mut ::libc::c_char)
+     -> ::libc::c_int;
+    pub fn gnutls_pkcs11_token_get_info(url: *const ::libc::c_char,
+                                        ttype: gnutls_pkcs11_token_info_t,
+                                        output: *mut ::libc::c_void,
+                                        output_size: *mut size_t)
+     -> ::libc::c_int;
+    pub fn gnutls_pkcs11_token_get_flags(url: *const ::libc::c_char,
+                                         flags: *mut ::libc::c_uint)
+     -> ::libc::c_int;
+    pub fn gnutls_pkcs11_obj_list_import_url3(p_list:
+                                                  *mut gnutls_pkcs11_obj_t,
+                                              n_list: *mut ::libc::c_uint,
+                                              url: *const ::libc::c_char,
+                                              flags: ::libc::c_uint)
+     -> ::libc::c_int;
+    pub fn gnutls_pkcs11_obj_list_import_url4(p_list:
+                                                  *mut *mut gnutls_pkcs11_obj_t,
+                                              n_list: *mut ::libc::c_uint,
+                                              url: *const ::libc::c_char,
+                                              flags: ::libc::c_uint)
+     -> ::libc::c_int;
+    pub fn gnutls_x509_crt_import_pkcs11(crt: gnutls_x509_crt_t,
+                                         pkcs11_crt: gnutls_pkcs11_obj_t)
+     -> ::libc::c_int;
+    pub fn gnutls_pkcs11_obj_get_type(obj: gnutls_pkcs11_obj_t)
+     -> gnutls_pkcs11_obj_type_t;
+    pub fn gnutls_pkcs11_type_get_name(_type: gnutls_pkcs11_obj_type_t)
+     -> *const ::libc::c_char;
+    pub fn gnutls_pkcs11_obj_get_exts(obj: gnutls_pkcs11_obj_t,
+                                      exts:
+                                          *mut *mut Struct_gnutls_x509_ext_st,
+                                      exts_size: *mut ::libc::c_uint,
+                                      flags: ::libc::c_uint) -> ::libc::c_int;
+    pub fn gnutls_pkcs11_obj_get_flags(obj: gnutls_pkcs11_obj_t,
+                                       oflags: *mut ::libc::c_uint)
+     -> ::libc::c_int;
+    pub fn gnutls_pkcs11_obj_flags_get_str(flags: ::libc::c_uint)
+     -> *mut ::libc::c_char;
+    pub fn gnutls_x509_crt_list_import_pkcs11(certs: *mut gnutls_x509_crt_t,
+                                              cert_max: ::libc::c_uint,
+                                              objs: *mut gnutls_pkcs11_obj_t,
+                                              flags: ::libc::c_uint)
+     -> ::libc::c_int;
+    pub fn gnutls_pkcs11_privkey_init(key: *mut gnutls_pkcs11_privkey_t)
+     -> ::libc::c_int;
+    pub fn gnutls_pkcs11_privkey_cpy(dst: gnutls_pkcs11_privkey_t,
+                                     src: gnutls_pkcs11_privkey_t)
+     -> ::libc::c_int;
+    pub fn gnutls_pkcs11_privkey_set_pin_function(key:
+                                                      gnutls_pkcs11_privkey_t,
+                                                  _fn: gnutls_pin_callback_t,
+                                                  userdata:
+                                                      *mut ::libc::c_void);
+    pub fn gnutls_pkcs11_privkey_deinit(key: gnutls_pkcs11_privkey_t);
+    pub fn gnutls_pkcs11_privkey_get_pk_algorithm(key:
+                                                      gnutls_pkcs11_privkey_t,
+                                                  bits: *mut ::libc::c_uint)
+     -> ::libc::c_int;
+    pub fn gnutls_pkcs11_privkey_get_info(pkey: gnutls_pkcs11_privkey_t,
+                                          itype: gnutls_pkcs11_obj_info_t,
+                                          output: *mut ::libc::c_void,
+                                          output_size: *mut size_t)
+     -> ::libc::c_int;
+    pub fn gnutls_pkcs11_privkey_import_url(pkey: gnutls_pkcs11_privkey_t,
+                                            url: *const ::libc::c_char,
+                                            flags: ::libc::c_uint)
+     -> ::libc::c_int;
+    pub fn gnutls_pkcs11_privkey_export_url(key: gnutls_pkcs11_privkey_t,
+                                            detailed:
+                                                gnutls_pkcs11_url_type_t,
+                                            url: *mut *mut ::libc::c_char)
+     -> ::libc::c_int;
+    pub fn gnutls_pkcs11_privkey_status(key: gnutls_pkcs11_privkey_t)
+     -> ::libc::c_int;
+    pub fn gnutls_pkcs11_privkey_generate3(url: *const ::libc::c_char,
+                                           pk: gnutls_pk_algorithm_t,
+                                           bits: ::libc::c_uint,
+                                           label: *const ::libc::c_char,
+                                           cid: *const gnutls_datum_t,
+                                           fmt: gnutls_x509_crt_fmt_t,
+                                           pubkey: *mut gnutls_datum_t,
+                                           key_usage: ::libc::c_uint,
+                                           flags: ::libc::c_uint)
+     -> ::libc::c_int;
+    pub fn gnutls_pkcs11_privkey_export_pubkey(pkey: gnutls_pkcs11_privkey_t,
+                                               fmt: gnutls_x509_crt_fmt_t,
+                                               pubkey: *mut gnutls_datum_t,
+                                               flags: ::libc::c_uint)
+     -> ::libc::c_int;
+    pub fn gnutls_pkcs11_token_get_random(token_url: *const ::libc::c_char,
+                                          data: *mut ::libc::c_void,
+                                          len: size_t) -> ::libc::c_int;
+    pub fn gnutls_pkcs11_copy_attached_extension(token_url:
+                                                     *const ::libc::c_char,
+                                                 crt: gnutls_x509_crt_t,
+                                                 data: *mut gnutls_datum_t,
+                                                 label: *const ::libc::c_char,
+                                                 flags: ::libc::c_uint)
+     -> ::libc::c_int;
+    pub fn gnutls_openpgp_crt_init(key: *mut gnutls_openpgp_crt_t)
+     -> ::libc::c_int;
+    pub fn gnutls_openpgp_crt_deinit(key: gnutls_openpgp_crt_t);
+    pub fn gnutls_openpgp_crt_import(key: gnutls_openpgp_crt_t,
+                                     data: *const gnutls_datum_t,
+                                     format: gnutls_openpgp_crt_fmt_t)
+     -> ::libc::c_int;
+    pub fn gnutls_openpgp_crt_export(key: gnutls_openpgp_crt_t,
+                                     format: gnutls_openpgp_crt_fmt_t,
+                                     output_data: *mut ::libc::c_void,
+                                     output_data_size: *mut size_t)
+     -> ::libc::c_int;
+    pub fn gnutls_openpgp_crt_export2(key: gnutls_openpgp_crt_t,
+                                      format: gnutls_openpgp_crt_fmt_t,
+                                      out: *mut gnutls_datum_t)
+     -> ::libc::c_int;
+    pub fn gnutls_openpgp_crt_print(cert: gnutls_openpgp_crt_t,
+                                    format:
+                                        gnutls_certificate_print_formats_t,
+                                    out: *mut gnutls_datum_t)
+     -> ::libc::c_int;
+    pub fn gnutls_openpgp_crt_get_key_usage(key: gnutls_openpgp_crt_t,
+                                            key_usage: *mut ::libc::c_uint)
+     -> ::libc::c_int;
+    pub fn gnutls_openpgp_crt_get_fingerprint(key: gnutls_openpgp_crt_t,
+                                              fpr: *mut ::libc::c_void,
+                                              fprlen: *mut size_t)
+     -> ::libc::c_int;
+    pub fn gnutls_openpgp_crt_get_subkey_fingerprint(key:
+                                                         gnutls_openpgp_crt_t,
+                                                     idx: ::libc::c_uint,
+                                                     fpr: *mut ::libc::c_void,
+                                                     fprlen: *mut size_t)
+     -> ::libc::c_int;
+    pub fn gnutls_openpgp_crt_get_name(key: gnutls_openpgp_crt_t,
+                                       idx: ::libc::c_int,
+                                       buf: *mut ::libc::c_char,
+                                       sizeof_buf: *mut size_t)
+     -> ::libc::c_int;
+    pub fn gnutls_openpgp_crt_get_pk_algorithm(key: gnutls_openpgp_crt_t,
+                                               bits: *mut ::libc::c_uint)
+     -> gnutls_pk_algorithm_t;
+    pub fn gnutls_openpgp_crt_get_version(key: gnutls_openpgp_crt_t)
+     -> ::libc::c_int;
+    pub fn gnutls_openpgp_crt_get_creation_time(key: gnutls_openpgp_crt_t)
+     -> time_t;
+    pub fn gnutls_openpgp_crt_get_expiration_time(key: gnutls_openpgp_crt_t)
+     -> time_t;
+    pub fn gnutls_openpgp_crt_get_key_id(key: gnutls_openpgp_crt_t,
+                                         keyid: gnutls_openpgp_keyid_t)
+     -> ::libc::c_int;
+    pub fn gnutls_openpgp_crt_check_hostname(key: gnutls_openpgp_crt_t,
+                                             hostname: *const ::libc::c_char)
+     -> ::libc::c_int;
+    pub fn gnutls_openpgp_crt_check_hostname2(key: gnutls_openpgp_crt_t,
+                                              hostname: *const ::libc::c_char,
+                                              flags: ::libc::c_uint)
+     -> ::libc::c_int;
+    pub fn gnutls_openpgp_crt_check_email(key: gnutls_openpgp_crt_t,
+                                          email: *const ::libc::c_char,
+                                          flags: ::libc::c_uint)
+     -> ::libc::c_int;
+    pub fn gnutls_openpgp_crt_get_revoked_status(key: gnutls_openpgp_crt_t)
+     -> ::libc::c_int;
+    pub fn gnutls_openpgp_crt_get_subkey_count(key: gnutls_openpgp_crt_t)
+     -> ::libc::c_int;
+    pub fn gnutls_openpgp_crt_get_subkey_idx(key: gnutls_openpgp_crt_t,
+                                             keyid: gnutls_openpgp_keyid_t)
+     -> ::libc::c_int;
+    pub fn gnutls_openpgp_crt_get_subkey_revoked_status(key:
+                                                            gnutls_openpgp_crt_t,
+                                                        idx: ::libc::c_uint)
+     -> ::libc::c_int;
+    pub fn gnutls_openpgp_crt_get_subkey_pk_algorithm(key:
+                                                          gnutls_openpgp_crt_t,
+                                                      idx: ::libc::c_uint,
+                                                      bits:
+                                                          *mut ::libc::c_uint)
+     -> gnutls_pk_algorithm_t;
+    pub fn gnutls_openpgp_crt_get_subkey_creation_time(key:
+                                                           gnutls_openpgp_crt_t,
+                                                       idx: ::libc::c_uint)
+     -> time_t;
+    pub fn gnutls_openpgp_crt_get_subkey_expiration_time(key:
+                                                             gnutls_openpgp_crt_t,
+                                                         idx: ::libc::c_uint)
+     -> time_t;
+    pub fn gnutls_openpgp_crt_get_subkey_id(key: gnutls_openpgp_crt_t,
+                                            idx: ::libc::c_uint,
+                                            keyid: gnutls_openpgp_keyid_t)
+     -> ::libc::c_int;
+    pub fn gnutls_openpgp_crt_get_subkey_usage(key: gnutls_openpgp_crt_t,
+                                               idx: ::libc::c_uint,
+                                               key_usage: *mut ::libc::c_uint)
+     -> ::libc::c_int;
+    pub fn gnutls_openpgp_crt_get_subkey_pk_dsa_raw(crt: gnutls_openpgp_crt_t,
+                                                    idx: ::libc::c_uint,
+                                                    p: *mut gnutls_datum_t,
+                                                    q: *mut gnutls_datum_t,
+                                                    g: *mut gnutls_datum_t,
+                                                    y: *mut gnutls_datum_t)
+     -> ::libc::c_int;
+    pub fn gnutls_openpgp_crt_get_subkey_pk_rsa_raw(crt: gnutls_openpgp_crt_t,
+                                                    idx: ::libc::c_uint,
+                                                    m: *mut gnutls_datum_t,
+                                                    e: *mut gnutls_datum_t)
+     -> ::libc::c_int;
+    pub fn gnutls_openpgp_crt_get_pk_dsa_raw(crt: gnutls_openpgp_crt_t,
+                                             p: *mut gnutls_datum_t,
+                                             q: *mut gnutls_datum_t,
+                                             g: *mut gnutls_datum_t,
+                                             y: *mut gnutls_datum_t)
+     -> ::libc::c_int;
+    pub fn gnutls_openpgp_crt_get_pk_rsa_raw(crt: gnutls_openpgp_crt_t,
+                                             m: *mut gnutls_datum_t,
+                                             e: *mut gnutls_datum_t)
+     -> ::libc::c_int;
+    pub fn gnutls_openpgp_crt_get_preferred_key_id(key: gnutls_openpgp_crt_t,
+                                                   keyid:
+                                                       gnutls_openpgp_keyid_t)
+     -> ::libc::c_int;
+    pub fn gnutls_openpgp_crt_set_preferred_key_id(key: gnutls_openpgp_crt_t,
+                                                   keyid:
+                                                       gnutls_openpgp_keyid_t)
+     -> ::libc::c_int;
+    pub fn gnutls_openpgp_privkey_init(key: *mut gnutls_openpgp_privkey_t)
+     -> ::libc::c_int;
+    pub fn gnutls_openpgp_privkey_deinit(key: gnutls_openpgp_privkey_t);
+    pub fn gnutls_openpgp_privkey_get_pk_algorithm(key:
+                                                       gnutls_openpgp_privkey_t,
+                                                   bits: *mut ::libc::c_uint)
+     -> gnutls_pk_algorithm_t;
+    pub fn gnutls_openpgp_privkey_sec_param(key: gnutls_openpgp_privkey_t)
+     -> gnutls_sec_param_t;
+    pub fn gnutls_openpgp_privkey_import(key: gnutls_openpgp_privkey_t,
+                                         data: *const gnutls_datum_t,
+                                         format: gnutls_openpgp_crt_fmt_t,
+                                         password: *const ::libc::c_char,
+                                         flags: ::libc::c_uint)
+     -> ::libc::c_int;
+    pub fn gnutls_openpgp_privkey_get_fingerprint(key:
+                                                      gnutls_openpgp_privkey_t,
+                                                  fpr: *mut ::libc::c_void,
+                                                  fprlen: *mut size_t)
+     -> ::libc::c_int;
+    pub fn gnutls_openpgp_privkey_get_subkey_fingerprint(key:
+                                                             gnutls_openpgp_privkey_t,
+                                                         idx: ::libc::c_uint,
+                                                         fpr:
+                                                             *mut ::libc::c_void,
+                                                         fprlen: *mut size_t)
+     -> ::libc::c_int;
+    pub fn gnutls_openpgp_privkey_get_key_id(key: gnutls_openpgp_privkey_t,
+                                             keyid: gnutls_openpgp_keyid_t)
+     -> ::libc::c_int;
+    pub fn gnutls_openpgp_privkey_get_subkey_count(key:
+                                                       gnutls_openpgp_privkey_t)
+     -> ::libc::c_int;
+    pub fn gnutls_openpgp_privkey_get_subkey_idx(key:
+                                                     gnutls_openpgp_privkey_t,
+                                                 keyid:
+                                                     gnutls_openpgp_keyid_t)
+     -> ::libc::c_int;
+    pub fn gnutls_openpgp_privkey_get_subkey_revoked_status(key:
+                                                                gnutls_openpgp_privkey_t,
+                                                            idx:
+                                                                ::libc::c_uint)
+     -> ::libc::c_int;
+    pub fn gnutls_openpgp_privkey_get_revoked_status(key:
+                                                         gnutls_openpgp_privkey_t)
+     -> ::libc::c_int;
+    pub fn gnutls_openpgp_privkey_get_subkey_pk_algorithm(key:
+                                                              gnutls_openpgp_privkey_t,
+                                                          idx: ::libc::c_uint,
+                                                          bits:
+                                                              *mut ::libc::c_uint)
+     -> gnutls_pk_algorithm_t;
+    pub fn gnutls_openpgp_privkey_get_subkey_expiration_time(key:
+                                                                 gnutls_openpgp_privkey_t,
+                                                             idx:
+                                                                 ::libc::c_uint)
+     -> time_t;
+    pub fn gnutls_openpgp_privkey_get_subkey_id(key: gnutls_openpgp_privkey_t,
+                                                idx: ::libc::c_uint,
+                                                keyid: gnutls_openpgp_keyid_t)
+     -> ::libc::c_int;
+    pub fn gnutls_openpgp_privkey_get_subkey_creation_time(key:
+                                                               gnutls_openpgp_privkey_t,
+                                                           idx:
+                                                               ::libc::c_uint)
+     -> time_t;
+    pub fn gnutls_openpgp_privkey_export_subkey_dsa_raw(pkey:
+                                                            gnutls_openpgp_privkey_t,
+                                                        idx: ::libc::c_uint,
+                                                        p:
+                                                            *mut gnutls_datum_t,
+                                                        q:
+                                                            *mut gnutls_datum_t,
+                                                        g:
+                                                            *mut gnutls_datum_t,
+                                                        y:
+                                                            *mut gnutls_datum_t,
+                                                        x:
+                                                            *mut gnutls_datum_t)
+     -> ::libc::c_int;
+    pub fn gnutls_openpgp_privkey_export_subkey_rsa_raw(pkey:
+                                                            gnutls_openpgp_privkey_t,
+                                                        idx: ::libc::c_uint,
+                                                        m:
+                                                            *mut gnutls_datum_t,
+                                                        e:
+                                                            *mut gnutls_datum_t,
+                                                        d:
+                                                            *mut gnutls_datum_t,
+                                                        p:
+                                                            *mut gnutls_datum_t,
+                                                        q:
+                                                            *mut gnutls_datum_t,
+                                                        u:
+                                                            *mut gnutls_datum_t)
+     -> ::libc::c_int;
+    pub fn gnutls_openpgp_privkey_export_dsa_raw(pkey:
+                                                     gnutls_openpgp_privkey_t,
+                                                 p: *mut gnutls_datum_t,
+                                                 q: *mut gnutls_datum_t,
+                                                 g: *mut gnutls_datum_t,
+                                                 y: *mut gnutls_datum_t,
+                                                 x: *mut gnutls_datum_t)
+     -> ::libc::c_int;
+    pub fn gnutls_openpgp_privkey_export_rsa_raw(pkey:
+                                                     gnutls_openpgp_privkey_t,
+                                                 m: *mut gnutls_datum_t,
+                                                 e: *mut gnutls_datum_t,
+                                                 d: *mut gnutls_datum_t,
+                                                 p: *mut gnutls_datum_t,
+                                                 q: *mut gnutls_datum_t,
+                                                 u: *mut gnutls_datum_t)
+     -> ::libc::c_int;
+    pub fn gnutls_openpgp_privkey_export(key: gnutls_openpgp_privkey_t,
+                                         format: gnutls_openpgp_crt_fmt_t,
+                                         password: *const ::libc::c_char,
+                                         flags: ::libc::c_uint,
+                                         output_data: *mut ::libc::c_void,
+                                         output_data_size: *mut size_t)
+     -> ::libc::c_int;
+    pub fn gnutls_openpgp_privkey_export2(key: gnutls_openpgp_privkey_t,
+                                          format: gnutls_openpgp_crt_fmt_t,
+                                          password: *const ::libc::c_char,
+                                          flags: ::libc::c_uint,
+                                          out: *mut gnutls_datum_t)
+     -> ::libc::c_int;
+    pub fn gnutls_openpgp_privkey_set_preferred_key_id(key:
+                                                           gnutls_openpgp_privkey_t,
+                                                       keyid:
+                                                           gnutls_openpgp_keyid_t)
+     -> ::libc::c_int;
+    pub fn gnutls_openpgp_privkey_get_preferred_key_id(key:
+                                                           gnutls_openpgp_privkey_t,
+                                                       keyid:
+                                                           gnutls_openpgp_keyid_t)
+     -> ::libc::c_int;
+    pub fn gnutls_openpgp_crt_get_auth_subkey(crt: gnutls_openpgp_crt_t,
+                                              keyid: gnutls_openpgp_keyid_t,
+                                              flag: ::libc::c_uint)
+     -> ::libc::c_int;
+    pub fn gnutls_openpgp_keyring_init(keyring: *mut gnutls_openpgp_keyring_t)
+     -> ::libc::c_int;
+    pub fn gnutls_openpgp_keyring_deinit(keyring: gnutls_openpgp_keyring_t);
+    pub fn gnutls_openpgp_keyring_import(keyring: gnutls_openpgp_keyring_t,
+                                         data: *const gnutls_datum_t,
+                                         format: gnutls_openpgp_crt_fmt_t)
+     -> ::libc::c_int;
+    pub fn gnutls_openpgp_keyring_check_id(ring: gnutls_openpgp_keyring_t,
+                                           keyid: gnutls_openpgp_keyid_t,
+                                           flags: ::libc::c_uint)
+     -> ::libc::c_int;
+    pub fn gnutls_openpgp_crt_verify_ring(key: gnutls_openpgp_crt_t,
+                                          keyring: gnutls_openpgp_keyring_t,
+                                          flags: ::libc::c_uint,
+                                          verify: *mut ::libc::c_uint)
+     -> ::libc::c_int;
+    pub fn gnutls_openpgp_crt_verify_self(key: gnutls_openpgp_crt_t,
+                                          flags: ::libc::c_uint,
+                                          verify: *mut ::libc::c_uint)
+     -> ::libc::c_int;
+    pub fn gnutls_openpgp_keyring_get_crt(ring: gnutls_openpgp_keyring_t,
+                                          idx: ::libc::c_uint,
+                                          cert: *mut gnutls_openpgp_crt_t)
+     -> ::libc::c_int;
+    pub fn gnutls_openpgp_keyring_get_crt_count(ring:
+                                                    gnutls_openpgp_keyring_t)
+     -> ::libc::c_int;
+    pub fn gnutls_openpgp_set_recv_key_function(session: gnutls_session_t,
+                                                func:
+                                                    gnutls_openpgp_recv_key_func);
+    pub fn gnutls_certificate_set_openpgp_key(res:
+                                                  gnutls_certificate_credentials_t,
+                                              crt: gnutls_openpgp_crt_t,
+                                              pkey: gnutls_openpgp_privkey_t)
+     -> ::libc::c_int;
+    pub fn gnutls_certificate_get_openpgp_key(res:
+                                                  gnutls_certificate_credentials_t,
+                                              index: ::libc::c_uint,
+                                              key:
+                                                  *mut gnutls_openpgp_privkey_t)
+     -> ::libc::c_int;
+    pub fn gnutls_certificate_get_openpgp_crt(res:
+                                                  gnutls_certificate_credentials_t,
+                                              index: ::libc::c_uint,
+                                              crt_list:
+                                                  *mut *mut gnutls_openpgp_crt_t,
+                                              crt_list_size:
+                                                  *mut ::libc::c_uint)
+     -> ::libc::c_int;
+    pub fn gnutls_certificate_set_openpgp_key_file(res:
+                                                       gnutls_certificate_credentials_t,
+                                                   certfile:
+                                                       *const ::libc::c_char,
+                                                   keyfile:
+                                                       *const ::libc::c_char,
+                                                   format:
+                                                       gnutls_openpgp_crt_fmt_t)
+     -> ::libc::c_int;
+    pub fn gnutls_certificate_set_openpgp_key_mem(res:
+                                                      gnutls_certificate_credentials_t,
+                                                  cert: *const gnutls_datum_t,
+                                                  key: *const gnutls_datum_t,
+                                                  format:
+                                                      gnutls_openpgp_crt_fmt_t)
+     -> ::libc::c_int;
+    pub fn gnutls_certificate_set_openpgp_key_file2(res:
+                                                        gnutls_certificate_credentials_t,
+                                                    certfile:
+                                                        *const ::libc::c_char,
+                                                    keyfile:
+                                                        *const ::libc::c_char,
+                                                    subkey_id:
+                                                        *const ::libc::c_char,
+                                                    format:
+                                                        gnutls_openpgp_crt_fmt_t)
+     -> ::libc::c_int;
+    pub fn gnutls_certificate_set_openpgp_key_mem2(res:
+                                                       gnutls_certificate_credentials_t,
+                                                   cert:
+                                                       *const gnutls_datum_t,
+                                                   key: *const gnutls_datum_t,
+                                                   subkey_id:
+                                                       *const ::libc::c_char,
+                                                   format:
+                                                       gnutls_openpgp_crt_fmt_t)
+     -> ::libc::c_int;
+    pub fn gnutls_certificate_set_openpgp_keyring_mem(c:
+                                                          gnutls_certificate_credentials_t,
+                                                      data:
+                                                          *const ::libc::c_uchar,
+                                                      dlen: size_t,
+                                                      format:
+                                                          gnutls_openpgp_crt_fmt_t)
+     -> ::libc::c_int;
+    pub fn gnutls_certificate_set_openpgp_keyring_file(c:
+                                                           gnutls_certificate_credentials_t,
+                                                       file:
+                                                           *const ::libc::c_char,
+                                                       format:
+                                                           gnutls_openpgp_crt_fmt_t)
+     -> ::libc::c_int;
+    pub fn gnutls_tpm_privkey_generate(pk: gnutls_pk_algorithm_t,
+                                       bits: ::libc::c_uint,
+                                       srk_password: *const ::libc::c_char,
+                                       key_password: *const ::libc::c_char,
+                                       format: gnutls_tpmkey_fmt_t,
+                                       pub_format: gnutls_x509_crt_fmt_t,
+                                       privkey: *mut gnutls_datum_t,
+                                       pubkey: *mut gnutls_datum_t,
+                                       flags: ::libc::c_uint)
+     -> ::libc::c_int;
+    pub fn gnutls_tpm_key_list_deinit(list: gnutls_tpm_key_list_t);
+    pub fn gnutls_tpm_key_list_get_url(list: gnutls_tpm_key_list_t,
+                                       idx: ::libc::c_uint,
+                                       url: *mut *mut ::libc::c_char,
+                                       flags: ::libc::c_uint)
+     -> ::libc::c_int;
+    pub fn gnutls_tpm_get_registered(list: *mut gnutls_tpm_key_list_t)
+     -> ::libc::c_int;
+    pub fn gnutls_tpm_privkey_delete(url: *const ::libc::c_char,
+                                     srk_password: *const ::libc::c_char)
+     -> ::libc::c_int;
+    pub fn gnutls_pubkey_init(key: *mut gnutls_pubkey_t) -> ::libc::c_int;
+    pub fn gnutls_pubkey_deinit(key: gnutls_pubkey_t);
+    pub fn gnutls_pubkey_verify_params(key: gnutls_pubkey_t) -> ::libc::c_int;
+    pub fn gnutls_pubkey_set_pin_function(key: gnutls_pubkey_t,
+                                          _fn: gnutls_pin_callback_t,
+                                          userdata: *mut ::libc::c_void);
+    pub fn gnutls_pubkey_get_pk_algorithm(key: gnutls_pubkey_t,
+                                          bits: *mut ::libc::c_uint)
+     -> ::libc::c_int;
+    pub fn gnutls_pubkey_import_x509(key: gnutls_pubkey_t,
+                                     crt: gnutls_x509_crt_t,
+                                     flags: ::libc::c_uint) -> ::libc::c_int;
+    pub fn gnutls_pubkey_import_x509_crq(key: gnutls_pubkey_t,
+                                         crq: gnutls_x509_crq_t,
+                                         flags: ::libc::c_uint)
+     -> ::libc::c_int;
+    pub fn gnutls_pubkey_import_pkcs11(key: gnutls_pubkey_t,
+                                       obj: gnutls_pkcs11_obj_t,
+                                       flags: ::libc::c_uint)
+     -> ::libc::c_int;
+    pub fn gnutls_pubkey_import_openpgp(key: gnutls_pubkey_t,
+                                        crt: gnutls_openpgp_crt_t,
+                                        flags: ::libc::c_uint)
+     -> ::libc::c_int;
+    pub fn gnutls_pubkey_import_openpgp_raw(pkey: gnutls_pubkey_t,
+                                            data: *const gnutls_datum_t,
+                                            format: gnutls_openpgp_crt_fmt_t,
+                                            keyid: gnutls_openpgp_keyid_t,
+                                            flags: ::libc::c_uint)
+     -> ::libc::c_int;
+    pub fn gnutls_pubkey_import_x509_raw(pkey: gnutls_pubkey_t,
+                                         data: *const gnutls_datum_t,
+                                         format: gnutls_x509_crt_fmt_t,
+                                         flags: ::libc::c_uint)
+     -> ::libc::c_int;
+    pub fn gnutls_pubkey_import_privkey(key: gnutls_pubkey_t,
+                                        pkey: gnutls_privkey_t,
+                                        usage: ::libc::c_uint,
+                                        flags: ::libc::c_uint)
+     -> ::libc::c_int;
+    pub fn gnutls_pubkey_import_tpm_url(pkey: gnutls_pubkey_t,
+                                        url: *const ::libc::c_char,
+                                        srk_password: *const ::libc::c_char,
+                                        flags: ::libc::c_uint)
+     -> ::libc::c_int;
+    pub fn gnutls_pubkey_import_url(key: gnutls_pubkey_t,
+                                    url: *const ::libc::c_char,
+                                    flags: ::libc::c_uint) -> ::libc::c_int;
+    pub fn gnutls_pubkey_import_tpm_raw(pkey: gnutls_pubkey_t,
+                                        fdata: *const gnutls_datum_t,
+                                        format: gnutls_tpmkey_fmt_t,
+                                        srk_password: *const ::libc::c_char,
+                                        flags: ::libc::c_uint)
+     -> ::libc::c_int;
+    pub fn gnutls_pubkey_get_preferred_hash_algorithm(key: gnutls_pubkey_t,
+                                                      hash:
+                                                          *mut gnutls_digest_algorithm_t,
+                                                      mand:
+                                                          *mut ::libc::c_uint)
+     -> ::libc::c_int;
+    pub fn gnutls_pubkey_export_rsa_raw(key: gnutls_pubkey_t,
+                                        m: *mut gnutls_datum_t,
+                                        e: *mut gnutls_datum_t)
+     -> ::libc::c_int;
+    pub fn gnutls_pubkey_export_dsa_raw(key: gnutls_pubkey_t,
+                                        p: *mut gnutls_datum_t,
+                                        q: *mut gnutls_datum_t,
+                                        g: *mut gnutls_datum_t,
+                                        y: *mut gnutls_datum_t)
+     -> ::libc::c_int;
+    pub fn gnutls_pubkey_export_ecc_raw(key: gnutls_pubkey_t,
+                                        curve: *mut gnutls_ecc_curve_t,
+                                        x: *mut gnutls_datum_t,
+                                        y: *mut gnutls_datum_t)
+     -> ::libc::c_int;
+    pub fn gnutls_pubkey_export_ecc_x962(key: gnutls_pubkey_t,
+                                         parameters: *mut gnutls_datum_t,
+                                         ecpoint: *mut gnutls_datum_t)
+     -> ::libc::c_int;
+    pub fn gnutls_pubkey_export(key: gnutls_pubkey_t,
+                                format: gnutls_x509_crt_fmt_t,
+                                output_data: *mut ::libc::c_void,
+                                output_data_size: *mut size_t)
+     -> ::libc::c_int;
+    pub fn gnutls_pubkey_export2(key: gnutls_pubkey_t,
+                                 format: gnutls_x509_crt_fmt_t,
+                                 out: *mut gnutls_datum_t) -> ::libc::c_int;
+    pub fn gnutls_pubkey_get_key_id(key: gnutls_pubkey_t,
+                                    flags: ::libc::c_uint,
+                                    output_data: *mut ::libc::c_uchar,
+                                    output_data_size: *mut size_t)
+     -> ::libc::c_int;
+    pub fn gnutls_pubkey_get_openpgp_key_id(key: gnutls_pubkey_t,
+                                            flags: ::libc::c_uint,
+                                            output_data: *mut ::libc::c_uchar,
+                                            output_data_size: *mut size_t,
+                                            subkey: *mut ::libc::c_uint)
+     -> ::libc::c_int;
+    pub fn gnutls_pubkey_get_key_usage(key: gnutls_pubkey_t,
+                                       usage: *mut ::libc::c_uint)
+     -> ::libc::c_int;
+    pub fn gnutls_pubkey_set_key_usage(key: gnutls_pubkey_t,
+                                       usage: ::libc::c_uint)
+     -> ::libc::c_int;
+    pub fn gnutls_pubkey_import(key: gnutls_pubkey_t,
+                                data: *const gnutls_datum_t,
+                                format: gnutls_x509_crt_fmt_t)
+     -> ::libc::c_int;
+    pub fn gnutls_pubkey_import_dsa_raw(key: gnutls_pubkey_t,
+                                        p: *const gnutls_datum_t,
+                                        q: *const gnutls_datum_t,
+                                        g: *const gnutls_datum_t,
+                                        y: *const gnutls_datum_t)
+     -> ::libc::c_int;
+    pub fn gnutls_pubkey_import_rsa_raw(key: gnutls_pubkey_t,
+                                        m: *const gnutls_datum_t,
+                                        e: *const gnutls_datum_t)
+     -> ::libc::c_int;
+    pub fn gnutls_pubkey_import_ecc_x962(key: gnutls_pubkey_t,
+                                         parameters: *const gnutls_datum_t,
+                                         ecpoint: *const gnutls_datum_t)
+     -> ::libc::c_int;
+    pub fn gnutls_pubkey_import_ecc_raw(key: gnutls_pubkey_t,
+                                        curve: gnutls_ecc_curve_t,
+                                        x: *const gnutls_datum_t,
+                                        y: *const gnutls_datum_t)
+     -> ::libc::c_int;
+    pub fn gnutls_pubkey_encrypt_data(key: gnutls_pubkey_t,
+                                      flags: ::libc::c_uint,
+                                      plaintext: *const gnutls_datum_t,
+                                      ciphertext: *mut gnutls_datum_t)
+     -> ::libc::c_int;
+    pub fn gnutls_x509_crt_set_pubkey(crt: gnutls_x509_crt_t,
+                                      key: gnutls_pubkey_t) -> ::libc::c_int;
+    pub fn gnutls_x509_crq_set_pubkey(crq: gnutls_x509_crq_t,
+                                      key: gnutls_pubkey_t) -> ::libc::c_int;
+    pub fn gnutls_pubkey_verify_hash2(key: gnutls_pubkey_t,
+                                      algo: gnutls_sign_algorithm_t,
+                                      flags: ::libc::c_uint,
+                                      hash: *const gnutls_datum_t,
+                                      signature: *const gnutls_datum_t)
+     -> ::libc::c_int;
+    pub fn gnutls_pubkey_verify_data2(pubkey: gnutls_pubkey_t,
+                                      algo: gnutls_sign_algorithm_t,
+                                      flags: ::libc::c_uint,
+                                      data: *const gnutls_datum_t,
+                                      signature: *const gnutls_datum_t)
+     -> ::libc::c_int;
+    pub fn gnutls_privkey_init(key: *mut gnutls_privkey_t) -> ::libc::c_int;
+    pub fn gnutls_privkey_deinit(key: gnutls_privkey_t);
+    pub fn gnutls_privkey_generate(key: gnutls_privkey_t,
+                                   algo: gnutls_pk_algorithm_t,
+                                   bits: ::libc::c_uint,
+                                   flags: ::libc::c_uint) -> ::libc::c_int;
+    pub fn gnutls_privkey_verify_params(key: gnutls_privkey_t)
+     -> ::libc::c_int;
+    pub fn gnutls_privkey_set_pin_function(key: gnutls_privkey_t,
+                                           _fn: gnutls_pin_callback_t,
+                                           userdata: *mut ::libc::c_void);
+    pub fn gnutls_privkey_get_pk_algorithm(key: gnutls_privkey_t,
+                                           bits: *mut ::libc::c_uint)
+     -> ::libc::c_int;
+    pub fn gnutls_privkey_get_type(key: gnutls_privkey_t)
+     -> gnutls_privkey_type_t;
+    pub fn gnutls_privkey_status(key: gnutls_privkey_t) -> ::libc::c_int;
+    pub fn gnutls_privkey_import_pkcs11(pkey: gnutls_privkey_t,
+                                        key: gnutls_pkcs11_privkey_t,
+                                        flags: ::libc::c_uint)
+     -> ::libc::c_int;
+    pub fn gnutls_privkey_import_x509(pkey: gnutls_privkey_t,
+                                      key: gnutls_x509_privkey_t,
+                                      flags: ::libc::c_uint) -> ::libc::c_int;
+    pub fn gnutls_privkey_import_openpgp(pkey: gnutls_privkey_t,
+                                         key: gnutls_openpgp_privkey_t,
+                                         flags: ::libc::c_uint)
+     -> ::libc::c_int;
+    pub fn gnutls_privkey_export_x509(pkey: gnutls_privkey_t,
+                                      key: *mut gnutls_x509_privkey_t)
+     -> ::libc::c_int;
+    pub fn gnutls_privkey_export_openpgp(pkey: gnutls_privkey_t,
+                                         key: *mut gnutls_openpgp_privkey_t)
+     -> ::libc::c_int;
+    pub fn gnutls_privkey_export_pkcs11(pkey: gnutls_privkey_t,
+                                        key: *mut gnutls_pkcs11_privkey_t)
+     -> ::libc::c_int;
+    pub fn gnutls_privkey_import_openpgp_raw(pkey: gnutls_privkey_t,
+                                             data: *const gnutls_datum_t,
+                                             format: gnutls_openpgp_crt_fmt_t,
+                                             keyid: gnutls_openpgp_keyid_t,
+                                             password: *const ::libc::c_char)
+     -> ::libc::c_int;
+    pub fn gnutls_privkey_import_x509_raw(pkey: gnutls_privkey_t,
+                                          data: *const gnutls_datum_t,
+                                          format: gnutls_x509_crt_fmt_t,
+                                          password: *const ::libc::c_char,
+                                          flags: ::libc::c_uint)
+     -> ::libc::c_int;
+    pub fn gnutls_privkey_import_tpm_raw(pkey: gnutls_privkey_t,
+                                         fdata: *const gnutls_datum_t,
+                                         format: gnutls_tpmkey_fmt_t,
+                                         srk_password: *const ::libc::c_char,
+                                         key_password: *const ::libc::c_char,
+                                         flags: ::libc::c_uint)
+     -> ::libc::c_int;
+    pub fn gnutls_privkey_import_tpm_url(pkey: gnutls_privkey_t,
+                                         url: *const ::libc::c_char,
+                                         srk_password: *const ::libc::c_char,
+                                         key_password: *const ::libc::c_char,
+                                         flags: ::libc::c_uint)
+     -> ::libc::c_int;
+    pub fn gnutls_privkey_import_url(key: gnutls_privkey_t,
+                                     url: *const ::libc::c_char,
+                                     flags: ::libc::c_uint) -> ::libc::c_int;
+    pub fn gnutls_privkey_import_ext(pkey: gnutls_privkey_t,
+                                     pk: gnutls_pk_algorithm_t,
+                                     userdata: *mut ::libc::c_void,
+                                     sign_func: gnutls_privkey_sign_func,
+                                     decrypt_func:
+                                         gnutls_privkey_decrypt_func,
+                                     flags: ::libc::c_uint) -> ::libc::c_int;
+    pub fn gnutls_privkey_import_ext2(pkey: gnutls_privkey_t,
+                                      pk: gnutls_pk_algorithm_t,
+                                      userdata: *mut ::libc::c_void,
+                                      sign_func: gnutls_privkey_sign_func,
+                                      decrypt_func:
+                                          gnutls_privkey_decrypt_func,
+                                      deinit_func: gnutls_privkey_deinit_func,
+                                      flags: ::libc::c_uint) -> ::libc::c_int;
+    pub fn gnutls_privkey_import_ext3(pkey: gnutls_privkey_t,
+                                      userdata: *mut ::libc::c_void,
+                                      sign_func: gnutls_privkey_sign_func,
+                                      decrypt_func:
+                                          gnutls_privkey_decrypt_func,
+                                      deinit_func: gnutls_privkey_deinit_func,
+                                      info_func: gnutls_privkey_info_func,
+                                      flags: ::libc::c_uint) -> ::libc::c_int;
+    pub fn gnutls_privkey_import_dsa_raw(key: gnutls_privkey_t,
+                                         p: *const gnutls_datum_t,
+                                         q: *const gnutls_datum_t,
+                                         g: *const gnutls_datum_t,
+                                         y: *const gnutls_datum_t,
+                                         x: *const gnutls_datum_t)
+     -> ::libc::c_int;
+    pub fn gnutls_privkey_import_rsa_raw(key: gnutls_privkey_t,
+                                         m: *const gnutls_datum_t,
+                                         e: *const gnutls_datum_t,
+                                         d: *const gnutls_datum_t,
+                                         p: *const gnutls_datum_t,
+                                         q: *const gnutls_datum_t,
+                                         u: *const gnutls_datum_t,
+                                         e1: *const gnutls_datum_t,
+                                         e2: *const gnutls_datum_t)
+     -> ::libc::c_int;
+    pub fn gnutls_privkey_import_ecc_raw(key: gnutls_privkey_t,
+                                         curve: gnutls_ecc_curve_t,
+                                         x: *const gnutls_datum_t,
+                                         y: *const gnutls_datum_t,
+                                         k: *const gnutls_datum_t)
+     -> ::libc::c_int;
+    pub fn gnutls_privkey_sign_data(signer: gnutls_privkey_t,
+                                    hash: gnutls_digest_algorithm_t,
+                                    flags: ::libc::c_uint,
+                                    data: *const gnutls_datum_t,
+                                    signature: *mut gnutls_datum_t)
+     -> ::libc::c_int;
+    pub fn gnutls_privkey_sign_hash(signer: gnutls_privkey_t,
+                                    hash_algo: gnutls_digest_algorithm_t,
+                                    flags: ::libc::c_uint,
+                                    hash_data: *const gnutls_datum_t,
+                                    signature: *mut gnutls_datum_t)
+     -> ::libc::c_int;
+    pub fn gnutls_privkey_decrypt_data(key: gnutls_privkey_t,
+                                       flags: ::libc::c_uint,
+                                       ciphertext: *const gnutls_datum_t,
+                                       plaintext: *mut gnutls_datum_t)
+     -> ::libc::c_int;
+    pub fn gnutls_privkey_export_rsa_raw(key: gnutls_privkey_t,
+                                         m: *mut gnutls_datum_t,
+                                         e: *mut gnutls_datum_t,
+                                         d: *mut gnutls_datum_t,
+                                         p: *mut gnutls_datum_t,
+                                         q: *mut gnutls_datum_t,
+                                         u: *mut gnutls_datum_t,
+                                         e1: *mut gnutls_datum_t,
+                                         e2: *mut gnutls_datum_t)
+     -> ::libc::c_int;
+    pub fn gnutls_privkey_export_dsa_raw(key: gnutls_privkey_t,
+                                         p: *mut gnutls_datum_t,
+                                         q: *mut gnutls_datum_t,
+                                         g: *mut gnutls_datum_t,
+                                         y: *mut gnutls_datum_t,
+                                         x: *mut gnutls_datum_t)
+     -> ::libc::c_int;
+    pub fn gnutls_privkey_export_ecc_raw(key: gnutls_privkey_t,
+                                         curve: *mut gnutls_ecc_curve_t,
+                                         x: *mut gnutls_datum_t,
+                                         y: *mut gnutls_datum_t,
+                                         k: *mut gnutls_datum_t)
+     -> ::libc::c_int;
+    pub fn gnutls_x509_crt_privkey_sign(crt: gnutls_x509_crt_t,
+                                        issuer: gnutls_x509_crt_t,
+                                        issuer_key: gnutls_privkey_t,
+                                        dig: gnutls_digest_algorithm_t,
+                                        flags: ::libc::c_uint)
+     -> ::libc::c_int;
+    pub fn gnutls_x509_crl_privkey_sign(crl: gnutls_x509_crl_t,
+                                        issuer: gnutls_x509_crt_t,
+                                        issuer_key: gnutls_privkey_t,
+                                        dig: gnutls_digest_algorithm_t,
+                                        flags: ::libc::c_uint)
+     -> ::libc::c_int;
+    pub fn gnutls_x509_crq_privkey_sign(crq: gnutls_x509_crq_t,
+                                        key: gnutls_privkey_t,
+                                        dig: gnutls_digest_algorithm_t,
+                                        flags: ::libc::c_uint)
+     -> ::libc::c_int;
+    pub fn gnutls_pcert_import_x509(pcert: *mut gnutls_pcert_st,
+                                    crt: gnutls_x509_crt_t,
+                                    flags: ::libc::c_uint) -> ::libc::c_int;
+    pub fn gnutls_pcert_import_x509_list(pcert: *mut gnutls_pcert_st,
+                                         crt: *mut gnutls_x509_crt_t,
+                                         ncrt: *mut ::libc::c_uint,
+                                         flags: ::libc::c_uint)
+     -> ::libc::c_int;
+    pub fn gnutls_pcert_export_x509(pcert: *mut gnutls_pcert_st,
+                                    crt: *mut gnutls_x509_crt_t)
+     -> ::libc::c_int;
+    pub fn gnutls_pcert_list_import_x509_raw(pcerts: *mut gnutls_pcert_st,
+                                             pcert_max: *mut ::libc::c_uint,
+                                             data: *const gnutls_datum_t,
+                                             format: gnutls_x509_crt_fmt_t,
+                                             flags: ::libc::c_uint)
+     -> ::libc::c_int;
+    pub fn gnutls_pcert_import_x509_raw(pcert: *mut gnutls_pcert_st,
+                                        cert: *const gnutls_datum_t,
+                                        format: gnutls_x509_crt_fmt_t,
+                                        flags: ::libc::c_uint)
+     -> ::libc::c_int;
+    pub fn gnutls_pcert_import_openpgp_raw(pcert: *mut gnutls_pcert_st,
+                                           cert: *const gnutls_datum_t,
+                                           format: gnutls_openpgp_crt_fmt_t,
+                                           keyid: gnutls_openpgp_keyid_t,
+                                           flags: ::libc::c_uint)
+     -> ::libc::c_int;
+    pub fn gnutls_pcert_import_openpgp(pcert: *mut gnutls_pcert_st,
+                                       crt: gnutls_openpgp_crt_t,
+                                       flags: ::libc::c_uint)
+     -> ::libc::c_int;
+    pub fn gnutls_pcert_export_openpgp(pcert: *mut gnutls_pcert_st,
+                                       crt: *mut gnutls_openpgp_crt_t)
+     -> ::libc::c_int;
+    pub fn gnutls_pcert_deinit(pcert: *mut gnutls_pcert_st);
+    pub fn gnutls_certificate_set_retrieve_function2(cred:
+                                                         gnutls_certificate_credentials_t,
+                                                     func:
+                                                         *mut ::std::option::Option<extern "C" fn()
+                                                                                        ->
+                                                                                            ::libc::c_int>);
+    pub fn gnutls_certificate_set_key(res: gnutls_certificate_credentials_t,
+                                      names: *mut *const ::libc::c_char,
+                                      names_size: ::libc::c_int,
+                                      pcert_list: *mut gnutls_pcert_st,
+                                      pcert_list_size: ::libc::c_int,
+                                      key: gnutls_privkey_t) -> ::libc::c_int;
+    pub fn gnutls_pubkey_print(pubkey: gnutls_pubkey_t,
+                               format: gnutls_certificate_print_formats_t,
+                               out: *mut gnutls_datum_t) -> ::libc::c_int;
+    pub fn gnutls_cipher_init(handle: *mut gnutls_cipher_hd_t,
+                              cipher: gnutls_cipher_algorithm_t,
+                              key: *const gnutls_datum_t,
+                              iv: *const gnutls_datum_t) -> ::libc::c_int;
+    pub fn gnutls_cipher_encrypt(handle: gnutls_cipher_hd_t,
+                                 text: *mut ::libc::c_void, textlen: size_t)
+     -> ::libc::c_int;
+    pub fn gnutls_cipher_decrypt(handle: gnutls_cipher_hd_t,
+                                 ciphertext: *mut ::libc::c_void,
+                                 ciphertextlen: size_t) -> ::libc::c_int;
+    pub fn gnutls_cipher_decrypt2(handle: gnutls_cipher_hd_t,
+                                  ciphertext: *const ::libc::c_void,
+                                  ciphertextlen: size_t,
+                                  text: *mut ::libc::c_void, textlen: size_t)
+     -> ::libc::c_int;
+    pub fn gnutls_cipher_encrypt2(handle: gnutls_cipher_hd_t,
+                                  text: *const ::libc::c_void,
+                                  textlen: size_t,
+                                  ciphertext: *mut ::libc::c_void,
+                                  ciphertextlen: size_t) -> ::libc::c_int;
+    pub fn gnutls_cipher_set_iv(handle: gnutls_cipher_hd_t,
+                                iv: *mut ::libc::c_void, ivlen: size_t);
+    pub fn gnutls_cipher_tag(handle: gnutls_cipher_hd_t,
+                             tag: *mut ::libc::c_void, tag_size: size_t)
+     -> ::libc::c_int;
+    pub fn gnutls_cipher_add_auth(handle: gnutls_cipher_hd_t,
+                                  text: *const ::libc::c_void,
+                                  text_size: size_t) -> ::libc::c_int;
+    pub fn gnutls_cipher_deinit(handle: gnutls_cipher_hd_t);
+    pub fn gnutls_cipher_get_block_size(algorithm: gnutls_cipher_algorithm_t)
+     -> ::libc::c_int;
+    pub fn gnutls_cipher_get_iv_size(algorithm: gnutls_cipher_algorithm_t)
+     -> ::libc::c_int;
+    pub fn gnutls_cipher_get_tag_size(algorithm: gnutls_cipher_algorithm_t)
+     -> ::libc::c_int;
+    pub fn gnutls_aead_cipher_init(handle: *mut gnutls_aead_cipher_hd_t,
+                                   cipher: gnutls_cipher_algorithm_t,
+                                   key: *const gnutls_datum_t)
+     -> ::libc::c_int;
+    pub fn gnutls_aead_cipher_decrypt(handle: gnutls_aead_cipher_hd_t,
+                                      nonce: *const ::libc::c_void,
+                                      nonce_len: size_t,
+                                      auth: *const ::libc::c_void,
+                                      auth_len: size_t, tag_size: size_t,
+                                      ctext: *const ::libc::c_void,
+                                      ctext_len: size_t,
+                                      ptext: *mut ::libc::c_void,
+                                      ptext_len: *mut size_t)
+     -> ::libc::c_int;
+    pub fn gnutls_aead_cipher_encrypt(handle: gnutls_aead_cipher_hd_t,
+                                      nonce: *const ::libc::c_void,
+                                      nonce_len: size_t,
+                                      auth: *const ::libc::c_void,
+                                      auth_len: size_t, tag_size: size_t,
+                                      ptext: *const ::libc::c_void,
+                                      ptext_len: size_t,
+                                      ctext: *mut ::libc::c_void,
+                                      ctext_len: *mut size_t)
+     -> ::libc::c_int;
+    pub fn gnutls_aead_cipher_deinit(handle: gnutls_aead_cipher_hd_t);
+    pub fn gnutls_mac_get_nonce_size(algorithm: gnutls_mac_algorithm_t)
+     -> size_t;
+    pub fn gnutls_hmac_init(dig: *mut gnutls_hmac_hd_t,
+                            algorithm: gnutls_mac_algorithm_t,
+                            key: *const ::libc::c_void, keylen: size_t)
+     -> ::libc::c_int;
+    pub fn gnutls_hmac_set_nonce(handle: gnutls_hmac_hd_t,
+                                 nonce: *const ::libc::c_void,
+                                 nonce_len: size_t);
+    pub fn gnutls_hmac(handle: gnutls_hmac_hd_t, text: *const ::libc::c_void,
+                       textlen: size_t) -> ::libc::c_int;
+    pub fn gnutls_hmac_output(handle: gnutls_hmac_hd_t,
+                              digest: *mut ::libc::c_void);
+    pub fn gnutls_hmac_deinit(handle: gnutls_hmac_hd_t,
+                              digest: *mut ::libc::c_void);
+    pub fn gnutls_hmac_get_len(algorithm: gnutls_mac_algorithm_t)
+     -> ::libc::c_int;
+    pub fn gnutls_hmac_fast(algorithm: gnutls_mac_algorithm_t,
+                            key: *const ::libc::c_void, keylen: size_t,
+                            text: *const ::libc::c_void, textlen: size_t,
+                            digest: *mut ::libc::c_void) -> ::libc::c_int;
+    pub fn gnutls_hash_init(dig: *mut gnutls_hash_hd_t,
+                            algorithm: gnutls_digest_algorithm_t)
+     -> ::libc::c_int;
+    pub fn gnutls_hash(handle: gnutls_hash_hd_t, text: *const ::libc::c_void,
+                       textlen: size_t) -> ::libc::c_int;
+    pub fn gnutls_hash_output(handle: gnutls_hash_hd_t,
+                              digest: *mut ::libc::c_void);
+    pub fn gnutls_hash_deinit(handle: gnutls_hash_hd_t,
+                              digest: *mut ::libc::c_void);
+    pub fn gnutls_hash_get_len(algorithm: gnutls_digest_algorithm_t)
+     -> ::libc::c_int;
+    pub fn gnutls_hash_fast(algorithm: gnutls_digest_algorithm_t,
+                            text: *const ::libc::c_void, textlen: size_t,
+                            digest: *mut ::libc::c_void) -> ::libc::c_int;
+    pub fn gnutls_rnd(level: gnutls_rnd_level_t, data: *mut ::libc::c_void,
+                      len: size_t) -> ::libc::c_int;
+    pub fn gnutls_rnd_refresh();
+    pub fn gnutls_crypto_register_cipher(algorithm: gnutls_cipher_algorithm_t,
+                                         priority: ::libc::c_int,
+                                         init: gnutls_cipher_init_func,
+                                         setkey: gnutls_cipher_setkey_func,
+                                         setiv: gnutls_cipher_setiv_func,
+                                         encrypt: gnutls_cipher_encrypt_func,
+                                         decrypt: gnutls_cipher_decrypt_func,
+                                         deinit: gnutls_cipher_deinit_func)
+     -> ::libc::c_int;
+    pub fn gnutls_crypto_register_aead_cipher(algorithm:
+                                                  gnutls_cipher_algorithm_t,
+                                              priority: ::libc::c_int,
+                                              init: gnutls_cipher_init_func,
+                                              setkey:
+                                                  gnutls_cipher_setkey_func,
+                                              aead_encrypt:
+                                                  gnutls_cipher_aead_encrypt_func,
+                                              aead_decrypt:
+                                                  gnutls_cipher_aead_decrypt_func,
+                                              deinit:
+                                                  gnutls_cipher_deinit_func)
+     -> ::libc::c_int;
+    pub fn gnutls_crypto_register_mac(mac: gnutls_mac_algorithm_t,
+                                      priority: ::libc::c_int,
+                                      init: gnutls_mac_init_func,
+                                      setkey: gnutls_mac_setkey_func,
+                                      setnonce: gnutls_mac_setnonce_func,
+                                      hash: gnutls_mac_hash_func,
+                                      output: gnutls_mac_output_func,
+                                      deinit: gnutls_mac_deinit_func,
+                                      hash_fast: gnutls_mac_fast_func)
+     -> ::libc::c_int;
+    pub fn gnutls_crypto_register_digest(digest: gnutls_digest_algorithm_t,
+                                         priority: ::libc::c_int,
+                                         init: gnutls_digest_init_func,
+                                         hash: gnutls_digest_hash_func,
+                                         output: gnutls_digest_output_func,
+                                         deinit: gnutls_digest_deinit_func,
+                                         hash_fast: gnutls_digest_fast_func)
+     -> ::libc::c_int;
+    pub fn dane_state_init(s: *mut dane_state_t, flags: ::libc::c_uint)
+     -> ::libc::c_int;
+    pub fn dane_state_set_dlv_file(s: dane_state_t,
+                                   file: *const ::libc::c_char)
+     -> ::libc::c_int;
+    pub fn dane_state_deinit(s: dane_state_t);
+    pub fn dane_raw_tlsa(s: dane_state_t, r: *mut dane_query_t,
+                         dane_data: *const *mut ::libc::c_char,
+                         dane_data_len: *const ::libc::c_int,
+                         secure: ::libc::c_int, bogus: ::libc::c_int)
+     -> ::libc::c_int;
+    pub fn dane_query_tlsa(s: dane_state_t, r: *mut dane_query_t,
+                           host: *const ::libc::c_char,
+                           proto: *const ::libc::c_char, port: ::libc::c_uint)
+     -> ::libc::c_int;
+    pub fn dane_query_status(q: dane_query_t) -> dane_query_status_t;
+    pub fn dane_query_entries(q: dane_query_t) -> ::libc::c_uint;
+    pub fn dane_query_data(q: dane_query_t, idx: ::libc::c_uint,
+                           usage: *mut ::libc::c_uint,
+                           _type: *mut ::libc::c_uint,
+                           _match: *mut ::libc::c_uint,
+                           data: *mut gnutls_datum_t) -> ::libc::c_int;
+    pub fn dane_query_to_raw_tlsa(q: dane_query_t,
+                                  data_entries: *mut ::libc::c_uint,
+                                  dane_data: *mut *mut *mut ::libc::c_char,
+                                  dane_data_len: *mut *mut ::libc::c_int,
+                                  secure: *mut ::libc::c_int,
+                                  bogus: *mut ::libc::c_int) -> ::libc::c_int;
+    pub fn dane_query_deinit(q: dane_query_t);
+    pub fn dane_cert_type_name(_type: dane_cert_type_t)
+     -> *const ::libc::c_char;
+    pub fn dane_match_type_name(_type: dane_match_type_t)
+     -> *const ::libc::c_char;
+    pub fn dane_cert_usage_name(usage: dane_cert_usage_t)
+     -> *const ::libc::c_char;
+    pub fn dane_verification_status_print(status: ::libc::c_uint,
+                                          out: *mut gnutls_datum_t,
+                                          flags: ::libc::c_uint)
+     -> ::libc::c_int;
+    pub fn dane_verify_crt_raw(s: dane_state_t, chain: *const gnutls_datum_t,
+                               chain_size: ::libc::c_uint,
+                               chain_type: gnutls_certificate_type_t,
+                               r: dane_query_t, sflags: ::libc::c_uint,
+                               vflags: ::libc::c_uint,
+                               verify: *mut ::libc::c_uint) -> ::libc::c_int;
+    pub fn dane_verify_crt(s: dane_state_t, chain: *const gnutls_datum_t,
+                           chain_size: ::libc::c_uint,
+                           chain_type: gnutls_certificate_type_t,
+                           hostname: *const ::libc::c_char,
+                           proto: *const ::libc::c_char, port: ::libc::c_uint,
+                           sflags: ::libc::c_uint, vflags: ::libc::c_uint,
+                           verify: *mut ::libc::c_uint) -> ::libc::c_int;
+    pub fn dane_verify_session_crt(s: dane_state_t, session: gnutls_session_t,
+                                   hostname: *const ::libc::c_char,
+                                   proto: *const ::libc::c_char,
+                                   port: ::libc::c_uint,
+                                   sflags: ::libc::c_uint,
+                                   vflags: ::libc::c_uint,
+                                   verify: *mut ::libc::c_uint)
+     -> ::libc::c_int;
+    pub fn dane_strerror(error: ::libc::c_int) -> *const ::libc::c_char;
+    pub fn gnutls_dtls_set_timeouts(session: gnutls_session_t,
+                                    retrans_timeout: ::libc::c_uint,
+                                    total_timeout: ::libc::c_uint);
+    pub fn gnutls_dtls_get_mtu(session: gnutls_session_t) -> ::libc::c_uint;
+    pub fn gnutls_dtls_get_data_mtu(session: gnutls_session_t)
+     -> ::libc::c_uint;
+    pub fn gnutls_dtls_set_mtu(session: gnutls_session_t,
+                               mtu: ::libc::c_uint);
+    pub fn gnutls_dtls_set_data_mtu(session: gnutls_session_t,
+                                    mtu: ::libc::c_uint) -> ::libc::c_int;
+    pub fn gnutls_dtls_get_timeout(session: gnutls_session_t)
+     -> ::libc::c_uint;
+    pub fn gnutls_dtls_cookie_send(key: *mut gnutls_datum_t,
+                                   client_data: *mut ::libc::c_void,
+                                   client_data_size: size_t,
+                                   prestate: *mut gnutls_dtls_prestate_st,
+                                   ptr: gnutls_transport_ptr_t,
+                                   push_func: gnutls_push_func)
+     -> ::libc::c_int;
+    pub fn gnutls_dtls_cookie_verify(key: *mut gnutls_datum_t,
+                                     client_data: *mut ::libc::c_void,
+                                     client_data_size: size_t,
+                                     _msg: *mut ::libc::c_void,
+                                     msg_size: size_t,
+                                     prestate: *mut gnutls_dtls_prestate_st)
+     -> ::libc::c_int;
+    pub fn gnutls_dtls_prestate_set(session: gnutls_session_t,
+                                    prestate: *mut gnutls_dtls_prestate_st);
+    pub fn gnutls_record_get_discarded(session: gnutls_session_t)
+     -> ::libc::c_uint;
+    pub fn gnutls_ocsp_req_init(req: *mut gnutls_ocsp_req_t) -> ::libc::c_int;
+    pub fn gnutls_ocsp_req_deinit(req: gnutls_ocsp_req_t);
+    pub fn gnutls_ocsp_req_import(req: gnutls_ocsp_req_t,
+                                  data: *const gnutls_datum_t)
+     -> ::libc::c_int;
+    pub fn gnutls_ocsp_req_export(req: gnutls_ocsp_req_t,
+                                  data: *mut gnutls_datum_t) -> ::libc::c_int;
+    pub fn gnutls_ocsp_req_print(req: gnutls_ocsp_req_t,
+                                 format: gnutls_ocsp_print_formats_t,
+                                 out: *mut gnutls_datum_t) -> ::libc::c_int;
+    pub fn gnutls_ocsp_req_get_version(req: gnutls_ocsp_req_t)
+     -> ::libc::c_int;
+    pub fn gnutls_ocsp_req_get_cert_id(req: gnutls_ocsp_req_t,
+                                       indx: ::libc::c_uint,
+                                       digest: *mut gnutls_digest_algorithm_t,
+                                       issuer_name_hash: *mut gnutls_datum_t,
+                                       issuer_key_hash: *mut gnutls_datum_t,
+                                       serial_number: *mut gnutls_datum_t)
+     -> ::libc::c_int;
+    pub fn gnutls_ocsp_req_add_cert_id(req: gnutls_ocsp_req_t,
+                                       digest: gnutls_digest_algorithm_t,
+                                       issuer_name_hash:
+                                           *const gnutls_datum_t,
+                                       issuer_key_hash: *const gnutls_datum_t,
+                                       serial_number: *const gnutls_datum_t)
+     -> ::libc::c_int;
+    pub fn gnutls_ocsp_req_add_cert(req: gnutls_ocsp_req_t,
+                                    digest: gnutls_digest_algorithm_t,
+                                    issuer: gnutls_x509_crt_t,
+                                    cert: gnutls_x509_crt_t) -> ::libc::c_int;
+    pub fn gnutls_ocsp_req_get_extension(req: gnutls_ocsp_req_t,
+                                         indx: ::libc::c_uint,
+                                         oid: *mut gnutls_datum_t,
+                                         critical: *mut ::libc::c_uint,
+                                         data: *mut gnutls_datum_t)
+     -> ::libc::c_int;
+    pub fn gnutls_ocsp_req_set_extension(req: gnutls_ocsp_req_t,
+                                         oid: *const ::libc::c_char,
+                                         critical: ::libc::c_uint,
+                                         data: *const gnutls_datum_t)
+     -> ::libc::c_int;
+    pub fn gnutls_ocsp_req_get_nonce(req: gnutls_ocsp_req_t,
+                                     critical: *mut ::libc::c_uint,
+                                     nonce: *mut gnutls_datum_t)
+     -> ::libc::c_int;
+    pub fn gnutls_ocsp_req_set_nonce(req: gnutls_ocsp_req_t,
+                                     critical: ::libc::c_uint,
+                                     nonce: *const gnutls_datum_t)
+     -> ::libc::c_int;
+    pub fn gnutls_ocsp_req_randomize_nonce(req: gnutls_ocsp_req_t)
+     -> ::libc::c_int;
+    pub fn gnutls_ocsp_resp_init(resp: *mut gnutls_ocsp_resp_t)
+     -> ::libc::c_int;
+    pub fn gnutls_ocsp_resp_deinit(resp: gnutls_ocsp_resp_t);
+    pub fn gnutls_ocsp_resp_import(resp: gnutls_ocsp_resp_t,
+                                   data: *const gnutls_datum_t)
+     -> ::libc::c_int;
+    pub fn gnutls_ocsp_resp_export(resp: gnutls_ocsp_resp_t,
+                                   data: *mut gnutls_datum_t)
+     -> ::libc::c_int;
+    pub fn gnutls_ocsp_resp_print(resp: gnutls_ocsp_resp_t,
+                                  format: gnutls_ocsp_print_formats_t,
+                                  out: *mut gnutls_datum_t) -> ::libc::c_int;
+    pub fn gnutls_ocsp_resp_get_status(resp: gnutls_ocsp_resp_t)
+     -> ::libc::c_int;
+    pub fn gnutls_ocsp_resp_get_response(resp: gnutls_ocsp_resp_t,
+                                         response_type_oid:
+                                             *mut gnutls_datum_t,
+                                         response: *mut gnutls_datum_t)
+     -> ::libc::c_int;
+    pub fn gnutls_ocsp_resp_get_version(resp: gnutls_ocsp_resp_t)
+     -> ::libc::c_int;
+    pub fn gnutls_ocsp_resp_get_responder(resp: gnutls_ocsp_resp_t,
+                                          dn: *mut gnutls_datum_t)
+     -> ::libc::c_int;
+    pub fn gnutls_ocsp_resp_get_responder_raw_id(resp: gnutls_ocsp_resp_t,
+                                                 _type: ::libc::c_uint,
+                                                 raw: *mut gnutls_datum_t)
+     -> ::libc::c_int;
+    pub fn gnutls_ocsp_resp_get_produced(resp: gnutls_ocsp_resp_t) -> time_t;
+    pub fn gnutls_ocsp_resp_get_single(resp: gnutls_ocsp_resp_t,
+                                       indx: ::libc::c_uint,
+                                       digest: *mut gnutls_digest_algorithm_t,
+                                       issuer_name_hash: *mut gnutls_datum_t,
+                                       issuer_key_hash: *mut gnutls_datum_t,
+                                       serial_number: *mut gnutls_datum_t,
+                                       cert_status: *mut ::libc::c_uint,
+                                       this_update: *mut time_t,
+                                       next_update: *mut time_t,
+                                       revocation_time: *mut time_t,
+                                       revocation_reason: *mut ::libc::c_uint)
+     -> ::libc::c_int;
+    pub fn gnutls_ocsp_resp_get_extension(resp: gnutls_ocsp_resp_t,
+                                          indx: ::libc::c_uint,
+                                          oid: *mut gnutls_datum_t,
+                                          critical: *mut ::libc::c_uint,
+                                          data: *mut gnutls_datum_t)
+     -> ::libc::c_int;
+    pub fn gnutls_ocsp_resp_get_nonce(resp: gnutls_ocsp_resp_t,
+                                      critical: *mut ::libc::c_uint,
+                                      nonce: *mut gnutls_datum_t)
+     -> ::libc::c_int;
+    pub fn gnutls_ocsp_resp_get_signature_algorithm(resp: gnutls_ocsp_resp_t)
+     -> ::libc::c_int;
+    pub fn gnutls_ocsp_resp_get_signature(resp: gnutls_ocsp_resp_t,
+                                          sig: *mut gnutls_datum_t)
+     -> ::libc::c_int;
+    pub fn gnutls_ocsp_resp_get_certs(resp: gnutls_ocsp_resp_t,
+                                      certs: *mut *mut gnutls_x509_crt_t,
+                                      ncerts: *mut size_t) -> ::libc::c_int;
+    pub fn gnutls_ocsp_resp_verify_direct(resp: gnutls_ocsp_resp_t,
+                                          issuer: gnutls_x509_crt_t,
+                                          verify: *mut ::libc::c_uint,
+                                          flags: ::libc::c_uint)
+     -> ::libc::c_int;
+    pub fn gnutls_ocsp_resp_verify(resp: gnutls_ocsp_resp_t,
+                                   trustlist: gnutls_x509_trust_list_t,
+                                   verify: *mut ::libc::c_uint,
+                                   flags: ::libc::c_uint) -> ::libc::c_int;
+    pub fn gnutls_ocsp_resp_check_crt(resp: gnutls_ocsp_resp_t,
+                                      indx: ::libc::c_uint,
+                                      crt: gnutls_x509_crt_t)
+     -> ::libc::c_int;
+    pub fn gnutls_pkcs12_init(pkcs12: *mut gnutls_pkcs12_t) -> ::libc::c_int;
+    pub fn gnutls_pkcs12_deinit(pkcs12: gnutls_pkcs12_t);
+    pub fn gnutls_pkcs12_import(pkcs12: gnutls_pkcs12_t,
+                                data: *const gnutls_datum_t,
+                                format: gnutls_x509_crt_fmt_t,
+                                flags: ::libc::c_uint) -> ::libc::c_int;
+    pub fn gnutls_pkcs12_export(pkcs12: gnutls_pkcs12_t,
+                                format: gnutls_x509_crt_fmt_t,
+                                output_data: *mut ::libc::c_void,
+                                output_data_size: *mut size_t)
+     -> ::libc::c_int;
+    pub fn gnutls_pkcs12_export2(pkcs12: gnutls_pkcs12_t,
+                                 format: gnutls_x509_crt_fmt_t,
+                                 out: *mut gnutls_datum_t) -> ::libc::c_int;
+    pub fn gnutls_pkcs12_get_bag(pkcs12: gnutls_pkcs12_t, indx: ::libc::c_int,
+                                 bag: gnutls_pkcs12_bag_t) -> ::libc::c_int;
+    pub fn gnutls_pkcs12_set_bag(pkcs12: gnutls_pkcs12_t,
+                                 bag: gnutls_pkcs12_bag_t) -> ::libc::c_int;
+    pub fn gnutls_pkcs12_generate_mac(pkcs12: gnutls_pkcs12_t,
+                                      pass: *const ::libc::c_char)
+     -> ::libc::c_int;
+    pub fn gnutls_pkcs12_generate_mac2(pkcs12: gnutls_pkcs12_t,
+                                       mac: gnutls_mac_algorithm_t,
+                                       pass: *const ::libc::c_char)
+     -> ::libc::c_int;
+    pub fn gnutls_pkcs12_verify_mac(pkcs12: gnutls_pkcs12_t,
+                                    pass: *const ::libc::c_char)
+     -> ::libc::c_int;
+    pub fn gnutls_pkcs12_bag_decrypt(bag: gnutls_pkcs12_bag_t,
+                                     pass: *const ::libc::c_char)
+     -> ::libc::c_int;
+    pub fn gnutls_pkcs12_bag_encrypt(bag: gnutls_pkcs12_bag_t,
+                                     pass: *const ::libc::c_char,
+                                     flags: ::libc::c_uint) -> ::libc::c_int;
+    pub fn gnutls_pkcs12_bag_enc_info(bag: gnutls_pkcs12_bag_t,
+                                      schema: *mut ::libc::c_uint,
+                                      cipher: *mut ::libc::c_uint,
+                                      salt: *mut ::libc::c_void,
+                                      salt_size: *mut ::libc::c_uint,
+                                      iter_count: *mut ::libc::c_uint,
+                                      oid: *mut *mut ::libc::c_char)
+     -> ::libc::c_int;
+    pub fn gnutls_pkcs12_mac_info(pkcs12: gnutls_pkcs12_t,
+                                  mac: *mut ::libc::c_uint,
+                                  salt: *mut ::libc::c_void,
+                                  salt_size: *mut ::libc::c_uint,
+                                  iter_count: *mut ::libc::c_uint,
+                                  oid: *mut *mut ::libc::c_char)
+     -> ::libc::c_int;
+    pub fn gnutls_pkcs12_simple_parse(p12: gnutls_pkcs12_t,
+                                      password: *const ::libc::c_char,
+                                      key: *mut gnutls_x509_privkey_t,
+                                      chain: *mut *mut gnutls_x509_crt_t,
+                                      chain_len: *mut ::libc::c_uint,
+                                      extra_certs:
+                                          *mut *mut gnutls_x509_crt_t,
+                                      extra_certs_len: *mut ::libc::c_uint,
+                                      crl: *mut gnutls_x509_crl_t,
+                                      flags: ::libc::c_uint) -> ::libc::c_int;
+    pub fn gnutls_pkcs12_bag_get_type(bag: gnutls_pkcs12_bag_t,
+                                      indx: ::libc::c_int)
+     -> gnutls_pkcs12_bag_type_t;
+    pub fn gnutls_pkcs12_bag_get_data(bag: gnutls_pkcs12_bag_t,
+                                      indx: ::libc::c_int,
+                                      data: *mut gnutls_datum_t)
+     -> ::libc::c_int;
+    pub fn gnutls_pkcs12_bag_set_data(bag: gnutls_pkcs12_bag_t,
+                                      _type: gnutls_pkcs12_bag_type_t,
+                                      data: *const gnutls_datum_t)
+     -> ::libc::c_int;
+    pub fn gnutls_pkcs12_bag_set_crl(bag: gnutls_pkcs12_bag_t,
+                                     crl: gnutls_x509_crl_t) -> ::libc::c_int;
+    pub fn gnutls_pkcs12_bag_set_crt(bag: gnutls_pkcs12_bag_t,
+                                     crt: gnutls_x509_crt_t) -> ::libc::c_int;
+    pub fn gnutls_pkcs12_bag_set_privkey(bag: gnutls_pkcs12_bag_t,
+                                         privkey: gnutls_x509_privkey_t,
+                                         password: *const ::libc::c_char,
+                                         flags: ::libc::c_uint)
+     -> ::libc::c_int;
+    pub fn gnutls_pkcs12_bag_init(bag: *mut gnutls_pkcs12_bag_t)
+     -> ::libc::c_int;
+    pub fn gnutls_pkcs12_bag_deinit(bag: gnutls_pkcs12_bag_t);
+    pub fn gnutls_pkcs12_bag_get_count(bag: gnutls_pkcs12_bag_t)
+     -> ::libc::c_int;
+    pub fn gnutls_pkcs12_bag_get_key_id(bag: gnutls_pkcs12_bag_t,
+                                        indx: ::libc::c_int,
+                                        id: *mut gnutls_datum_t)
+     -> ::libc::c_int;
+    pub fn gnutls_pkcs12_bag_set_key_id(bag: gnutls_pkcs12_bag_t,
+                                        indx: ::libc::c_int,
+                                        id: *const gnutls_datum_t)
+     -> ::libc::c_int;
+    pub fn gnutls_pkcs12_bag_get_friendly_name(bag: gnutls_pkcs12_bag_t,
+                                               indx: ::libc::c_int,
+                                               name: *mut *mut ::libc::c_char)
+     -> ::libc::c_int;
+    pub fn gnutls_pkcs12_bag_set_friendly_name(bag: gnutls_pkcs12_bag_t,
+                                               indx: ::libc::c_int,
+                                               name: *const ::libc::c_char)
+     -> ::libc::c_int;
+    pub fn gnutls_cipher_self_test(all: ::libc::c_uint,
+                                   cipher: gnutls_cipher_algorithm_t)
+     -> ::libc::c_int;
+    pub fn gnutls_mac_self_test(all: ::libc::c_uint,
+                                mac: gnutls_mac_algorithm_t) -> ::libc::c_int;
+    pub fn gnutls_digest_self_test(all: ::libc::c_uint,
+                                   digest: gnutls_digest_algorithm_t)
+     -> ::libc::c_int;
+    pub fn gnutls_pk_self_test(all: ::libc::c_uint, pk: gnutls_pk_algorithm_t)
+     -> ::libc::c_int;
+    pub fn gnutls_system_key_iter_deinit(iter: gnutls_system_key_iter_t);
+    pub fn gnutls_system_key_iter_get_info(iter:
+                                               *mut gnutls_system_key_iter_t,
+                                           cert_type: ::libc::c_uint,
+                                           cert_url: *mut *mut ::libc::c_char,
+                                           key_url: *mut *mut ::libc::c_char,
+                                           label: *mut *mut ::libc::c_char,
+                                           der: *mut gnutls_datum_t,
+                                           flags: ::libc::c_uint)
+     -> ::libc::c_int;
+    pub fn gnutls_system_key_delete(cert_url: *const ::libc::c_char,
+                                    key_url: *const ::libc::c_char)
+     -> ::libc::c_int;
+    pub fn gnutls_system_key_add_x509(crt: gnutls_x509_crt_t,
+                                      privkey: gnutls_x509_privkey_t,
+                                      label: *const ::libc::c_char,
+                                      cert_url: *mut *mut ::libc::c_char,
+                                      key_url: *mut *mut ::libc::c_char)
+     -> ::libc::c_int;
+    pub fn gnutls_register_custom_url(st: *const gnutls_custom_url_st)
+     -> ::libc::c_int;
+    pub fn gnutls_subject_alt_names_init(arg1:
+                                             *mut gnutls_subject_alt_names_t)
+     -> ::libc::c_int;
+    pub fn gnutls_subject_alt_names_deinit(sans: gnutls_subject_alt_names_t);
+    pub fn gnutls_subject_alt_names_get(sans: gnutls_subject_alt_names_t,
+                                        seq: ::libc::c_uint,
+                                        san_type: *mut ::libc::c_uint,
+                                        san: *mut gnutls_datum_t,
+                                        othername_oid: *mut gnutls_datum_t)
+     -> ::libc::c_int;
+    pub fn gnutls_subject_alt_names_set(sans: gnutls_subject_alt_names_t,
+                                        san_type: ::libc::c_uint,
+                                        san: *const gnutls_datum_t,
+                                        othername_oid: *const ::libc::c_char)
+     -> ::libc::c_int;
+    pub fn gnutls_x509_ext_import_subject_alt_names(ext:
+                                                        *const gnutls_datum_t,
+                                                    arg1:
+                                                        gnutls_subject_alt_names_t,
+                                                    flags: ::libc::c_uint)
+     -> ::libc::c_int;
+    pub fn gnutls_x509_ext_export_subject_alt_names(arg1:
+                                                        gnutls_subject_alt_names_t,
+                                                    ext: *mut gnutls_datum_t)
+     -> ::libc::c_int;
+    pub fn gnutls_x509_crl_dist_points_init(arg1:
+                                                *mut gnutls_x509_crl_dist_points_t)
+     -> ::libc::c_int;
+    pub fn gnutls_x509_crl_dist_points_deinit(arg1:
+                                                  gnutls_x509_crl_dist_points_t);
+    pub fn gnutls_x509_crl_dist_points_get(arg1:
+                                               gnutls_x509_crl_dist_points_t,
+                                           seq: ::libc::c_uint,
+                                           _type: *mut ::libc::c_uint,
+                                           dist: *mut gnutls_datum_t,
+                                           reason_flags: *mut ::libc::c_uint)
+     -> ::libc::c_int;
+    pub fn gnutls_x509_crl_dist_points_set(arg1:
+                                               gnutls_x509_crl_dist_points_t,
+                                           _type:
+                                               gnutls_x509_subject_alt_name_t,
+                                           dist: *const gnutls_datum_t,
+                                           reason_flags: ::libc::c_uint)
+     -> ::libc::c_int;
+    pub fn gnutls_x509_ext_import_crl_dist_points(ext: *const gnutls_datum_t,
+                                                  dp:
+                                                      gnutls_x509_crl_dist_points_t,
+                                                  flags: ::libc::c_uint)
+     -> ::libc::c_int;
+    pub fn gnutls_x509_ext_export_crl_dist_points(dp:
+                                                      gnutls_x509_crl_dist_points_t,
+                                                  ext: *mut gnutls_datum_t)
+     -> ::libc::c_int;
+    pub fn gnutls_x509_ext_import_name_constraints(ext: *const gnutls_datum_t,
+                                                   nc:
+                                                       gnutls_x509_name_constraints_t,
+                                                   flags: ::libc::c_uint)
+     -> ::libc::c_int;
+    pub fn gnutls_x509_ext_export_name_constraints(nc:
+                                                       gnutls_x509_name_constraints_t,
+                                                   ext: *mut gnutls_datum_t)
+     -> ::libc::c_int;
+    pub fn gnutls_x509_aia_init(arg1: *mut gnutls_x509_aia_t)
+     -> ::libc::c_int;
+    pub fn gnutls_x509_aia_deinit(arg1: gnutls_x509_aia_t);
+    pub fn gnutls_x509_aia_get(aia: gnutls_x509_aia_t, seq: ::libc::c_uint,
+                               oid: *mut gnutls_datum_t,
+                               san_type: *mut ::libc::c_uint,
+                               san: *mut gnutls_datum_t) -> ::libc::c_int;
+    pub fn gnutls_x509_aia_set(aia: gnutls_x509_aia_t,
+                               oid: *const ::libc::c_char,
+                               san_type: ::libc::c_uint,
+                               san: *const gnutls_datum_t) -> ::libc::c_int;
+    pub fn gnutls_x509_ext_import_aia(ext: *const gnutls_datum_t,
+                                      arg1: gnutls_x509_aia_t,
+                                      flags: ::libc::c_uint) -> ::libc::c_int;
+    pub fn gnutls_x509_ext_export_aia(aia: gnutls_x509_aia_t,
+                                      ext: *mut gnutls_datum_t)
+     -> ::libc::c_int;
+    pub fn gnutls_x509_ext_import_subject_key_id(ext: *const gnutls_datum_t,
+                                                 id: *mut gnutls_datum_t)
+     -> ::libc::c_int;
+    pub fn gnutls_x509_ext_export_subject_key_id(id: *const gnutls_datum_t,
+                                                 ext: *mut gnutls_datum_t)
+     -> ::libc::c_int;
+    pub fn gnutls_x509_ext_export_authority_key_id(arg1: gnutls_x509_aki_t,
+                                                   ext: *mut gnutls_datum_t)
+     -> ::libc::c_int;
+    pub fn gnutls_x509_ext_import_authority_key_id(ext: *const gnutls_datum_t,
+                                                   arg1: gnutls_x509_aki_t,
+                                                   flags: ::libc::c_uint)
+     -> ::libc::c_int;
+    pub fn gnutls_x509_othername_to_virtual(oid: *const ::libc::c_char,
+                                            othername: *const gnutls_datum_t,
+                                            virt_type: *mut ::libc::c_uint,
+                                            virt: *mut gnutls_datum_t)
+     -> ::libc::c_int;
+    pub fn gnutls_x509_aki_init(arg1: *mut gnutls_x509_aki_t)
+     -> ::libc::c_int;
+    pub fn gnutls_x509_aki_get_id(arg1: gnutls_x509_aki_t,
+                                  id: *mut gnutls_datum_t) -> ::libc::c_int;
+    pub fn gnutls_x509_aki_get_cert_issuer(aki: gnutls_x509_aki_t,
+                                           seq: ::libc::c_uint,
+                                           san_type: *mut ::libc::c_uint,
+                                           san: *mut gnutls_datum_t,
+                                           othername_oid: *mut gnutls_datum_t,
+                                           serial: *mut gnutls_datum_t)
+     -> ::libc::c_int;
+    pub fn gnutls_x509_aki_set_id(aki: gnutls_x509_aki_t,
+                                  id: *const gnutls_datum_t) -> ::libc::c_int;
+    pub fn gnutls_x509_aki_set_cert_issuer(aki: gnutls_x509_aki_t,
+                                           san_type: ::libc::c_uint,
+                                           san: *const gnutls_datum_t,
+                                           othername_oid:
+                                               *const ::libc::c_char,
+                                           serial: *const gnutls_datum_t)
+     -> ::libc::c_int;
+    pub fn gnutls_x509_aki_deinit(arg1: gnutls_x509_aki_t);
+    pub fn gnutls_x509_ext_import_private_key_usage_period(ext:
+                                                               *const gnutls_datum_t,
+                                                           activation:
+                                                               *mut time_t,
+                                                           expiration:
+                                                               *mut time_t)
+     -> ::libc::c_int;
+    pub fn gnutls_x509_ext_export_private_key_usage_period(activation: time_t,
+                                                           expiration: time_t,
+                                                           ext:
+                                                               *mut gnutls_datum_t)
+     -> ::libc::c_int;
+    pub fn gnutls_x509_ext_import_basic_constraints(ext:
+                                                        *const gnutls_datum_t,
+                                                    ca: *mut ::libc::c_uint,
+                                                    pathlen:
+                                                        *mut ::libc::c_int)
+     -> ::libc::c_int;
+    pub fn gnutls_x509_ext_export_basic_constraints(ca: ::libc::c_uint,
+                                                    pathlen: ::libc::c_int,
+                                                    ext: *mut gnutls_datum_t)
+     -> ::libc::c_int;
+    pub fn gnutls_x509_key_purpose_init(p: *mut gnutls_x509_key_purposes_t)
+     -> ::libc::c_int;
+    pub fn gnutls_x509_key_purpose_deinit(p: gnutls_x509_key_purposes_t);
+    pub fn gnutls_x509_key_purpose_set(p: gnutls_x509_key_purposes_t,
+                                       oid: *const ::libc::c_char)
+     -> ::libc::c_int;
+    pub fn gnutls_x509_key_purpose_get(p: gnutls_x509_key_purposes_t,
+                                       idx: ::libc::c_uint,
+                                       oid: *mut gnutls_datum_t)
+     -> ::libc::c_int;
+    pub fn gnutls_x509_ext_import_key_purposes(ext: *const gnutls_datum_t,
+                                               arg1:
+                                                   gnutls_x509_key_purposes_t,
+                                               flags: ::libc::c_uint)
+     -> ::libc::c_int;
+    pub fn gnutls_x509_ext_export_key_purposes(arg1:
+                                                   gnutls_x509_key_purposes_t,
+                                               ext: *mut gnutls_datum_t)
+     -> ::libc::c_int;
+    pub fn gnutls_x509_ext_import_key_usage(ext: *const gnutls_datum_t,
+                                            key_usage: *mut ::libc::c_uint)
+     -> ::libc::c_int;
+    pub fn gnutls_x509_ext_export_key_usage(key_usage: ::libc::c_uint,
+                                            ext: *mut gnutls_datum_t)
+     -> ::libc::c_int;
+    pub fn gnutls_x509_ext_import_proxy(ext: *const gnutls_datum_t,
+                                        pathlen: *mut ::libc::c_int,
+                                        policyLanguage:
+                                            *mut *mut ::libc::c_char,
+                                        policy: *mut *mut ::libc::c_char,
+                                        sizeof_policy: *mut size_t)
+     -> ::libc::c_int;
+    pub fn gnutls_x509_ext_export_proxy(pathLenConstraint: ::libc::c_int,
+                                        policyLanguage: *const ::libc::c_char,
+                                        policy: *const ::libc::c_char,
+                                        sizeof_policy: size_t,
+                                        ext: *mut gnutls_datum_t)
+     -> ::libc::c_int;
+    pub fn gnutls_x509_policies_init(arg1: *mut gnutls_x509_policies_t)
+     -> ::libc::c_int;
+    pub fn gnutls_x509_policies_deinit(arg1: gnutls_x509_policies_t);
+    pub fn gnutls_x509_policies_get(policies: gnutls_x509_policies_t,
+                                    seq: ::libc::c_uint,
+                                    policy: *mut Struct_gnutls_x509_policy_st)
+     -> ::libc::c_int;
+    pub fn gnutls_x509_policies_set(policies: gnutls_x509_policies_t,
+                                    policy:
+                                        *const Struct_gnutls_x509_policy_st)
+     -> ::libc::c_int;
+    pub fn gnutls_x509_ext_import_policies(ext: *const gnutls_datum_t,
+                                           policies: gnutls_x509_policies_t,
+                                           flags: ::libc::c_uint)
+     -> ::libc::c_int;
+    pub fn gnutls_x509_ext_export_policies(policies: gnutls_x509_policies_t,
+                                           ext: *mut gnutls_datum_t)
+     -> ::libc::c_int;
 }

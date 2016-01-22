@@ -1,0 +1,17 @@
+#include <gnutls/gnutls.h>
+#include <gnutls/abstract.h>
+#include <gnutls/compat.h>
+#include <gnutls/crypto.h>
+#include <gnutls/dane.h>
+#include <gnutls/dtls.h>
+#include <gnutls/ocsp.h>
+#include <gnutls/openpgp.h>
+#include <gnutls/pkcs11.h>
+#include <gnutls/pkcs12.h>
+#include <gnutls/pkcs7.h>
+#include <gnutls/self-test.h>
+#include <gnutls/system-keys.h>
+#include <gnutls/tpm.h>
+#include <gnutls/urls.h>
+#include <gnutls/x509-ext.h>
+#include <gnutls/x509.h>
