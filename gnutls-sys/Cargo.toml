@@ -12,3 +12,4 @@ libc = "*"
 
 [build-dependencies]
 gcc = "*"
+pkg-config = "*"
