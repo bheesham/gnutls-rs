@@ -9,7 +9,7 @@ You will need to have the GnuTLS development libraries, and the rust-bindgen
 executable.
 
 Generate new bindings by running the following, then editing the output to get
-rid of the invariants:
+rid of the invariants and the aliased enums:
 
 ```
 bindgen -lgnutls -builtins -o gnutls-sys/src/gen.rs -i gnutls-sys/src/inc.h

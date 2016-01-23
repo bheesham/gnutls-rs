@@ -2,14 +2,14 @@
 name = "gnutls-sys"
 version = "0.1.0"
 authors = ["Bheesham Persaud <bheesham.persaud@live.ca>"]
-license = "LGPLv2"
+license = "LGPL-2.1"
 description = "GnuTLS bindngs for Rust!"
 links = "gnutls"
 build = "build.rs"
 
 [dependencies]
-libc = "*"
+libc = "0.2.5"
 
 [build-dependencies]
-gcc = "*"
-pkg-config = "*"
+gcc = "0.3.21"
+pkg-config = "0.3.6"
