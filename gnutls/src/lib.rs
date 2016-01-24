@@ -111,3 +111,4 @@ fn test_check_version() {
 
 pub mod sec_params;
 pub mod dh_params;
+pub mod certificate;

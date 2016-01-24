@@ -1,4 +1,5 @@
 #![allow(dead_code)]
+/// TODO: Remove the suppressed warnings.
 use std::mem;
 use std::ops::Drop;
 
@@ -17,38 +18,36 @@ use gt::gen::{
     gnutls_dh_params_import_raw2,
 };
 
-pub struct DhParams {
+pub struct DHParams {
     params: gnutls_dh_params_t
 }
 
-impl DhParams {
-    /// TODO: Remove the suppressed warnings.
+impl DHParams {
     #[allow(unused_must_use)]
-    fn new() -> Result<DhParams, i32> {
+    fn new() -> Result<DHParams, i32> {
         unsafe {
-
             ::init();
 
             let mut dh_params: gnutls_dh_params_t = mem::zeroed();
             let val = gnutls_dh_params_init(&mut dh_params);
 
             if val == GNUTLS_E_SUCCESS {
-                Ok(DhParams {
+                return Ok(DHParams {
                     params: dh_params
-                })
-            } else {
-                Err(val)
+                });
             }
+
+            Err(val)
         }
     }
 
     #[allow(unused_mut)]
-    fn try_clone(&self) -> Result<DhParams, i32> {
+    fn try_clone(&self) -> Result<DHParams, i32> {
         unsafe {
             let mut new_params: gnutls_dh_params_t = mem::zeroed();
             let val = gnutls_dh_params_cpy(new_params, self.params);
             if val == GNUTLS_E_SUCCESS {
-                Ok(DhParams {
+                Ok(DHParams {
                     params: new_params
                 })
             } else {
@@ -110,9 +109,13 @@ impl DhParams {
             is_succ!(val)
         }
     }
+
+    fn as_raw(&self) -> gnutls_dh_params_t {
+        self.params
+    }
 }
 
-impl Drop for DhParams {
+impl Drop for DHParams {
     fn drop(&mut self) {
         unsafe {
             gnutls_dh_params_deinit(self.params)
