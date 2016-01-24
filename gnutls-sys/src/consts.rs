@@ -1,4 +1,11 @@
-use libc::c_int;
+use libc::{c_int, c_char};
+use std::ffi::CString;
+
+pub static GNUTLS_VERSION: &'static str = "3.4.8";
+pub const GNUTLS_VERSION_MAJOR: c_int =  3;
+pub const GNUTLS_VERSION_MINOR:c_int = 4;
+pub const GNUTLS_VERSION_PATCH: c_int = 8;
+pub const GNUTLS_VERSION_NUMBER: i32 = 0x030408;
 
 pub const GNUTLS_E_SUCCESS: c_int = 0;
 pub const GNUTLS_E_UNKNOWN_COMPRESSION_ALGORITHM: c_int = -3;

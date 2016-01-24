@@ -1,8 +1,9 @@
 #![allow(non_camel_case_types, non_upper_case_globals,
          non_snake_case, dead_code, unused_imports)]
 extern crate libc;
-mod gen;
-mod consts;
+
+pub mod gen;
+pub mod consts;
 
 use std::mem;
 use libc::{c_int, c_uchar};

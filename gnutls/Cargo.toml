@@ -1,0 +1,8 @@
+[package]
+name = "gnutls"
+version = "0.1.0"
+authors = ["Bheesham Persaud <bheesham.persaud@live.ca>"]
+
+[dependencies]
+libc = "0.2.5"
+gnutls-sys = { version = "0.1.0", path = "../gnutls-sys" }
