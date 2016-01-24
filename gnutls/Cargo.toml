@@ -1,6 +1,6 @@
 [package]
 name = "gnutls"
-version = "0.1.2"
+version = "0.1.3"
 authors = ["Bheesham Persaud <bheesham.persaud@live.ca>"]
 license = "LGPL-2.1"
 description = "A wrapper around gnutls-sys (GnuTLS bindngs for Rust)."
