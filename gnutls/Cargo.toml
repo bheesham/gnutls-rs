@@ -5,4 +5,4 @@ authors = ["Bheesham Persaud <bheesham.persaud@live.ca>"]
 
 [dependencies]
 libc = "0.2.5"
-gnutls-sys = { version = "0.1.0", path = "../gnutls-sys" }
+gnutls-sys = { version = "0.1.1", path = "../gnutls-sys" }
