@@ -1,9 +1,12 @@
 [package]
 name = "gnutls-sys"
-version = "0.1.1"
+version = "0.1.2"
 authors = ["Bheesham Persaud <bheesham.persaud@live.ca>"]
 license = "LGPL-2.1"
 description = "GnuTLS bindngs for Rust!"
+repository = "https://github.com/bheesham/gnutls-rs/tree/master/gnutls-sys"
+homepage = "https://github.com/bheesham/gnutls-rs"
+keywords = ["tls", "security", "crypto", "ssl", "gnutls"]
 links = "gnutls"
 build = "build.rs"
 

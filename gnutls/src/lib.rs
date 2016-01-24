@@ -38,7 +38,7 @@ pub fn check_version(req_version: Option<&'static str>) -> Result<&str, &str> {
 }
 
 #[test]
-fn test_version() {
+fn test_check_version() {
     assert_eq!(check_version(Some("3.4.8")).unwrap(), "3.4.8");
     assert_eq!(check_version(None).unwrap(), "3.4.8");
     assert_eq!(check_version(Some("4")).unwrap_or(""), "");

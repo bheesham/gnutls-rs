@@ -1,8 +1,8 @@
 [root]
 name = "gnutls"
-version = "0.1.0"
+version = "0.1.1"
 dependencies = [
- "gnutls-sys 0.1.1",
+ "gnutls-sys 0.1.2",
  "libc 0.2.5 (registry+https://github.com/rust-lang/crates.io-index)",
 ]
 
@@ -26,7 +26,7 @@ dependencies = [
 
 [[package]]
 name = "gnutls-sys"
-version = "0.1.1"
+version = "0.1.2"
 dependencies = [
  "gcc 0.3.21 (registry+https://github.com/rust-lang/crates.io-index)",
  "libc 0.2.5 (registry+https://github.com/rust-lang/crates.io-index)",

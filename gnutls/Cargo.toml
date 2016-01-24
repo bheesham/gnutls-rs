@@ -1,8 +1,13 @@
 [package]
 name = "gnutls"
-version = "0.1.0"
+version = "0.1.2"
 authors = ["Bheesham Persaud <bheesham.persaud@live.ca>"]
+license = "LGPL-2.1"
+description = "A wrapper around gnutls-sys (GnuTLS bindngs for Rust)."
+repository = "https://github.com/bheesham/gnutls-rs/tree/master/gnutls"
+homepage = "https://github.com/bheesham/gnutls-rs"
+keywords = ["tls", "security", "crypto", "ssl", "gnutls"]
 
 [dependencies]
 libc = "0.2.5"
-gnutls-sys = { version = "0.1.1", path = "../gnutls-sys" }
+gnutls-sys = { version = "0.1.2", path = "../gnutls-sys" }
