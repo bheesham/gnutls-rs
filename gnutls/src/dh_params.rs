@@ -3,7 +3,6 @@
 use std::mem;
 use std::ops::Drop;
 
-use gt::consts::*;
 use gt::gen::{
     gnutls_dh_params_t,
     gnutls_dh_params_init,
@@ -18,47 +17,53 @@ use gt::gen::{
     gnutls_dh_params_import_raw2,
 };
 
+use error::{
+    Error,
+    AsError
+};
+
 pub struct DHParams {
     params: gnutls_dh_params_t
 }
 
 impl DHParams {
     #[allow(unused_must_use)]
-    fn new() -> Result<DHParams, i32> {
+    fn new() -> Result<DHParams, Error> {
         unsafe {
             ::init();
 
             let mut dh_params: gnutls_dh_params_t = mem::zeroed();
             let val = gnutls_dh_params_init(&mut dh_params);
 
-            if val == GNUTLS_E_SUCCESS {
+            if val == Error::None as i32 {
                 return Ok(DHParams {
                     params: dh_params
                 });
             }
 
-            Err(val)
+            Err(val.as_error())
         }
     }
 
     #[allow(unused_mut)]
-    fn try_clone(&self) -> Result<DHParams, i32> {
+    fn try_clone(&self) -> Result<DHParams, Error> {
         unsafe {
             let mut new_params: gnutls_dh_params_t = mem::zeroed();
             let val = gnutls_dh_params_cpy(new_params, self.params);
-            if val == GNUTLS_E_SUCCESS {
+
+            if val == Error::None as i32 {
                 Ok(DHParams {
                     params: new_params
                 })
             } else {
-                Err(val)
+                Err(val.as_error())
             }
         }
     }
 
     /// TODO: Refactor to edit a gnutls_datum_t structure.
     fn export_pkcs3(&self, format: gnutls_x509_crt_fmt_t,
-                    datum: *mut gnutls_datum_t) -> Result<i32, i32> {
+                    datum: *mut gnutls_datum_t) -> Result<Error, Error> {
 
         unsafe {
             let val = gnutls_dh_params_export2_pkcs3(self.params, format, datum);
@@ -69,7 +74,7 @@ impl DHParams {
     /// TODO: Same as above.
     fn export_raw(&self, prime: *mut gnutls_datum_t,
                   generator: *mut gnutls_datum_t,
-                  bits: *mut u32) -> Result<i32, i32> {
+                  bits: *mut u32) -> Result<Error, Error> {
 
         unsafe {
             let val = gnutls_dh_params_export_raw(self.params, prime,
@@ -78,7 +83,7 @@ impl DHParams {
         }
     }
 
-    fn generate(&self, bits: u32) -> Result<i32, i32> {
+    fn generate(&self, bits: u32) -> Result<Error, Error> {
         unsafe {
             let val = gnutls_dh_params_generate2(self.params, bits);
             is_succ!(val)
@@ -86,7 +91,7 @@ impl DHParams {
     }
 
     fn import_pkcs3(&mut self, pkcs3_params: *const gnutls_datum_t,
-                    format: gnutls_x509_crt_fmt_t) -> Result<i32, i32> {
+                    format: gnutls_x509_crt_fmt_t) -> Result<Error, Error> {
 
         unsafe {
             let val = gnutls_dh_params_import_pkcs3(self.params, pkcs3_params,
@@ -97,7 +102,7 @@ impl DHParams {
 
     fn import_raw(&mut self, prime: *const gnutls_datum_t,
                   generator: *const gnutls_datum_t,
-                  key_bits: Option<u32>) -> Result<i32, i32> {
+                  key_bits: Option<u32>) -> Result<Error, Error> {
 
         let bits: u32 = match key_bits {
             Some(x) => x,

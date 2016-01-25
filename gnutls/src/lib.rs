@@ -5,55 +5,58 @@ extern crate gnutls_sys as gt;
 use std::ffi::CString;
 use std::ffi::CStr;
 use std::sync::{Once, ONCE_INIT};
-use libc::c_int;
 
-pub use gt::consts::*;
+pub mod error;
+use error::{
+    Error,
+    AsError
+};
 
+use gt::consts::*;
 use gt::gen::{
     gnutls_global_init,
     gnutls_global_deinit,
     gnutls_check_version,
-    gnutls_error_is_fatal
 };
 
 macro_rules! is_succ {
     ($e:ident) => (
-        if $e == GNUTLS_E_SUCCESS { Ok($e) } else { Err($e) }
+        if $e.as_error() == Error::None { Ok($e.as_error()) } else { Err($e.as_error()) }
     );
 }
 
 /// Globally initialize the library.
-pub fn init() -> Result<Option<i32>, i32> {
+pub fn init() -> Result<Option<Error>, Error> {
     static mut INIT: Once = ONCE_INIT;
     let mut val: Option<i32> = None;
 
     unsafe{
         INIT.call_once(|| {
-            val = Some(gnutls_global_init() as i32);
+            val = Some(gnutls_global_init());
         });
     }
 
     match val {
         Some(val) => {
             if val == 0 {
-                Ok(Some(GNUTLS_E_SUCCESS))
+                Ok(Some(Error::None))
             } else {
-               Err(val)
+               Err(val.as_error())
             }
         },
         None => {
             // We couldn't initialize, return a failing code but don't break.
-            Ok(Some(GNUTLS_E_CRYPTO_INIT_FAILED))
+            Ok(Some(Error::CryptoInitFailed))
         }
     }
 }
 
 #[test]
 fn test_init() {
-    assert_eq!(init().ok().unwrap(), Some(GNUTLS_E_SUCCESS));
+    assert_eq!(init().ok().unwrap(), Some(Error::None));
 
     // Calling init twice should be successful, but return an error code.
-    assert_eq!(init().ok().unwrap(), Some(GNUTLS_E_CRYPTO_INIT_FAILED));
+    assert_eq!(init().ok().unwrap(), Some(Error::CryptoInitFailed));
 }
 
 /// Globally deinitialize the library.
@@ -61,20 +64,6 @@ pub fn deinit() {
     unsafe {
         gnutls_global_deinit()
     }
-}
-
-/// Checks to see if an error code is fatal.
-pub fn is_fatal(err: i32) -> bool {
-    unsafe {
-        let res: c_int = gnutls_error_is_fatal(err as c_int);
-        res != 0
-    }
-}
-
-#[test]
-fn test_is_fatal() {
-    assert_eq!(is_fatal(GNUTLS_E_SUCCESS), false);
-    assert_eq!(is_fatal(GNUTLS_E_FATAL_ALERT_RECEIVED), true);
 }
 
 /// Check that the minimum libgnutls version is `req_version`. Returns the installed
