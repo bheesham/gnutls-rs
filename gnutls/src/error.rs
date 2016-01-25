@@ -1,6 +1,7 @@
 #![allow(dead_code)]
 use std::fmt;
 use std::mem;
+
 use gt::consts::*;
 use gt::gen:: {
     gnutls_error_is_fatal
@@ -213,7 +214,19 @@ impl AsError for i32 {
 
 impl fmt::Debug for Error {
     fn fmt(&self, fmt: &mut fmt::Formatter) -> fmt::Result {
-        write!(fmt, "{}", *self as i32)
+        unsafe {
+            let val: i32 =  mem::transmute(*self);
+            write!(fmt, "{}", val)
+        }
+    }
+}
+
+impl fmt::Display for Error {
+    fn fmt(&self, fmt: &mut fmt::Formatter) -> fmt::Result {
+        unsafe {
+            let val: i32 =  mem::transmute(*self);
+            write!(fmt, "{}", val)
+        }
     }
 }
 
@@ -221,4 +234,6 @@ impl fmt::Debug for Error {
 fn test_is_fatal() {
     assert_eq!(Error::is_fatal(Error::None), false);
     assert_eq!(Error::is_fatal(Error::FatalAlertReceived), true);
+    assert_eq!(Error::None, 0.as_error());
+    assert_eq!(Error::DecompressionFailed, (-26).as_error());
 }
