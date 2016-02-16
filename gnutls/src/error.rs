@@ -200,12 +200,12 @@ impl Error {
     }
 }
 
-pub trait AsError {
-    fn as_error(&self) -> Error;
+pub trait AsGnutlsError {
+    fn as_gnutls_error(&self) -> Error;
 }
 
-impl AsError for i32 {
-    fn as_error(&self) -> Error {
+impl AsGnutlsError for i32 {
+    fn as_gnutls_error(&self) -> Error {
         unsafe {
             mem::transmute(*self)
         }
@@ -230,10 +230,15 @@ impl fmt::Display for Error {
     }
 }
 
-#[test]
-fn test_is_fatal() {
-    assert_eq!(Error::is_fatal(Error::None), false);
-    assert_eq!(Error::is_fatal(Error::FatalAlertReceived), true);
-    assert_eq!(Error::None, 0.as_error());
-    assert_eq!(Error::DecompressionFailed, (-26).as_error());
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn test_is_fatal() {
+        assert_eq!(Error::is_fatal(Error::None), false);
+        assert_eq!(Error::is_fatal(Error::FatalAlertReceived), true);
+        assert_eq!(Error::None, 0.as_gnutls_error());
+        assert_eq!(Error::DecompressionFailed, (-26).as_gnutls_error());
+    }
 }

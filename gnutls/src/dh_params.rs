@@ -19,7 +19,7 @@ use gt::gen::{
 
 use error::{
     Error,
-    AsError
+    AsGnutlsError
 };
 
 pub struct DHParams {
@@ -41,7 +41,7 @@ impl DHParams {
                 });
             }
 
-            Err(val.as_error())
+            Err(val.as_gnutls_error())
         }
     }
 
@@ -56,7 +56,7 @@ impl DHParams {
                     params: new_params
                 })
             } else {
-                Err(val.as_error())
+                Err(val.as_gnutls_error())
             }
         }
     }
@@ -125,5 +125,15 @@ impl Drop for DHParams {
         unsafe {
             gnutls_dh_params_deinit(self.params)
         }
+    }
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn comp() {
+
     }
 }

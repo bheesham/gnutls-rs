@@ -1,4 +1,5 @@
 #[macro_use]
+extern crate bitflags;
 extern crate libc;
 extern crate gnutls_sys as gt;
 
@@ -9,7 +10,7 @@ use std::sync::{Once, ONCE_INIT};
 pub mod error;
 use error::{
     Error,
-    AsError
+    AsGnutlsError
 };
 
 use gt::consts::*;
@@ -21,12 +22,16 @@ use gt::gen::{
 
 macro_rules! is_succ {
     ($e:ident) => (
-        if $e.as_error() == Error::None { Ok($e.as_error()) } else { Err($e.as_error()) }
+        if $e.as_gnutls_error() == Error::None {
+            Ok($e.as_gnutls_error())
+        } else {
+            Err($e.as_gnutls_error())
+        }
     );
 }
 
 /// Globally initialize the library.
-pub fn init() -> Result<Option<Error>, Error> {
+pub fn init() -> Result<Error, Error> {
     static mut INIT: Once = ONCE_INIT;
     let mut val: Option<i32> = None;
 
@@ -39,25 +44,18 @@ pub fn init() -> Result<Option<Error>, Error> {
     match val {
         Some(val) => {
             if val == 0 {
-                Ok(Some(Error::None))
+                Ok(Error::None)
             } else {
-               Err(val.as_error())
+               Err(val.as_gnutls_error())
             }
         },
         None => {
-            // We couldn't initialize, return a failing code but don't break.
-            Ok(Some(Error::CryptoInitFailed))
+            // Already initialized.
+            Ok(Error::None)
         }
     }
 }
 
-#[test]
-fn test_init() {
-    assert_eq!(init().ok().unwrap(), Some(Error::None));
-
-    // Calling init twice should be successful, but return an error code.
-    assert_eq!(init().ok().unwrap(), Some(Error::CryptoInitFailed));
-}
 
 /// Globally deinitialize the library.
 pub fn deinit() {
@@ -91,13 +89,28 @@ pub fn check_version(req_version: Option<&'static str>) -> Result<&'static  str,
     }
 }
 
-#[test]
-fn test_check_version() {
-    assert_eq!(check_version(Some("3.4.8")).unwrap(), "3.4.8");
-    assert_eq!(check_version(None).unwrap(), "3.4.8");
-    assert_eq!(check_version(Some("4")).unwrap_or(""), "");
-}
-
 pub mod sec_params;
 pub mod dh_params;
-pub mod certificate;
+pub mod cert_creds;
+pub mod session;
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+    use error::Error;
+
+    #[test]
+    fn test_init() {
+        assert_eq!(Error::None, init().ok().unwrap());
+
+        // Calling init twice should be successful, but return an error code.
+        assert_eq!(Error::None, init().ok().unwrap());
+    }
+
+    #[test]
+    fn test_check_version() {
+        assert_eq!(check_version(Some("3.4.8")).unwrap(), "3.4.8");
+        assert_eq!(check_version(None).unwrap(), "3.4.8");
+        assert_eq!(check_version(Some("4")).unwrap_or(""), "");
+    }
+}

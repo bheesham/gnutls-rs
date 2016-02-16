@@ -9,5 +9,6 @@ homepage = "https://github.com/bheesham/gnutls-rs"
 keywords = ["tls", "security", "crypto", "ssl", "gnutls"]
 
 [dependencies]
-libc = "0.2.5"
+bitflags = "0.4.0"
 gnutls-sys = { version = "0.1.2", path = "../gnutls-sys" }
+libc = "0.2.5"
