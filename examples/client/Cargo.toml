@@ -1,0 +1,8 @@
+[package]
+name = "client"
+version = "0.1.0"
+authors = ["Bheesham Persaud <bheesham.persaud@live.ca>"]
+
+[dependencies]
+bitflags = "0.4.0"
+gnutls = { path = "../../gnutls" }

@@ -20,13 +20,17 @@ use gt::gen::{gnutls_x509_crt_fmt_t,
               gnutls_certificate_set_x509_key_file
 };
 
-pub struct CertCreds {
-   credentials: gnutls_certificate_credentials_t
+pub use gt::gen::gnutls_credentials_type_t as CredType;
+
+pub struct Cert {
+    pub credentials: gnutls_certificate_credentials_t,
+    trust_file: bool,
+    key_file: bool
 }
 
-impl CertCreds {
+impl Cert {
     #[allow(unused_must_use)]
-    fn new() -> Result<CertCreds, Error> {
+    pub fn new() -> Result<Cert, Error> {
         unsafe {
             ::init();
 
@@ -37,13 +41,15 @@ impl CertCreds {
                 return Err(val.as_gnutls_error());
             }
 
-            Ok(CertCreds {
-                credentials: credentials
+            Ok(Cert{
+                credentials: credentials,
+                trust_file: false,
+                key_file: false
             })
         }
     }
 
-    fn x509_set_trust_file(&mut self, file: &'static str,
+    pub fn x509_set_trust_file(&mut self, file: &'static str,
                            fmt: Option<gnutls_x509_crt_fmt_t>) -> Result<i32, Error> {
         let format: gnutls_x509_crt_fmt_t = match fmt {
             None => gnutls_x509_crt_fmt_t::GNUTLS_X509_FMT_PEM,
@@ -59,12 +65,13 @@ impl CertCreds {
             if processed < 1 {
                 Err(processed.as_gnutls_error())
             } else {
+                self.trust_file = true;
                 Ok(processed)
             }
         }
     }
 
-    fn x509_set_trust_dir(&mut self, directory: &'static str,
+    pub fn x509_set_trust_dir(&mut self, directory: &'static str,
                           fmt: Option<gnutls_x509_crt_fmt_t>)
                           -> Result<i32, Error> {
         let format: gnutls_x509_crt_fmt_t = match fmt {
@@ -81,13 +88,14 @@ impl CertCreds {
             if processed < 1 {
                 Err(processed.as_gnutls_error())
             } else {
+                self.trust_file = true;
                 Ok(processed)
             }
         }
     }
 
 
-    fn x509_set_key_file(&mut self, cert: &'static str, key: &'static str,
+    pub fn x509_set_key_file(&mut self, cert: &'static str, key: &'static str,
                          fmt: Option<gnutls_x509_crt_fmt_t>)
                          -> Result<Error, Error> {
         let format: gnutls_x509_crt_fmt_t = match fmt {
@@ -103,12 +111,13 @@ impl CertCreds {
                 format
             );
 
+            self.key_file = true;
             is_succ!(res)
         }
     }
 }
 
-impl Drop for CertCreds {
+impl Drop for Cert {
     fn drop(&mut self) {
         unsafe {
             // Also free keys, and CRLs?
@@ -124,7 +133,7 @@ mod tests {
 
     #[test]
     fn comp() {
-        let mut cert: CertCreds = match CertCreds::new() {
+        let mut cert: Cert= match Cert::new() {
             Ok(x) => x,
             Err(_) => {
                 panic!("Could not initialize the certificate.")

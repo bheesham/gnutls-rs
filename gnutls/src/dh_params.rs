@@ -130,8 +130,6 @@ impl Drop for DHParams {
 
 #[cfg(test)]
 mod tests {
-    use super::*;
-
     #[test]
     fn comp() {
 
