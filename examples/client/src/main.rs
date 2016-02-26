@@ -10,7 +10,11 @@ use gnutls::{
 };
 
 fn main() {
-    init().unwrap();
+    match init() {
+        Ok(_) => {},
+        Err(_) => panic!("could not initialize.")
+    };
+
     let hostname: &'static str = "localhost";
     let mut creds: Cert = Cert::new().unwrap();
     let mut session: Session = Session::new(gnutls::GNUTLS_CLIENT).unwrap();

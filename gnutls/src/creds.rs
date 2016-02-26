@@ -32,8 +32,6 @@ impl Cert {
     #[allow(unused_must_use)]
     pub fn new() -> Result<Cert, Error> {
         unsafe {
-            ::init();
-
             let mut credentials: gnutls_certificate_credentials_t = mem::zeroed();
             let val = gnutls_certificate_allocate_credentials(&mut credentials);
 

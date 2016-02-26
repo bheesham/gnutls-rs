@@ -30,8 +30,6 @@ impl DHParams {
     #[allow(unused_must_use)]
     fn new() -> Result<DHParams, Error> {
         unsafe {
-            ::init();
-
             let mut dh_params: gnutls_dh_params_t = mem::zeroed();
             let val = gnutls_dh_params_init(&mut dh_params);
 
