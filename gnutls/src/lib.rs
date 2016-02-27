@@ -5,11 +5,6 @@ extern crate gnutls_sys as gt;
 
 use libc::{c_char};
 
-use std::ffi::{CStr, CString};
-use std::mem;
-use std::ops::Drop;
-use std::sync::{Once, ONCE_INIT};
-
 use gt::consts::*;
 use gt::gen::{gnutls_global_init,
               gnutls_global_deinit,
@@ -17,12 +12,21 @@ use gt::gen::{gnutls_global_init,
               gnutls_session_t,
               gnutls_init,
               gnutls_deinit,
+              gnutls_priority_set_direct,
               gnutls_credentials_set,
               gnutls_session_set_verify_cert,
-              gnutls_priority_set_direct
+              gnutls_transport_set_int2,
+              gnutls_handshake_set_timeout,
+              gnutls_handshake
 };
 
 pub use gt::gen::gnutls_certificate_verify_flags as CertVerifyFlags;
+
+use std::ffi::{CStr, CString};
+use std::mem;
+use std::os::unix::io::RawFd;
+use std::ops::Drop;
+use std::sync::{Once, ONCE_INIT};
 
 macro_rules! is_succ {
     ($e:ident) => (
@@ -145,6 +149,32 @@ impl Session {
         }
     }
 
+    /// The default priority is "NORMAL".
+    pub fn set_priority(&mut self, pri: Option<&'static str>) -> Result<Error, String> {
+        let priority = match pri {
+            None => "NORMAL",
+            Some(x) => x
+        };
+
+        unsafe {
+            let mut err_location: *const c_char = mem::zeroed();
+            let priority_string = CString::new(priority).unwrap();
+            let res = gnutls_priority_set_direct(self.session,
+                                                 priority_string.as_ptr(),
+                                                 &mut err_location);
+
+            if res == 0 {
+                self.priority = true;
+                return Ok(Error::None);
+            }
+
+            match CStr::from_ptr(err_location).to_str() {
+                Ok(x) => Err(format!("could not parse the priority string, specifically: {}", x)),
+                Err(e) => Err(format!("{}", e))
+            }
+        }
+    }
+
     pub fn set_creds(&mut self, cred_type: CredType,
                  creds: &mut Cert) -> Result<Error, Error> {
         unsafe {
@@ -173,29 +203,30 @@ impl Session {
         }
     }
 
-    /// The default priority is "NORMAL".
-    pub fn set_priority(&mut self, pri: Option<&'static str>) -> Result<Error, String> {
-        let priority = match pri {
-            None => "NORMAL",
-            Some(x) => x
-        };
-
+    pub fn set_fd(&mut self, sd: RawFd) {
         unsafe {
-            let mut err_location: *const c_char = mem::zeroed();
-            let priority_string = CString::new(priority).unwrap();
-            let res = gnutls_priority_set_direct(self.session,
-                                                 priority_string.as_ptr(),
-                                                 &mut err_location);
+            gnutls_transport_set_int2(self.session, sd, sd);
+        }
+    }
 
-            if res == 0 {
-                self.priority = true;
-                return Ok(Error::None);
+    pub fn handshake_timeout(&mut self, ms: Option<u32>) {
+        unsafe {
+            match ms {
+                None => gnutls_handshake_set_timeout(self.session, std::u32::MAX),
+                Some(t) => gnutls_handshake_set_timeout(self.session, t)
+            };
+        }
+    }
+
+    pub fn handshake(&mut self) -> Result<Error, Error> {
+        unsafe {
+            let val = gnutls_handshake(self.session);
+
+            if val != 0 {
+                return Err(val.as_gnutls_error());
             }
 
-            match CStr::from_ptr(err_location).to_str() {
-                Ok(x) => Err(format!("could not parse the priority string, specifically: {}", x)),
-                Err(e) => Err(format!("{}", e))
-            }
+            Ok(Error::None)
         }
     }
 }

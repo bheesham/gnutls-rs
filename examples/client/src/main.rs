@@ -9,6 +9,10 @@ use gnutls::{
     Session
 };
 
+use std::io::prelude::*;
+use std::os::unix::io::AsRawFd;
+use std::net::TcpStream;
+
 fn main() {
     match init() {
         Ok(_) => {},
@@ -28,17 +32,36 @@ fn main() {
         panic!("Error: couldn't set the keyfile.");
     }
 
-    if session.set_creds(CredType::GNUTLS_CRD_CERTIFICATE, &mut creds).err() != None {
+    match session.set_priority(None) {
+        Err(e) => panic!("{}", e),
+        Ok(_) => {}
+    };
+
+    if session.set_creds(CredType::GNUTLS_CRD_CERTIFICATE, &mut creds) .err() != None {
         panic!("Error: could not set the session credentials.");
     }
 
     session.set_verify_cert(hostname,
                             Some(CertVerifyFlags::GNUTLS_VERIFY_ALLOW_ANY_X509_V1_CA_CRT));
 
-    match session.set_priority(None) {
+    let mut stream = match TcpStream::connect("bheesham.com:443") {
         Err(e) => panic!("{}", e),
-        Ok(_) => {}
+        Ok(s) => s
     };
+
+    session.set_fd(stream.as_raw_fd());
+    session.handshake_timeout(None);
+
+    match session.handshake() {
+        Ok(_) => println!("Established a connection!"),
+        Err(e) => panic!("Error: {}", e)
+    };
+
+    let _ = stream.write("GET / HTTP/1.0\n\n".as_bytes()).unwrap();
+
+    let mut res: String = String::new();
+    let _ = stream.read_to_string(&mut res).unwrap();
+    println!("{}", res);
 
     deinit();
 }
