@@ -23,8 +23,8 @@ fn main() {
     let mut creds: Cert = Cert::new().unwrap();
     let mut session: Session = Session::new(gnutls::GNUTLS_CLIENT).unwrap();
 
-    if creds.x509_set_trust_file("../../gnutls/tests/ca.cert.pem", None).err() != None {
-        panic!("Error: couldn't set the trust file.");
+    if creds.x509_set_system_trust().err() != None {
+        panic!("Error: couldn't set system trust.");
     }
 
     if creds.x509_set_key_file("../../gnutls/tests/ca.cert.pem",
