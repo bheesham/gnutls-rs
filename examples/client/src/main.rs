@@ -35,7 +35,7 @@ fn main() {
         panic!("Error: could not set the session credentials.");
     }
 
-    session.set_verify_cert(host.0, None);
+    session.set_verify_cert(Some(host.0), None);
 
     let mut stream = match TcpStream::connect(host) {
         Err(e) => panic!("{}", e),

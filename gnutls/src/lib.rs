@@ -26,6 +26,7 @@ use std::ffi::{CStr, CString};
 use std::mem;
 use std::os::unix::io::RawFd;
 use std::ops::Drop;
+use std::ptr;
 use std::sync::{Once, ONCE_INIT};
 
 macro_rules! is_succ {
@@ -187,17 +188,19 @@ impl Session {
         }
     }
 
-    pub fn set_verify_cert(&mut self, host: &'static str,
+    pub fn set_verify_cert(&mut self, host: Option<&'static str>,
                            verify_flags: Option<CertVerifyFlags>) {
         let flags = match verify_flags {
             None => 0,
             Some(x) => x as u32
         };
+        let host_string = match host {
+            None => ptr::null(),
+            Some(x) => CString::new(x).unwrap().as_ptr()
+        };
 
         unsafe {
-            gnutls_session_set_verify_cert(self.session,
-                                           CString::new(host).unwrap().as_ptr(),
-                                           flags);
+            gnutls_session_set_verify_cert(self.session, host_string, flags);
 
             self.verify_cert = true;
         }
