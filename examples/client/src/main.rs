@@ -18,9 +18,9 @@ fn main() {
         Err(_) => panic!("could not initialize.")
     };
 
-    let hostname: &'static str = "localhost";
-    let mut creds: Cert = Cert::new().unwrap();
-    let mut session: Session = Session::new(gnutls::GNUTLS_CLIENT).unwrap();
+    let hostname = "localhost";
+    let mut creds = Cert::new().unwrap();
+    let mut session = Session::new(gnutls::GNUTLS_CLIENT).unwrap();
 
     if creds.x509_set_system_trust().err() != None {
         panic!("Error: couldn't set system trust.");
@@ -58,7 +58,7 @@ fn main() {
 
     let _ = stream.write("GET / HTTP/1.0\n\n".as_bytes()).unwrap();
 
-    let mut res: String = String::new();
+    let mut res = String::new();
     let _ = stream.read_to_string(&mut res).unwrap();
     println!("{}", res);
 
