@@ -180,7 +180,7 @@ impl Session {
         unsafe {
             let res: i32 = gnutls_credentials_set(self.session,
                                                   cred_type,
-                                                  mem::transmute(&creds.credentials));
+                                                  mem::transmute(creds.credentials));
 
             self.creds = true;
             is_succ!(res)
