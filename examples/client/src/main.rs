@@ -1,4 +1,3 @@
-extern crate bitflags;
 extern crate gnutls;
 
 use gnutls::creds::{Cert, CredType};

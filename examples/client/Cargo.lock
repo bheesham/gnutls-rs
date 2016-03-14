@@ -2,7 +2,6 @@
 name = "client"
 version = "0.1.0"
 dependencies = [
- "bitflags 0.4.0 (registry+https://github.com/rust-lang/crates.io-index)",
  "gnutls 0.1.3",
 ]
 
