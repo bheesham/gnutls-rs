@@ -1,12 +1,7 @@
 extern crate gnutls;
 
 use gnutls::creds::{Cert, CredType};
-use gnutls::{
-    init,
-    deinit,
-    CertVerifyFlags,
-    Session
-};
+use gnutls::{init, deinit, Session};
 
 use std::io::prelude::*;
 use std::os::unix::io::AsRawFd;
@@ -18,7 +13,7 @@ fn main() {
         Err(_) => panic!("could not initialize.")
     };
 
-    let hostname = "localhost";
+    let host = ("bheesham.com", 443);
     let mut creds = Cert::new().unwrap();
     let mut session = Session::new(gnutls::GNUTLS_CLIENT).unwrap();
 
@@ -40,10 +35,9 @@ fn main() {
         panic!("Error: could not set the session credentials.");
     }
 
-    session.set_verify_cert(hostname,
-                            Some(CertVerifyFlags::GNUTLS_VERIFY_ALLOW_ANY_X509_V1_CA_CRT));
+    session.set_verify_cert(host.0, None);
 
-    let mut stream = match TcpStream::connect("bheesham.com:443") {
+    let mut stream = match TcpStream::connect(host) {
         Err(e) => panic!("{}", e),
         Ok(s) => s
     };
