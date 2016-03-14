@@ -15,6 +15,10 @@ rid of the invariants and the aliased enums:
 bindgen -lgnutls -builtins -o gnutls-sys/src/gen.rs -i gnutls-sys/src/inc.h
 ```
 
+## Contributors
+
+  * Andreas Karlsson
+
 <hr>
 
 Like GnuTLS, this code is licensed under the LGPLv2. A copy of the license can
