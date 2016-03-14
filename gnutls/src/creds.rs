@@ -15,6 +15,7 @@ use gt::gen::{gnutls_x509_crt_fmt_t,
               gnutls_certificate_credentials_t,
               gnutls_certificate_allocate_credentials,
               gnutls_certificate_free_credentials,
+              gnutls_certificate_set_x509_system_trust,
               gnutls_certificate_set_x509_trust_file,
               gnutls_certificate_set_x509_trust_dir,
               gnutls_certificate_set_x509_key_file
@@ -44,6 +45,19 @@ impl Cert {
                 trust_file: false,
                 key_file: false
             })
+        }
+    }
+
+    pub fn x509_set_system_trust(&mut self) -> Result<i32, Error> {
+        unsafe {
+            let processed: i32 = gnutls_certificate_set_x509_system_trust(
+                self.credentials);
+
+            if processed < 0 {
+                Err(processed.as_gnutls_error())
+            } else {
+                Ok(processed)
+            }
         }
     }
 
@@ -137,6 +151,8 @@ mod tests {
                 panic!("Could not initialize the certificate.")
             }
         };
+
+        assert!(cert.x509_set_system_trust().ok().unwrap() > 0);
 
         assert_eq!(Error::FileError,
                    cert.x509_set_trust_file("tests/does_not_exist.pem", None)
