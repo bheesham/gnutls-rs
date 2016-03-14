@@ -31,7 +31,7 @@ fn main() {
         Ok(_) => {}
     };
 
-    if session.set_creds(CredType::GNUTLS_CRD_CERTIFICATE, &mut creds) .err() != None {
+    if session.set_creds(CredType::GNUTLS_CRD_CERTIFICATE, &mut creds).err() != None {
         panic!("Error: could not set the session credentials.");
     }
 
